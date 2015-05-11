@@ -9,6 +9,7 @@ function extend (dest /* sources... */) {
 
 var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
   modules: {},
+  urls: {},
 
   load: function (moduleSet) {
     Object.keys(moduleSet).forEach(function (moduleHash) {
@@ -36,9 +37,33 @@ var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
     var module = sundry.modules[moduleHash] = sundry.modules[modulesHash] || {};
     module.blocking = (module.blocking || []).concat(blockedModuleHash);
     if (!module.requested) {
-      // TODO: AJAX
+
+      var head = document.getElementsByTagName("head")[0];
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.charset = "utf-8";
+      script.async = true;
+      script.src = sundry.getUrl(moduleHash);
+
+      script.onload = script.onreadystatechange = function () {
+        script.onload = script.onreadystatechange = null;
+        head.removeChild(script);
+        // UMD shim could go here --> if expected global module name is provided
+      }
+
+      head.appendChild(script);
+
       module.requested = true;
     }
+  },
+
+  getUrl: function (moduleHash) {
+    var url = sundry.urls[moduleHash];
+    return url;
+  },
+
+  registerUrls: function (urls) {
+    extend(sundry.urls, urls);
   },
 
   resolve: function (moduleHash) {

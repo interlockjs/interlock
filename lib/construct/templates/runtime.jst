@@ -78,9 +78,12 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
    */
   request: function (moduleHash, blockedModuleHash) {
     var module = r.modules[moduleHash] = r.modules[modulesHash] || {};
-    module.blocking = (module.blocking || []).concat(blockedModuleHash);
-    if (!module.requested) {
 
+    if (blockedModuleHash) {
+      module.blocking = (module.blocking || []).concat(blockedModuleHash);
+    }
+
+    if (!module.requested) {
       var head = document.getElementsByTagName("head")[0];
       var script = document.createElement("script");
       script.type = "text/javascript";

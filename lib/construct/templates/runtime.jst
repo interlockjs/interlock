@@ -1,4 +1,4 @@
-function extend (dest /* sources... */) {
+function copyProps (dest /* sources... */) {
   var len = arguments.length;
   if (arguments.length < 2 || dest === null) { return dest; }
   Array.prototype.splice.call(arguments, 1).forEach(function (src) {
@@ -23,7 +23,7 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
         return unloaded;
       }, []);
 
-      var module = r.modules[moduleHash] = extend(r.modules[moduleHash] || {}, loadedModule);
+      var module = r.modules[moduleHash] = copyProps(r.modules[moduleHash] || {}, loadedModule);
 
       if (!!unloadedDeps.length) {
         module.unloadedDeps = unloadedDeps;
@@ -63,7 +63,7 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
   },
 
   registerUrls: function (urls) {
-    extend(r.urls, urls);
+    copyProps(r.urls, urls);
   },
 
   resolve: function (moduleHash) {

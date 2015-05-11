@@ -1,0 +1,33 @@
+{
+  "name": "sundry",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha spec/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/divmain/sundry"
+  },
+  "author": "Dale Bustad <dale@divmain.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/divmain/sundry/issues"
+  },
+  "homepage": "https://github.com/divmain/sundry",
+  "dependencies": {
+    "ast-types": "^0.7.6",
+    "escodegen": "^1.6.1",
+    "esprima": "^2.2.0",
+    "esquery": "^0.4.0",
+    "estemplate": "^0.4.0",
+    "source-map": "^0.4.2"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "require-dir": "^0.3.0",
+    "sinon": "^1.14.1"
+  }
+}

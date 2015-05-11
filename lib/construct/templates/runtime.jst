@@ -1,0 +1,70 @@
+function extend (dest /* sources... */) {
+  var len = arguments.length;
+  if (arguments.length < 2 || dest === null) { return dest; }
+  Array.prototype.splice.call(arguments, 1).forEach(function (src) {
+    Object.keys(src).forEach(function (key) { dest[key] = src[key]; });
+  });
+  return dest;
+}
+
+var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
+  modules: {},
+
+  load: function (moduleSet) {
+    Object.keys(moduleSet).forEach(function (moduleHash) {
+      var loadedModule = moduleSet[moduleHash];
+      var unloadedDeps = loadedModule.deps.reduce(function (unloaded, dependencyHash) {
+        var dependency = sundry.modules[dependencyHash];
+        if (!dependency || dependency.blocking) {
+          unloaded.push(dependencyHash);
+          sundry.request(dependencyHash, moduleHash);
+        }
+        return unloaded;
+      }, []);
+
+      var module = sundry.modules[moduleHash] = extend(sundry.modules[moduleHash] || {}, loadedModule);
+
+      if (!!unloadedDeps.length) {
+        module.unloadedDeps = unloadedDeps;
+      } else {
+        sundry.resolve(moduleHash);
+      }
+    });
+  },
+
+  request: function (moduleHash, blockedModuleHash) {
+    var module = sundry.modules[moduleHash] = sundry.modules[modulesHash] || {};
+    module.blocking = (module.blocking || []).concat(blockedModuleHash);
+    if (!module.requested) {
+      // TODO: AJAX
+      module.requested = true;
+    }
+  },
+
+  resolve: function (moduleHash) {
+    var module = sundry.modules[moduleHash];
+
+    (module.blocking || []).forEach(function (blockedModuleHash) {
+      var blockedModule = sundry.modules[blockedModuleHash];
+      blockedModule.unloadedDeps = blockedModule.unloadedDeps.reduce(function (unloaded, dependencyHash) {
+        if (dependencyHash !== moduleHash) {
+          unloaded.push(dependencyHash);
+        }
+      }, [])
+      if (!blockedModule.unloadedDeps.length) {
+        sundry.resolve(blockedModule);
+      }
+    });
+
+    module.blocking = null;
+  },
+
+  require: function (moduleHash) {
+    var module = sundry.modules[moduleHash];
+    if (module.exports) { return module.exports; }
+
+    var moduleObj = { exports: {} };
+    module.fn.call(null, sundry.require.bind(sundry), moduleObj, moduleObj.exports);
+    return module.exports = moduleObj.exports;
+  }
+};

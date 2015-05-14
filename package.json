@@ -22,6 +22,7 @@
     "esprima": "^2.2.0",
     "esquery": "^0.4.0",
     "estemplate": "^0.4.0",
+    "lodash": "^3.8.0",
     "source-map": "^0.4.2"
   },
   "devDependencies": {

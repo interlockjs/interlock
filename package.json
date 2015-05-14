@@ -1,5 +1,5 @@
 {
-  "name": "sundry",
+  "name": "interlock",
   "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/divmain/sundry"
+    "url": "https://github.com/divmain/interlock"
   },
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/divmain/sundry/issues"
+    "url": "https://github.com/divmain/interlock/issues"
   },
-  "homepage": "https://github.com/divmain/sundry",
+  "homepage": "https://github.com/divmain/interlock",
   "dependencies": {
     "ast-types": "^0.7.6",
     "escodegen": "^1.6.1",

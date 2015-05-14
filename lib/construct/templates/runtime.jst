@@ -7,7 +7,7 @@ function extend (dest /* sources... */) {
   return dest;
 }
 
-var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
+var r = window[<%= globalName %>] = window[<%= globalName %>] || {
   modules: {},
   urls: {},
 
@@ -15,26 +15,26 @@ var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
     Object.keys(moduleSet).forEach(function (moduleHash) {
       var loadedModule = moduleSet[moduleHash];
       var unloadedDeps = loadedModule.deps.reduce(function (unloaded, dependencyHash) {
-        var dependency = sundry.modules[dependencyHash];
+        var dependency = r.modules[dependencyHash];
         if (!dependency || dependency.blocking) {
           unloaded.push(dependencyHash);
-          sundry.request(dependencyHash, moduleHash);
+          r.request(dependencyHash, moduleHash);
         }
         return unloaded;
       }, []);
 
-      var module = sundry.modules[moduleHash] = extend(sundry.modules[moduleHash] || {}, loadedModule);
+      var module = r.modules[moduleHash] = extend(r.modules[moduleHash] || {}, loadedModule);
 
       if (!!unloadedDeps.length) {
         module.unloadedDeps = unloadedDeps;
       } else {
-        sundry.resolve(moduleHash);
+        r.resolve(moduleHash);
       }
     });
   },
 
   request: function (moduleHash, blockedModuleHash) {
-    var module = sundry.modules[moduleHash] = sundry.modules[modulesHash] || {};
+    var module = r.modules[moduleHash] = r.modules[modulesHash] || {};
     module.blocking = (module.blocking || []).concat(blockedModuleHash);
     if (!module.requested) {
 
@@ -43,7 +43,7 @@ var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
       script.type = "text/javascript";
       script.charset = "utf-8";
       script.async = true;
-      script.src = sundry.getUrl(moduleHash);
+      script.src = r.getUrl(moduleHash);
 
       script.onload = script.onreadystatechange = function () {
         script.onload = script.onreadystatechange = null;
@@ -58,26 +58,26 @@ var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
   },
 
   getUrl: function (moduleHash) {
-    var url = sundry.urls[moduleHash];
+    var url = r.urls[moduleHash];
     return url;
   },
 
   registerUrls: function (urls) {
-    extend(sundry.urls, urls);
+    extend(r.urls, urls);
   },
 
   resolve: function (moduleHash) {
-    var module = sundry.modules[moduleHash];
+    var module = r.modules[moduleHash];
 
     (module.blocking || []).forEach(function (blockedModuleHash) {
-      var blockedModule = sundry.modules[blockedModuleHash];
+      var blockedModule = r.modules[blockedModuleHash];
       blockedModule.unloadedDeps = blockedModule.unloadedDeps.reduce(function (unloaded, dependencyHash) {
         if (dependencyHash !== moduleHash) {
           unloaded.push(dependencyHash);
         }
       }, [])
       if (!blockedModule.unloadedDeps.length) {
-        sundry.resolve(blockedModule);
+        r.resolve(blockedModule);
       }
     });
 
@@ -85,11 +85,11 @@ var sundry = window[<%= globalName %>] = window[<%= globalName %>] || {
   },
 
   require: function (moduleHash) {
-    var module = sundry.modules[moduleHash];
+    var module = r.modules[moduleHash];
     if (module.exports) { return module.exports; }
 
     var moduleObj = { exports: {} };
-    module.fn.call(null, sundry.require.bind(sundry), moduleObj, moduleObj.exports);
+    module.fn.call(null, r.require.bind(r), moduleObj, moduleObj.exports);
     return module.exports = moduleObj.exports;
   }
 };

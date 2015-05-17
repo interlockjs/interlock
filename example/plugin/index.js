@@ -1,7 +1,7 @@
 var ExamplePlugin = module.exports = function (opts) {
   this.opts = opts || {};
   /*
-  this.compilation will be set by Regiment upon plugin instantiation. Initially,
+  this.compilation will be set by Interlock upon plugin instantiation. Initially,
     it will be an empty object, and will be shared between all instantiated
     plugins to facilitate inter-plugin communication.
    */

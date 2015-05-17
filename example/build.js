@@ -1,6 +1,6 @@
 var path = require("path");
 
-var Interlock = require("regiment");
+var Interlock = require("interlock");
 var ExamplePlugin = require("../plugin");
 
 var ilk = new Interlock({

@@ -19,14 +19,14 @@ function copyProps (dest /* sources... */) {
 /**
  * This object is exposed to the browser environment and is accessible
  * to chunks that are loaded asynchronously.  It represents the core
- * of the Regiment runtime.
+ * of the Interlock runtime.
  */
 var r = window[<%= globalName %>] = window[<%= globalName %>] || {
   modules: {},
   urls: {},
 
   /**
-   * Loads a module set into the Regiment runtime.
+   * Loads a module set into the Interlock runtime.
    * 
    * If the loaded module requires other modules that are not yet loaded, requests
    * for those modules will be made.  If all dependencies are satisfied, the module

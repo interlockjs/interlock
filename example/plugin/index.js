@@ -31,8 +31,8 @@ ExamplePlugin.prototype.preresolve = function (requireStr, contextPath) {
  * @param  {String} requireStr
  * @param  {Object} resolved
  */
-ExamplePlugin.prototype.postresolve = function (requireStr, resolved) {
-
+ExamplePlugin.prototype.postresolve = function (asset, requireStr) {
+  return asset;
 };
 
 ExamplePlugin.prototype.preparse = function (asset) {

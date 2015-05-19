@@ -1,14 +1,14 @@
 var path = require("path");
 
-var Interlock = require("interlock");
-var ExamplePlugin = require("../plugin");
+var Interlock = require("..");
+var ExamplePlugin = require("./plugin");
 
 var ilk = new Interlock({
   namespace: require("./package.json").name,
   root: __dirname,
   outputPath: path.join(__dirname, "dist"),
 
-  bundle: [{
+  bundles: [{
     entry: true,
     src: "./app/entry-a.js",
     dest: "entry-a.bundle.js"

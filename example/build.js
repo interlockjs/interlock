@@ -18,6 +18,7 @@ var ilk = new Interlock({
     dest: "entry-b.bundle.js"
   }, {
     entry: false,
+    includeRuntime: false,
     src: "./app/shared/lib-a.js",
     dest: "[setHash].js"
   }],

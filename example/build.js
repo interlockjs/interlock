@@ -4,7 +4,6 @@ var Interlock = require("..");
 var ExamplePlugin = require("./plugin");
 
 var ilk = new Interlock({
-  namespace: require("./package.json").name,
   root: __dirname,
   outputPath: path.join(__dirname, "dist"),
 

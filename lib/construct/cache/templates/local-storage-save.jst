@@ -1,0 +1,8 @@
+if (window.localStorage) {
+  var fnBody = loadedModule.fn.toString();
+  var cacheObj = {
+    deps: loadedModule.deps,
+    fnBody: fnBody.slice(fnBody.indexOf("{") + 1, fnBody.length - 1)
+  };
+  window.localStorage["__interlock_cache:" + moduleHash] = JSON.stringify(cacheObj);
+}

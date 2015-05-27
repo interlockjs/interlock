@@ -22,6 +22,8 @@ var ilk = new Interlock({
     dest: "[setHash].js"
   }],
 
+  cacheMode: "localStorage",
+
   implicitBundleDest: "[setHash].js",
 
   plugins: [

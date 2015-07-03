@@ -1,3 +1,5 @@
+parser: "babel-eslint"
+
 env:
 
     ###########################################################################
@@ -134,7 +136,7 @@ rules:
     radix: 2                  # require use of the second argument for parseInt()
     vars-on-top: 1            # requires to declare all vars on top of their containing scope
     wrap-iife: [2, "inside"]  # require immediate function invocation to be wrapped in parentheses
-    yoda: "never"             # require or disallow Yoda conditions
+    yoda: [2, "never"]        # require or disallow Yoda conditions
 
     ###########################################################################
     #                                                                         #
@@ -209,7 +211,7 @@ rules:
     no-nested-ternary: 2           # disallow nested ternary expressions
     no-new-object: 1               # disallow use of the Object constructor
     no-space-before-semi: 2        # disallow space before semicolon
-    no-spaced-func: 2              # disallow space between function identifier and application
+    no-spaced-func: 0              # disallow space between function identifier and application
     no-ternary: 0                  # disallow the use of ternary operators
 
     no-trailing-spaces: 2          # disallow trailing whitespace at the end of lines
@@ -224,7 +226,8 @@ rules:
     semi: [2, "always"]            # require or disallow use of semicolons instead of ASI
     semi-spacing: 2                # enforce spacing before and after semicolons
     sort-vars: 0                   # sort variables within the same declaration block
-    space-after-keywords: "always" # require a space after certain keywords
+    space-after-keywords:          # require a space after certain keywords
+        [1, "always"]
     space-before-blocks: 2         # require or disallow space before blocks
     space-before-function-paren:   # require or disallow space before function opening parenthesis
         [2, { "anonymous": "always", "named": "never" }]

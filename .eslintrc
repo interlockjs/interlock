@@ -230,7 +230,7 @@ rules:
         [1, "always"]
     space-before-blocks: 2         # require or disallow space before blocks
     space-before-function-paren:   # require or disallow space before function opening parenthesis
-        [2, { "anonymous": "always", "named": "never" }]
+        [2, { "anonymous": "always", "named": "always" }]
     space-in-brackets: 0           # require or disallow spaces inside brackets
     space-in-parens: 0             # require or disallow spaces inside parentheses
     space-infix-ops: 2             # require spaces around operators

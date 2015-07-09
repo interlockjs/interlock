@@ -81,7 +81,7 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
    * @param  {String} blockedModuleHash  Hash of the module that needs it.
    */
   request: function (moduleHash, blockedModuleHash) {
-    var module = r.modules[moduleHash] = r.modules[modulesHash] || {};
+    var module = r.modules[moduleHash] = r.modules[moduleHash] || {};
 
     if (blockedModuleHash) {
       module.blocking = (module.blocking || []).concat(blockedModuleHash);

@@ -7,7 +7,7 @@ import compile from "./compile";
 import {entries} from "./util";
 
 export default function Interlock (options) {
-  var cwd = process.cwd();
+  const cwd = process.cwd();
   options = options || {};
 
   if (!options.bundles || !options.bundles.length) {

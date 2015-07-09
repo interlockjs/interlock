@@ -45,14 +45,16 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
       // Attempt to save to cache here, if enabled.
       ; %= cacheSave%;
 
-      var unloadedDeps = loadedModule.deps.reduce(function (unloaded, dependencyHash) {
+      var unloadedDeps = loadedModule.deps.filter(function (dependencyHash) {
         var dependency = r.modules[dependencyHash];
+
         if (!dependency || dependency.blocking) {
-          unloaded.push(dependencyHash);
           r.request(dependencyHash, moduleHash);
+          return true;
         }
-        return unloaded;
-      }, []);
+
+        return false;
+      });
 
       var module = r.modules[moduleHash] = copyProps(r.modules[moduleHash] || {}, loadedModule);
 
@@ -145,17 +147,16 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
 
     (module.blocking || []).forEach(function (blockedModuleHash) {
       var blockedModule = r.modules[blockedModuleHash];
-      blockedModule.unloadedDeps = blockedModule.unloadedDeps.reduce(function (unloaded, dependencyHash) {
-        if (dependencyHash !== moduleHash) {
-          unloaded.push(dependencyHash);
-        }
-      }, [])
+      blockedModule.unloadedDeps = blockedModule.unloadedDeps.filter(function (dependencyHash) {
+        return dependencyHash !== moduleHash;
+      });
       if (!blockedModule.unloadedDeps.length) {
-        r.resolve(blockedModule);
+        r.resolve(blockedModuleHash);
       }
     });
 
     module.blocking = null;
+    if (module.entry) { r.require(moduleHash); }
   },
 
   /**

@@ -10,7 +10,7 @@ export default function Interlock (options) {
   const cwd = process.cwd();
   options = options || {};
 
-  if (!options.bundles || !options.bundles.length) {
+  if (!options.emit || !options.emit.length) {
     throw new Error("Must define at least one bundle.");
   }
 

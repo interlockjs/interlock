@@ -7,18 +7,14 @@ var ilk = new Interlock({
   root: __dirname,
   outputPath: path.join(__dirname, "dist"),
 
-  bundles: [{
-    entry: true,
-    src: "./app/entry-a.js",
+  emit: [{
+    entry: "./app/entry-a.js",
     dest: "entry-a.bundle.js"
   }, {
-    entry: true,
-    src: "./app/entry-b.js",
+    entry: "./app/entry-b.js",
     dest: "entry-b.bundle.js"
   }, {
-    entry: false,
-    includeRuntime: false,
-    src: "./app/shared/lib-a.js",
+    split: "./app/shared/lib-a.js",
     dest: "[setHash].js"
   }],
 

@@ -19,8 +19,8 @@
   "dependencies": {
     "ast-types": "^0.7.6",
     "babel": "^5.6.14",
+    "babel-core": "^5.6.17",
     "escodegen": "^1.6.1",
-    "esprima": "^2.2.0",
     "esquery": "^0.4.0",
     "estemplate": "^0.4.0",
     "joi": "^6.5.0",

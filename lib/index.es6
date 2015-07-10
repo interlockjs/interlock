@@ -17,7 +17,7 @@ export default function Interlock (options) {
   // TODO: validate options, or only persist specific values
   options.context = options.context || cwd;
   options.outputPath = options.outputPath || path.join(cwd, "dist");
-  options.extensions = options.extensions || [".js"];
+  options.extensions = options.extensions || [".js", ".jsx", ".es6"];
   options.ns = options.ns || require(path.join(options.root, "./package.json")).name;
   options.context = options.context || cwd;
   this.options = options;

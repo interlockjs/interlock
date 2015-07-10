@@ -18,7 +18,9 @@ var ilk = new Interlock({
     dest: "[setHash].js"
   }],
 
-  cacheMode: "localStorage",
+  includeComments: true,
+  sourceMaps: true,
+  // cacheMode: "localStorage",
 
   implicitBundleDest: "[setHash].js",
 

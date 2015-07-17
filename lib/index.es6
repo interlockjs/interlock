@@ -4,7 +4,7 @@ import fs from "fs";
 import {sync as mkdirp} from "mkdirp";
 
 import compile from "./compile";
-import {entries} from "./util";
+import { entries } from "./util";
 
 export default function Interlock (options) {
   const cwd = process.cwd();
@@ -24,11 +24,14 @@ export default function Interlock (options) {
 }
 
 Interlock.prototype.build = function () {
-  compile(this.options).then(compilation => {
-    for (let [bundleDest, bundleOutput] of entries(compilation.bundles)) {
-      const outputPath = path.join(this.options.outputPath, bundleDest);
-      mkdirp(path.dirname(outputPath));
-      fs.writeFileSync(outputPath, bundleOutput);
-    }
-  });
+  compile(this.options).then(this._saveBundles);
 };
+
+Interlock.prototype._saveBundles = function (compilation) {
+  for (let [bundleDest, bundle] of entries(compilation.bundles)) {
+    const bundleOutput = bundle.raw;
+    const outputPath = path.join(this.options.outputPath, bundleDest);
+    mkdirp(path.dirname(outputPath));
+    fs.writeFileSync(outputPath, bundleOutput);
+  }  
+}

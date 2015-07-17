@@ -29,4 +29,17 @@ var ilk = new Interlock({
   ]
 });
 
-ilk.build();
+ilk.watch(true).observe(function (ev) {
+  var patchModules = ev.patchModules;
+  var compilation = ev.compilation;
+
+  if (patchModules) {
+    const paths = patchModules.map(function (module) { return module.path; });
+    console.log("the following modules have been updated:", paths);
+  }
+  if (compilation) {
+    console.log("a new compilation has completed");
+  }
+});
+
+// ilk.build();

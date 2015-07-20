@@ -37,8 +37,8 @@ Interlock.prototype._saveBundles = function (compilation) {
     const outputPath = path.join(this.options.outputPath, bundleDest);
     mkdirp(path.dirname(outputPath));
     fs.writeFileSync(outputPath, bundleOutput);
-  }  
-}
+  }
+};
 
 function getRefreshedAsset (compilation, changedFilePath) {
   const origAsset = compilation.cache.modulesByAbsPath[changedFilePath];
@@ -65,12 +65,11 @@ Interlock.prototype.watch = function (save=false) {
       lastCompilation = compilation;
       for (let [, bundleObj] of entries(compilation.bundles)) {
         for (let module of bundleObj.modules || []) {
-          console.log("watching:", module.path);
           watcher.add(module.path);
           absPathToModuleHash[module.path] = module.hash;
         }
       }
-      if (save) { self._saveBundles(compilation) }
+      if (save) { self._saveBundles(compilation); }
       // Emit compilation.
       add({ compilation });
     }
@@ -90,9 +89,9 @@ Interlock.prototype.watch = function (save=false) {
           // Emit patch modules (changed module plus any new dependencies).
           add({ patchModules, changedFilePath });
           compile(lastCompilation.opts).then(onCompileComplete);
-        })
+        });
     });
-  
+
     compile(this.options).then(onCompileComplete);
   });
 };

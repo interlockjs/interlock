@@ -1,5 +1,5 @@
-import path from "path";
-import fs from "fs";
+import * as path from "path";
+import * as fs from "fs";
 
 import { watch } from "chokidar";
 import {sync as mkdirp} from "mkdirp";
@@ -34,7 +34,7 @@ Interlock.prototype.build = function () {
 Interlock.prototype._saveBundles = function (compilation) {
   for (let [bundleDest, bundle] of entries(compilation.bundles)) {
     const bundleOutput = bundle.raw;
-    const outputPath = path.join(this.options.outputPath, bundleDest);
+    const outputPath = path.join(compilation.opts.outputPath, bundleDest);
     mkdirp(path.dirname(outputPath));
     fs.writeFileSync(outputPath, bundleOutput);
   }

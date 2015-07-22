@@ -1,8 +1,8 @@
-var parse = require("esprima").parse;
+var parse = require("babel").parse;
 var esquery = require("esquery");
 var escodegen = require("escodegen");
 
-var construct = require("../../lib/construct");
+var construct = require("../../lib/compile/construct");
 
 var render = function (ast) {
   return escodegen.generate(ast, {
@@ -11,17 +11,17 @@ var render = function (ast) {
       quotes: "single"
     }
   });
-}
+};
 
-describe("lib/construct", function () {
+describe("lib/compile/construct", function () {
   describe("common module", function () {
-    function simpleModule() {
+    function simpleModule () {
       var origModuleBody = parse("module.exports = 'hello';").body;
-      var dependencies = ["ddb179", "aa527f"]
+      var dependencies = [{ hash: "ddb179" }, { hash: "aa527f" }];
       return {
         moduleAst: construct.commonModule(origModuleBody, dependencies),
         origModuleBody: origModuleBody
-      }
+      };
     }
 
     it("outputs an object literal with two properties", function () {
@@ -49,7 +49,7 @@ describe("lib/construct", function () {
       expect(moduleFn).to.have.deep.property("value.type", "FunctionExpression");
       expect(moduleFn.value.params).to.have.length(3);
 
-      var constructedModuleFnBody = esquery(moduleFn, "BlockStatement")[0].body;
+      const constructedModuleFnBody = esquery(moduleFn, "BlockStatement")[0].body;
       expect(constructedModuleFnBody).to.eql(module.origModuleBody);
     });
 
@@ -67,6 +67,6 @@ describe("lib/construct", function () {
         "  }",
         "}"
       ].join("\n"));
-    })
+    });
   });
 });

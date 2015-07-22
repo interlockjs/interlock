@@ -7,7 +7,7 @@ var baseDir = path.resolve(__dirname, "../..");
 
 describe("lib/", function () {
   describe("resolve", function () {
-    function attemptResolve(requireStr, extentions) {
+    function attemptResolve (requireStr, extentions) {
       return resolve(
         requireStr,
         path.join(baseDir, "lib"),
@@ -18,17 +18,17 @@ describe("lib/", function () {
     }
 
     it("resolves file in same directory", function () {
-      var resolved = attemptResolve("./compilation");
+      var resolved = attemptResolve("./index");
       expect(resolved).to.have.property("ns", "interlock");
-      expect(resolved).to.have.property("nsPath", "lib/compilation.js");
-      expect(resolved.path).to.equal(path.join(baseDir, "lib/compilation.js"));
+      expect(resolved).to.have.property("nsPath", "lib/index.js");
+      expect(resolved.path).to.equal(path.join(baseDir, "lib/index.js"));
     });
 
     it("resolves file in sub-directory", function () {
-      var resolved = attemptResolve("./construct/index");
+      var resolved = attemptResolve("./compile/construct/index");
       expect(resolved).to.have.property("ns", "interlock");
-      expect(resolved).to.have.property("nsPath", "lib/construct/index.js");
-      expect(resolved.path).to.equal(path.join(baseDir, "lib/construct/index.js"));
+      expect(resolved).to.have.property("nsPath", "lib/compile/construct/index.js");
+      expect(resolved.path).to.equal(path.join(baseDir, "lib/compile/construct/index.js"));
     });
 
     it("resolves current directory", function () {

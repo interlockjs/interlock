@@ -4,6 +4,7 @@ import * as fs from "fs";
 import { watch } from "chokidar";
 import {sync as mkdirp} from "mkdirp";
 import most from "most";
+import _ from "lodash";
 
 import compile from "./compile";
 import { entries } from "./util";
@@ -12,19 +13,18 @@ import compileModules from "./compile/modules/compile";
 
 export default function Interlock (options) {
   const cwd = process.cwd();
-  options = options || {};
 
   if (!options.emit || !options.emit.length) {
     throw new Error("Must define at least one bundle.");
   }
 
   // TODO: validate options, or only persist specific values
-  options.context = options.context || cwd;
-  options.outputPath = options.outputPath || path.join(cwd, "dist");
-  options.extensions = options.extensions || [".js", ".jsx", ".es6"];
-  options.ns = options.ns || require(path.join(options.root, "./package.json")).name;
-  options.context = options.context || cwd;
-  this.options = options;
+  this.options = _.defaults(options || {}, {
+    context: cwd;
+    outputPath: path.join(cwd, "dist");
+    extensions: [".js", ".jsx", ".es6"];
+    ns: require(path.join(options.root, "./package.json")).name;
+  });
 }
 
 Interlock.prototype.build = function () {

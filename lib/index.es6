@@ -20,10 +20,10 @@ export default function Interlock (options) {
 
   // TODO: validate options, or only persist specific values
   this.options = _.defaults(options || {}, {
-    context: cwd;
-    outputPath: path.join(cwd, "dist");
-    extensions: [".js", ".jsx", ".es6"];
-    ns: require(path.join(options.root, "./package.json")).name;
+    context: cwd,
+    outputPath: path.join(cwd, "dist"),
+    extensions: [".js", ".jsx", ".es6"],
+    ns: require(path.join(options.root, "./package.json")).name
   });
 }
 

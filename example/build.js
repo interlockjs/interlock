@@ -1,6 +1,6 @@
 var path = require("path");
 
-var Interlock = require("..");
+var Interlock = require("../index.js");
 
 var ilk = new Interlock({
   root: __dirname,

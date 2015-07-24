@@ -45,13 +45,6 @@ describe("lib/", function () {
       expect(resolved.path).to.equal(path.join(baseDir, "example/build.js"));
     });
 
-    it("resolves a directory in a separate directory branch", function () {
-      var resolved = attemptResolve("../example/plugin");
-      expect(resolved).to.have.property("ns", "interlock");
-      expect(resolved).to.have.property("nsPath", "example/plugin/index.js");
-      expect(resolved.path).to.equal(path.join(baseDir, "example/plugin/index.js"));
-    });
-
     it("resolves a node_modules package", function () {
       var resolved = attemptResolve("lodash");
       expect(resolved).to.have.property("ns", "lodash");

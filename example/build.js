@@ -1,7 +1,6 @@
 var path = require("path");
 
 var Interlock = require("..");
-var ExamplePlugin = require("./plugin");
 
 var ilk = new Interlock({
   root: __dirname,
@@ -24,9 +23,7 @@ var ilk = new Interlock({
 
   implicitBundleDest: "[setHash].js",
 
-  plugins: [
-    new ExamplePlugin()
-  ]
+  plugins: []
 });
 
 ilk.watch(true).observe(function (ev) {

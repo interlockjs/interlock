@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "lint": "eslint --ignore-pattern example .",
     "test": "mocha spec/run.js"
   },
   "repository": {
@@ -30,7 +31,9 @@
     "source-map": "^0.4.2"
   },
   "devDependencies": {
+    "babel-eslint": "^3.1.26",
     "chai": "^2.3.0",
+    "eslint": "^0.24.1",
     "esquery": "^0.4.0",
     "mocha": "^2.2.4",
     "require-dir": "^0.3.0",

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ignore-pattern example .",
-    "test": "mocha spec/run.js"
+    "test": "mocha spec/run.js",
+    "check": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",

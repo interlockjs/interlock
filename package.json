@@ -2,7 +2,7 @@
   "name": "interlock",
   "version": "0.0.1",
   "description": "",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint --ignore-pattern example .",
     "test": "mocha spec/run.js"

@@ -10,7 +10,7 @@ function buildContext (props = {}, override = {}, transform = {}) {
 }
 
 
-describe("lib/extend", () => {
+describe("lib/pluggable", () => {
   let sandbox;
 
   beforeEach(() => {

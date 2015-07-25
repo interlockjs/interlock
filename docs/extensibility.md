@@ -95,7 +95,7 @@ This Pluggable's definition can be found [here](../lib/compile/index.js#L58).
 
 ## hashBundle
 
-Calculate the bundle's hash.  Defers to [updateBundleHash](#updateBundleHash) for
+Calculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for
 the actual calculations.
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.

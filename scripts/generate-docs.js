@@ -31,12 +31,15 @@ Something about Pluggable.CONTINUE...
 `;
 
 const PLUGGABLE_TYPE_PARAGRAPHS = {
-  sync: `This is a **synchronous pluggable**, which means that the function should return
-         a real value, rather than a promise or a stream.`,
-  promise: `This is an **asynchronous promise plugin**.  This means that the function
-            should return a promise that resolves to the expected value.`,
-  stream: `This is an **asynchronous stream plugin**.  This means that the function should
-           return a stream that emits expected values.`
+  sync: `
+    This is a **synchronous pluggable**, which means that the function should return
+    a real value, rather than a promise or a stream.`,
+  promise: `
+    This is an **asynchronous promise plugin**.  This means that the function
+    should return a promise that resolves to the expected value.`,
+  stream: `
+    This is an **asynchronous stream plugin**.  This means that the function should
+    return a stream that emits expected values.`
 };
 
 
@@ -62,7 +65,9 @@ function findDoc (node, parents) {
     return node.leadingComments[0].value;
   }
   for (let anscestor of parents) {
-    if (anscestor.type === "VariableDeclaration" &&
+    if ((anscestor.type === "VariableDeclaration" ||
+        anscestor.type === "ExportNamedDeclaration" ||
+        anscestor.type === "ExportDefaultDeclaration") &&
         anscestor.leadingComments &&
         anscestor.leadingComments.length > 0) {
       return anscestor.leadingComments[0].value;
@@ -216,7 +221,7 @@ function sortPluggables (pluggables) {
 
 function renderToMarkdown (pluggable) {
   const hasParsedDoc = !!pluggable.parsedDoc;
-  const doc = hasParsedDoc ? pluggable.parsedDoc.description + "\n" : "";
+  const doc = hasParsedDoc ? "\n" + pluggable.parsedDoc.description + "\n" : "";
 
   let tagsData = "";
   if (hasParsedDoc) {
@@ -247,7 +252,6 @@ function renderToMarkdown (pluggable) {
   /*eslint-enable max-len */
 
   return `## ${pluggable.name}
-
   ${doc}${PLUGGABLE_TYPE_PARAGRAPHS[pluggable.type]}
   ${tagsData}
   ${linksInfo}

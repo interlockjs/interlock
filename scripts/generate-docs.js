@@ -214,8 +214,8 @@ function renderToMarkdown (pluggable) {
   let tagsData = "";
   if (hasParsedDoc) {
     tagsData += "\n" +
-                "|   | Name | Type | Description |\n" +
-                "| - | ---- | ---- | ----------- |\n";
+                "|     | Name | Type | Description |\n" +
+                "| --- | ---- | ---- | ----------- |\n";
 
     tagsData += pluggable.parsedDoc.tags.map(tag => {
       if (tag.tag === "param") {

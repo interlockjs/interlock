@@ -72,8 +72,8 @@ the actual calculations.
 **Pluggable Type:** Sync<br />
 **Locations in Source:** ([pluggable](../lib/compile/bundles/hash.js#L40)) ([function](../lib/compile/bundles/hash.js#L27))
 
-|   | Name | Type | Description |
-| - | ---- | ---- | ----------- |
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
 | Parameter | **bundle** | Object | Bundle. |
 | Return value |  | String | SHA1 that uniquely identifies the bundle. |
 
@@ -115,8 +115,8 @@ Calculate the bundle's hash by invoking `update` with data from the bundle.
 **Pluggable Type:** Sync<br />
 **Locations in Source:** ([pluggable](../lib/compile/bundles/hash.js#L12)) ([function](../lib/compile/bundles/hash.js#L12))
 
-|   | Name | Type | Description |
-| - | ---- | ---- | ----------- |
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
 | Parameter | **update** | Function | Updates the ongoing computation of bundle hash. |
 | Parameter | **bundle** | Object | The bundle object. |
 

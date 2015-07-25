@@ -32,10 +32,11 @@ This Pluggable's definition can be found [here](../lib/compile/index.js#L14-L21)
 Given a stream of bundles, reduces those bundles down into a promise that
 resolves into a final compilation object.
 
-This compilation object will have three key/value pairs: `cache` (containing
-populated cache from the compilation), `bundles` (a mapping of destination
-paths to `raw` code), and `opts` (the original options passed to the
-compilation).
+This compilation object will have three key/value pairs:
+
+- `cache`, containing populated cache from the compilation;
+- `bundles`, a mapping of destination paths to `raw` code; and
+- `opts`, the original options passed to the compilation).
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
@@ -46,7 +47,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | of destination paths to bundles with raw code. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L78-L110).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L79-L111).
 
 ## compile
 
@@ -61,7 +62,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L118-L124).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L119-L125).
 
 ## compileModules
 

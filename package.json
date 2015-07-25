@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint --ignore-pattern example .",
     "test": "mocha spec/run.js",
-    "check": "npm run lint && npm run test"
+    "check": "npm run lint && npm run test",
+    "generate-docs": "babel-node ./scripts/generate-docs.js"
   },
   "repository": {
     "type": "git",
@@ -34,8 +35,11 @@
   "devDependencies": {
     "babel-eslint": "^3.1.26",
     "chai": "^2.3.0",
+    "comment-parser": "^0.3.0",
     "eslint": "^0.24.1",
     "esquery": "^0.4.0",
+    "estraverse": "^4.1.0",
+    "glob": "^5.0.14",
     "mocha": "^2.2.4",
     "require-dir": "^0.3.0",
     "sinon": "^1.14.1",

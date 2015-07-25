@@ -1,0 +1,14 @@
+---
+extends:
+    - "./.eslintrc"
+
+env:
+    mocha: true
+
+rules:
+    max-nested-callbacks: 0
+
+globals:
+    sinon: true
+    assert: false
+    expect: true

@@ -2,7 +2,7 @@ var parse = require("babel").parse;
 var esquery = require("esquery");
 var escodegen = require("escodegen");
 
-var construct = require("../../lib/compile/construct");
+var construct = require("../../../lib/compile/construct");
 
 var render = function (ast) {
   return escodegen.generate(ast, {

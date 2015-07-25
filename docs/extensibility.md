@@ -18,14 +18,14 @@ This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L25).
-The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.js#L8).
+The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.js#L8-L23).
 
 ## bootstrapCompilation
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L14).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L14-L21).
 
 ## buildOutput
 
@@ -46,7 +46,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | of destination paths to bundles with raw code. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L78).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L78-L110).
 
 ## compile
 
@@ -61,7 +61,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L118).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L118-L124).
 
 ## compileModules
 
@@ -69,14 +69,14 @@ This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L65).
-The function that it wraps can be found [here](../lib/compile/modules/compile.js#L16).
+The function that it wraps can be found [here](../lib/compile/modules/compile.js#L16-L63).
 
 ## createModule
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L4).
+This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L4-L16).
 
 ## dedupeExplicit
 
@@ -84,7 +84,7 @@ This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../lib/compile/bundles/dedupe-explicit.js#L41).
-The function that it wraps can be found [here](../lib/compile/bundles/dedupe-explicit.js#L5).
+The function that it wraps can be found [here](../lib/compile/bundles/dedupe-explicit.js#L5-L39).
 
 ## dedupeImplicit
 
@@ -92,28 +92,28 @@ This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../lib/compile/bundles/dedupe-implicit.js#L45).
-The function that it wraps can be found [here](../lib/compile/bundles/dedupe-implicit.js#L38).
+The function that it wraps can be found [here](../lib/compile/bundles/dedupe-implicit.js#L38-L43).
 
 ## getBundles
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L35).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L35-L56).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L23).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L23-L33).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L58).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L58-L63).
 
 ## hashBundle
 
@@ -130,7 +130,7 @@ a real value, rather than a promise or a stream.
 
 
 This Pluggable's definition can be found [here](../lib/compile/bundles/hash.js#L40).
-The function that it wraps can be found [here](../lib/compile/bundles/hash.js#L27).
+The function that it wraps can be found [here](../lib/compile/bundles/hash.js#L27-L38).
 
 ## hashModule
 
@@ -138,7 +138,7 @@ This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/hash.js#L30).
-The function that it wraps can be found [here](../lib/compile/modules/hash.js#L19).
+The function that it wraps can be found [here](../lib/compile/modules/hash.js#L19-L28).
 
 ## interpolateFilename
 
@@ -146,7 +146,7 @@ This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
 This Pluggable's definition can be found [here](../lib/compile/bundles/interpolate-filename.js#L14).
-The function that it wraps can be found [here](../lib/compile/bundles/interpolate-filename.js#L3).
+The function that it wraps can be found [here](../lib/compile/bundles/interpolate-filename.js#L3-L12).
 
 ## loadModule
 
@@ -154,21 +154,21 @@ This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L34).
-The function that it wraps can be found [here](../lib/compile/modules/load-ast.js#L28).
+The function that it wraps can be found [here](../lib/compile/modules/load-ast.js#L28-L32).
 
 ## parseModule
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L11).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L11-L25).
 
 ## preresolve
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L18).
+This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L18-L20).
 
 ## resolveModule
 
@@ -176,7 +176,7 @@ This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L42).
-The function that it wraps can be found [here](../lib/compile/modules/resolve.js#L22).
+The function that it wraps can be found [here](../lib/compile/modules/resolve.js#L22-L40).
 
 ## updateBundleHash
 
@@ -192,12 +192,12 @@ a real value, rather than a promise or a stream.
 | Parameter | **bundle** | Object | The bundle object. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/hash.js#L12).
+This Pluggable's definition can be found [here](../lib/compile/bundles/hash.js#L12-L16).
 
 ## updateModuleHash
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/hash.js#L5).
+This Pluggable's definition can be found [here](../lib/compile/modules/hash.js#L5-L17).
 

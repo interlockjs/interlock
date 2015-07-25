@@ -86,7 +86,8 @@ function getNamedFunctions (ast) {
       functions[node.id.name] = {
         fnParams: node.params,
         name: node.id.name,
-        fnLine: node.loc.start.line,
+        fnStart: node.loc.start.line,
+        fnEnd: node.loc.end.line,
         doc: findDoc(node, controller.parents().reverse())
       };
     }
@@ -117,7 +118,8 @@ function getPluggablesForFile (fpath) {
         Object.assign(pluggable, {
           fnParams: parent.arguments[0].params,
           name: parent.arguments[0].id.name,
-          fnLine: node.loc.start.line,
+          fnStart: parent.loc.start.line,
+          fnEnd: parent.loc.end.line,
           doc: findDoc(node, controller.parents().reverse())
         });
       } else {
@@ -199,8 +201,8 @@ function assertNoDuplicates (pluggables) {
   for (let pluggable of pluggables) {
     if (pluggable.name in pHash) {
       throw `duplicate pluggable '${pluggable.name}' found at\n` +
-        `  ${pHash[pluggable.name].path}:${pHash[pluggable.name].fnLine}\n` +
-        `  ${pluggable.path}:${pluggable.fnLine}`;
+        `  ${pHash[pluggable.name].path}:${pHash[pluggable.name].fnStart}\n` +
+        `  ${pluggable.path}:${pluggable.fnStart}`;
     }
     pHash[pluggable.name] = pluggable;
   }
@@ -243,11 +245,11 @@ function renderToMarkdown (pluggable) {
 
   let linksInfo;
   /* eslint-disable max-len */
-  if (pluggable.pluggableLine === pluggable.fnLine) {
-    linksInfo = `This Pluggable's definition can be found [here](../${pluggable.path}#L${pluggable.pluggableLine}).`;
+  if (pluggable.pluggableLine === pluggable.fnStart) {
+    linksInfo = `This Pluggable's definition can be found [here](../${pluggable.path}#L${pluggable.fnStart}-L${pluggable.fnEnd}).`;
   } else {
     linksInfo = `This Pluggable's definition can be found [here](../${pluggable.path}#L${pluggable.pluggableLine}).
-      The function that it wraps can be found [here](../${pluggable.path}#L${pluggable.fnLine}).`;
+      The function that it wraps can be found [here](../${pluggable.path}#L${pluggable.fnStart}-L${pluggable.fnEnd}).`;
   }
   /*eslint-enable max-len */
 

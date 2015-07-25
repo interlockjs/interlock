@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint --ignore-pattern example .",
     "test": "mocha spec/run.js",
-    "check": "npm run lint && npm run test",
+    "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
     "generate-docs": "babel-node ./scripts/generate-docs.js"
   },
   "repository": {

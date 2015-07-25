@@ -12,104 +12,117 @@ Hamburger tail landjaeger ball tip, porchetta fatback drumstick kielbasa shankle
 
 ## bootstrapBundles
 
-**Type:** stream
-**Location:** [Pluggable Definition](../lib/compile/bundles/bootstrap.js#L25), [Function Definition](../lib/compile/bundles/bootstrap.js#L8)
+**Pluggable Type:** Stream<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/bootstrap.js#L25)) ([function](../lib/compile/bundles/bootstrap.js#L8))
 
 ## bootstrapCompilation
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/index.js#L14), [Function Definition](../lib/compile/index.js#L14)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L14)) ([function](../lib/compile/index.js#L14))
 
 ## buildOutput
 
-**Type:** promise
-**Location:** [Pluggable Definition](../lib/compile/index.js#L65), [Function Definition](../lib/compile/index.js#L65)
+**Pluggable Type:** Promise<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L65)) ([function](../lib/compile/index.js#L65))
 
 ## compile
 
-**Type:** promise
-**Location:** [Pluggable Definition](../lib/compile/index.js#L99), [Function Definition](../lib/compile/index.js#L99)
+**Pluggable Type:** Promise<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L99)) ([function](../lib/compile/index.js#L99))
 
 ## compileModules
 
-**Type:** stream
-**Location:** [Pluggable Definition](../lib/compile/modules/compile.js#L65), [Function Definition](../lib/compile/modules/compile.js#L16)
+**Pluggable Type:** Stream<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/compile.js#L65)) ([function](../lib/compile/modules/compile.js#L16))
 
 ## createModule
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/resolve.js#L4), [Function Definition](../lib/compile/modules/resolve.js#L4)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/resolve.js#L4)) ([function](../lib/compile/modules/resolve.js#L4))
 
 ## dedupeExplicit
 
-**Type:** stream
-**Location:** [Pluggable Definition](../lib/compile/bundles/dedupe-explicit.js#L41), [Function Definition](../lib/compile/bundles/dedupe-explicit.js#L5)
+**Pluggable Type:** Stream<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/dedupe-explicit.js#L41)) ([function](../lib/compile/bundles/dedupe-explicit.js#L5))
 
 ## dedupeImplicit
 
-**Type:** stream
-**Location:** [Pluggable Definition](../lib/compile/bundles/dedupe-implicit.js#L45), [Function Definition](../lib/compile/bundles/dedupe-implicit.js#L38)
+**Pluggable Type:** Stream<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/dedupe-implicit.js#L45)) ([function](../lib/compile/bundles/dedupe-implicit.js#L38))
 
 ## getBundles
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/index.js#L35), [Function Definition](../lib/compile/index.js#L35)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L35)) ([function](../lib/compile/index.js#L35))
 
 ## getModuleMaps
 
-**Type:** promise
-**Location:** [Pluggable Definition](../lib/compile/index.js#L23), [Function Definition](../lib/compile/index.js#L23)
+**Pluggable Type:** Promise<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L23)) ([function](../lib/compile/index.js#L23))
 
 ## getUrls
 
-**Type:** promise
-**Location:** [Pluggable Definition](../lib/compile/index.js#L58), [Function Definition](../lib/compile/index.js#L58)
+**Pluggable Type:** Promise<br />
+**Locations in Source:** ([pluggable](../lib/compile/index.js#L58)) ([function](../lib/compile/index.js#L58))
 
 ## hashBundle
+Calculate the bundle's hash.  Defers to [updateBundleHash](#updateBundleHash) for
+the actual calculations.
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/bundles/hash.js#L32), [Function Definition](../lib/compile/bundles/hash.js#L18)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/hash.js#L40)) ([function](../lib/compile/bundles/hash.js#L27))
+
+|   | Name | Type | Description |
+| - | ---- | ---- | ----------- |
+| Parameter | **bundle** | Object | Bundle. |
+| Return value |  | String | SHA1 that uniquely identifies the bundle. |
+
 
 ## hashModule
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/hash.js#L30), [Function Definition](../lib/compile/modules/hash.js#L19)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/hash.js#L30)) ([function](../lib/compile/modules/hash.js#L19))
 
 ## interpolateFilename
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/bundles/interpolate-filename.js#L14), [Function Definition](../lib/compile/bundles/interpolate-filename.js#L3)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/interpolate-filename.js#L14)) ([function](../lib/compile/bundles/interpolate-filename.js#L3))
 
 ## loadModule
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/load-ast.js#L34), [Function Definition](../lib/compile/modules/load-ast.js#L28)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/load-ast.js#L34)) ([function](../lib/compile/modules/load-ast.js#L28))
 
 ## parseModule
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/load-ast.js#L11), [Function Definition](../lib/compile/modules/load-ast.js#L11)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/load-ast.js#L11)) ([function](../lib/compile/modules/load-ast.js#L11))
 
 ## preresolve
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/resolve.js#L18), [Function Definition](../lib/compile/modules/resolve.js#L18)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/resolve.js#L18)) ([function](../lib/compile/modules/resolve.js#L18))
 
 ## resolveModule
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/resolve.js#L42), [Function Definition](../lib/compile/modules/resolve.js#L22)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/resolve.js#L42)) ([function](../lib/compile/modules/resolve.js#L22))
 
 ## updateBundleHash
-
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/bundles/hash.js#L12), [Function Definition](../lib/compile/bundles/hash.js#L12)
-
 Calculate the bundle's hash by invoking `update` with data from the bundle.
 `update` should be called with string data only.
 
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/bundles/hash.js#L12)) ([function](../lib/compile/bundles/hash.js#L12))
+
+|   | Name | Type | Description |
+| - | ---- | ---- | ----------- |
+| Parameter | **update** | Function | Updates the ongoing computation of bundle hash. |
+| Parameter | **bundle** | Object | The bundle object. |
+
+
 ## updateModuleHash
 
-**Type:** sync
-**Location:** [Pluggable Definition](../lib/compile/modules/hash.js#L5), [Function Definition](../lib/compile/modules/hash.js#L5)
+**Pluggable Type:** Sync<br />
+**Locations in Source:** ([pluggable](../lib/compile/modules/hash.js#L5)) ([function](../lib/compile/modules/hash.js#L5))
 

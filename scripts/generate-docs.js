@@ -203,15 +203,39 @@ function sortPluggables (pluggables) {
   });
 }
 
+function capitalize (str) {
+  return str.slice(0, 1).toUpperCase() + str.slice(1);
+}
+
 function renderToMarkdown (pluggable) {
-  const doc = pluggable.parsedDoc ? pluggable.parsedDoc.description + "\n\n" : "";
+  const hasParsedDoc = !!pluggable.parsedDoc;
+  const doc = hasParsedDoc ? pluggable.parsedDoc.description + "\n" : "";
+
+  let tagsData = "";
+  if (hasParsedDoc) {
+    tagsData += "\n" +
+                "|   | Name | Type | Description |\n" +
+                "| - | ---- | ---- | ----------- |\n";
+
+    tagsData += pluggable.parsedDoc.tags.map(tag => {
+      if (tag.tag === "param") {
+        return `| Parameter | **${tag.name}** | ${tag.type} | ${tag.description} |`;
+      } else if (tag.tag === "return" || tag.tag === "returns") {
+        return `| Return value |  | ${tag.type} | ${tag.description} |`;
+      }
+      return "";
+    }).join("\n");
+
+    tagsData += "\n\n";
+  }
+
   /* eslint-disable max-len */
   return `## ${pluggable.name}
-
-  **Type:** ${pluggable.type}
-  **Location:** [Pluggable Definition](../${pluggable.path}#L${pluggable.pluggableLine}), [Function Definition](../${pluggable.path}#L${pluggable.fnLine})
-
-  ${doc}`;
+  ${doc}
+  **Pluggable Type:** ${capitalize(pluggable.type)}<br />
+  **Locations in Source:** ([pluggable](../${pluggable.path}#L${pluggable.pluggableLine})) ([function](../${pluggable.path}#L${pluggable.fnLine}))
+  ${tagsData}
+  `;
   /*eslint-enable max-len */
 }
 

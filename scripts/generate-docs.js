@@ -26,7 +26,18 @@ beef. Pork belly spare ribs kielbasa chicken ribeye turducken, jerky pig doner f
 
 Hamburger tail landjaeger ball tip, porchetta fatback drumstick kielbasa shankle frankfurter.
 
+Something about Pluggable.CONTINUE...
+
 `;
+
+const PLUGGABLE_TYPE_PARAGRAPHS = {
+  sync: `This is a **synchronous pluggable**, which means that the function should return
+         a real value, rather than a promise or a stream.`,
+  promise: `This is an **asynchronous promise plugin**.  This means that the function
+            should return a promise that resolves to the expected value.`,
+  stream: `This is an **asynchronous stream plugin**.  This means that the function should
+           return a stream that emits expected values.`
+};
 
 
 function green (text) {
@@ -203,10 +214,6 @@ function sortPluggables (pluggables) {
   });
 }
 
-function capitalize (str) {
-  return str.slice(0, 1).toUpperCase() + str.slice(1);
-}
-
 function renderToMarkdown (pluggable) {
   const hasParsedDoc = !!pluggable.parsedDoc;
   const doc = hasParsedDoc ? pluggable.parsedDoc.description + "\n" : "";
@@ -229,14 +236,23 @@ function renderToMarkdown (pluggable) {
     tagsData += "\n\n";
   }
 
+  let linksInfo;
   /* eslint-disable max-len */
-  return `## ${pluggable.name}
-  ${doc}
-  **Pluggable Type:** ${capitalize(pluggable.type)}<br />
-  **Locations in Source:** ([pluggable](../${pluggable.path}#L${pluggable.pluggableLine})) ([function](../${pluggable.path}#L${pluggable.fnLine}))
-  ${tagsData}
-  `;
+  if (pluggable.pluggableLine === pluggable.fnLine) {
+    linksInfo = `This Pluggable's definition can be found [here](../${pluggable.path}#L${pluggable.pluggableLine}).`;
+  } else {
+    linksInfo = `This Pluggable's definition can be found [here](../${pluggable.path}#L${pluggable.pluggableLine}).
+      The function that it wraps can be found [here](../${pluggable.path}#L${pluggable.fnLine}).`;
+  }
   /*eslint-enable max-len */
+
+  return `## ${pluggable.name}
+
+  ${doc}${PLUGGABLE_TYPE_PARAGRAPHS[pluggable.type]}
+  ${tagsData}
+  ${linksInfo}
+
+  `;
 }
 
 function trim (markdownText) {

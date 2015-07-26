@@ -2,8 +2,16 @@
 parser: "babel-eslint"
 
 extends:
-  - "defaults"
-  - "defaults/rules/eslint/node/walmart"
+    - "defaults"
+    - "defaults/rules/eslint/node/walmart"
+
+env:
+    mocha: true
+
+globals:
+    sinon: true
+    assert: false
+    expect: true
 
 rules:
 

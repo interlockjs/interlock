@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint-test": "eslint -c ./.eslintrc-test ./spec",
-    "lint-src": "eslint -c ./.eslintrc ./lib",
-    "lint": "npm run lint-src && npm run lint-test",
+    "lint": "eslint --ignore-pattern example .",
     "test": "mocha spec/run.js",
     "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
     "generate-docs": "babel-node ./scripts/generate-docs.js"

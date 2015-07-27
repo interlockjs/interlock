@@ -1,38 +1,16 @@
+---
 parser: "babel-eslint"
 
+extends:
+    - "defaults"
+    - "defaults/rules/eslint/node/walmart"
+
 env:
-
-    ###########################################################################
-    #                                                                         #
-    #   ENVIRONMENT: if you write code that will be executed in one of the    #
-    #   following environments, the value for that environment should be      #
-    #   set to true.                                                          #
-    #                                                                         #
-    ###########################################################################
-
-    browser: true
-    node: true
-    amd: false
     mocha: true
-    jasmine: false
 
 globals:
-
-    ###########################################################################
-    #                                                                         #
-    #   GLOBALS: ESLint will assume the following variables are declared      #
-    #   globally; other variables will require explicit declaration.          #
-    #                                                                         #
-    ###########################################################################
-
-    require: true
-    describe: true
-    beforeEach: true
-    afterEach: true
-    before: true
-    after: true
-    it: true
     sinon: true
+    assert: false
     expect: true
 
 rules:
@@ -175,13 +153,9 @@ rules:
     #                                                                         #
     ###########################################################################
 
-    handle-callback-err: 0        # enforces error handling in callbacks
     no-mixed-requires: [1, true]  # disallow mixing regular variable and require declarations
-    no-new-require: 2             # disallow use of new operator with the require function
     no-path-concat: 2             # disallow string concatenation with __dirname and __filename
     no-process-exit: 0            # disallow process.exit()
-    no-restricted-modules: 0      # restrict usage of specified node modules
-    no-sync: 0                    # disallow use of synchronous methods
 
     ###########################################################################
     #                                                                         #
@@ -250,7 +224,7 @@ rules:
 
     max-depth: 0              # specify the maximum depth that blocks can be nested
     max-len: [2, 100, 4]      # specify the maximum length of a line in your program
-    max-params: [1, 5]        # limits the number of parameters that can be used in the function 
+    max-params: [1, 5]        # limits the number of parameters that can be used in the function
                               #    declaration
     max-statements: 0         # specify the maximum number of statement allowed in a function
     no-bitwise: 0             # disallow use of bitwise operators

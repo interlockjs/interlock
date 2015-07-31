@@ -53,7 +53,7 @@ describe("lib/index", () => {
         emit: [ "./index.js" ],
         srcRoot: path.join(__dirname, "/../.."),
         context: path.join(__dirname, "../.."),
-        outputPath: path.join(__dirname, "../..", "dist"),
+        destRoot: path.join(__dirname, "../..", "dist"),
         extensions: [ ".js", ".jsx", ".es6" ],
         ns: "interlock"
       });
@@ -64,7 +64,7 @@ describe("lib/index", () => {
         emit: ["./index.js"],
         srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
-        outputPath: "custom outputPath",
+        destRoot: "custom destRoot",
         extensions: [".custom"],
         ns: "custom-namespace"
       });
@@ -73,7 +73,7 @@ describe("lib/index", () => {
         emit: [ "./index.js" ],
         srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
-        outputPath: "custom outputPath",
+        destRoot: "custom destRoot",
         extensions: [".custom"],
         ns: "custom-namespace"
       });
@@ -88,7 +88,7 @@ describe("lib/index", () => {
     it("rebuilds on file change");
   });
   describe("_saveBundles", function () {
-    it("saves output from compilation to outputPath");
+    it("saves output from compilation to destRoot");
     it("prefixes bundles with namespace");
   });
 });

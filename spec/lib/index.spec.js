@@ -8,10 +8,10 @@ import Interlock from "../../lib/index.js";
 
 const minimalValidConfig = {
   emit: ["./index.js"],
-  root: path.join(__dirname, "/../..")
+  srcRoot: path.join(__dirname, "/../..")
 };
 
-describe("lib/index.js", () => {
+describe("lib/index", () => {
   describe("constructor", function () {
     // TODO: Test for [] and undefined. _.merge ignores those values.
     it("throws an Error if not passed invalid options", function () {
@@ -32,16 +32,16 @@ describe("lib/index.js", () => {
         new Interlock(invalidConfig);
       }).to.throw(Error);
 
-      // Invalid options.root
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { root: true })); })
+      // Invalid options.srcRoot
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: true })); })
         .to.throw(Error);
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { root: 1 })); })
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: 1 })); })
         .to.throw(Error);
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { root: null })); })
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: null })); })
         .to.throw(Error);
       expect(() => {
         var invalidConfig = _.merge({}, minimalValidConfig);
-        delete invalidConfig.root;
+        delete invalidConfig.srcRoot;
         new Interlock(invalidConfig);
       }).to.throw(Error);
     });
@@ -51,7 +51,7 @@ describe("lib/index.js", () => {
 
       expect(ilk.options).to.deep.equal({
         emit: [ "./index.js" ],
-        root: path.join(__dirname, "/../.."),
+        srcRoot: path.join(__dirname, "/../.."),
         context: path.join(__dirname, "../.."),
         outputPath: path.join(__dirname, "../..", "dist"),
         extensions: [ ".js", ".jsx", ".es6" ],
@@ -62,7 +62,7 @@ describe("lib/index.js", () => {
     it("allows overrides to the default config", function () {
       var ilk = new Interlock({
         emit: ["./index.js"],
-        root: path.join(__dirname, "/../.."),
+        srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
         outputPath: "custom outputPath",
         extensions: [".custom"],
@@ -71,7 +71,7 @@ describe("lib/index.js", () => {
 
       expect(ilk.options).to.deep.equal({
         emit: [ "./index.js" ],
-        root: path.join(__dirname, "/../.."),
+        srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
         outputPath: "custom outputPath",
         extensions: [".custom"],

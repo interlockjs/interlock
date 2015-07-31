@@ -26,9 +26,10 @@ var ilk = new Interlock({
   plugins: []
 });
 
-ilk.watch(true).observe(function (ev) {
-  var patchModules = ev.patchModules;
-  var compilation = ev.compilation;
+
+ilk.watch(true).observe(function (buildEvent) {
+  var patchModules = buildEvent.patchModules;
+  var compilation = buildEvent.compilation;
 
   if (patchModules) {
     const paths = patchModules.map(function (module) { return module.path; });

@@ -7,7 +7,10 @@ import _ from "lodash";
 import Interlock from "../../lib/index.js";
 
 const minimalValidConfig = {
-  emit: ["./index.js"],
+  emit: [{
+    entry: "./app/entry-a.js",
+    dest: "entry-a.bundle.js"
+  }],
   root: path.join(__dirname, "/../..")
 };
 
@@ -50,7 +53,10 @@ describe("lib/index.js", () => {
       var ilk = new Interlock(minimalValidConfig);
 
       expect(ilk.options).to.deep.equal({
-        emit: [ "./index.js" ],
+        emit: [{
+          entry: "./app/entry-a.js",
+          dest: "entry-a.bundle.js"
+        }],
         root: path.join(__dirname, "/../.."),
         context: path.join(__dirname, "../.."),
         outputPath: path.join(__dirname, "../..", "dist"),
@@ -61,7 +67,10 @@ describe("lib/index.js", () => {
 
     it("allows overrides to the default config", function () {
       var ilk = new Interlock({
-        emit: ["./index.js"],
+        emit: [{
+          entry: "./app/entry-a.js",
+          dest: "entry-a.bundle.js"
+        }],
         root: path.join(__dirname, "/../.."),
         context: "custom context",
         outputPath: "custom outputPath",
@@ -70,7 +79,10 @@ describe("lib/index.js", () => {
       });
 
       expect(ilk.options).to.deep.equal({
-        emit: [ "./index.js" ],
+        emit: [{
+          entry: "./app/entry-a.js",
+          dest: "entry-a.bundle.js"
+        }],
         root: path.join(__dirname, "/../.."),
         context: "custom context",
         outputPath: "custom outputPath",

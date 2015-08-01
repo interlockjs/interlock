@@ -12,13 +12,20 @@ Hamburger tail landjaeger ball tip, porchetta fatback drumstick kielbasa shankle
 
 Something about Pluggable.CONTINUE...
 
+## bootstrapBundle
+
+This is a **synchronous pluggable**, which means that the function should return
+a real value, rather than a promise or a stream.
+
+This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L9-L18).
+
 ## bootstrapBundles
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L25).
-The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.js#L8-L23).
+This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L29).
+The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.js#L20-L27).
 
 ## bootstrapCompilation
 

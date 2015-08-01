@@ -32,7 +32,7 @@ The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L14-L21).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L15-L22).
 
 ## buildOutput
 
@@ -54,7 +54,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | of destination paths to bundles with raw code. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L79-L111).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L80-L112).
 
 ## compile
 
@@ -69,7 +69,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L119-L125).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L120-L126).
 
 ## compileModules
 
@@ -107,21 +107,21 @@ The function that it wraps can be found [here](../lib/compile/bundles/dedupe-imp
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L35-L56).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L36-L57).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L23-L33).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L24-L34).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L58-L63).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L59-L64).
 
 ## hashBundle
 
@@ -161,7 +161,7 @@ The function that it wraps can be found [here](../lib/compile/bundles/interpolat
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L34).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L35).
 The function that it wraps can be found [here](../lib/compile/modules/load-ast.js#L28-L32).
 
 ## parseModule

@@ -5,7 +5,7 @@ import * as Pluggable from "../../lib/pluggable";
 
 function buildContext (props = {}, override = {}, transform = {}) {
   return Object.assign({}, props, {
-    __extensions__: { override, transform }
+    __pluggables__: { override, transform }
   });
 }
 

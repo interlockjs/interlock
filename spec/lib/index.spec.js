@@ -7,7 +7,7 @@ import _ from "lodash";
 import Interlock from "../../lib/index.js";
 
 const minimalValidConfig = {
-  emit: ["./index.js"],
+  entry: { "./index.js": "bundle.js" },
   srcRoot: path.join(__dirname, "/../..")
 };
 
@@ -19,16 +19,16 @@ describe("lib/index", () => {
       expect(() => { new Interlock(); }).to.throw(Error);
       expect(() => { new Interlock({}); }).to.throw(Error);
 
-      // Invalid options.emit
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { emit: true })); })
+      // Invalid options.entry
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: true })); })
         .to.throw(Error);
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { emit: 1 })); })
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: 1 })); })
         .to.throw(Error);
-      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { emit: null })); })
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: null })); })
         .to.throw(Error);
       expect(() => {
         var invalidConfig = _.merge({}, minimalValidConfig);
-        delete invalidConfig.emit;
+        delete invalidConfig.entry;
         new Interlock(invalidConfig);
       }).to.throw(Error);
 
@@ -50,18 +50,20 @@ describe("lib/index", () => {
       var ilk = new Interlock(minimalValidConfig);
 
       expect(ilk.options).to.deep.equal({
-        emit: [ "./index.js" ],
+        entry: { "./index.js": { dest: "bundle.js" }},
+        split: {},
         srcRoot: path.join(__dirname, "/../.."),
         context: path.join(__dirname, "../.."),
         destRoot: path.join(__dirname, "../..", "dist"),
         extensions: [ ".js", ".jsx", ".es6" ],
-        ns: "interlock"
+        ns: "interlock",
+        implicitBundleDest: "[setHash].js"
       });
     });
 
     it("allows overrides to the default config", function () {
       var ilk = new Interlock({
-        emit: ["./index.js"],
+        entry: { "./index.js": "bundle.js" },
         srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
         destRoot: "custom destRoot",
@@ -70,12 +72,14 @@ describe("lib/index", () => {
       });
 
       expect(ilk.options).to.deep.equal({
-        emit: [ "./index.js" ],
-        srcRoot: path.join(__dirname, "/../.."),
+        entry: { "./index.js": { "dest": "bundle.js" } },
+        split: {},
+        srcRoot: "/Users/daleb/dev/me/interlock",
         context: "custom context",
         destRoot: "custom destRoot",
         extensions: [".custom"],
-        ns: "custom-namespace"
+        ns: "custom-namespace",
+        implicitBundleDest: "[setHash].js"
       });
     });
   });

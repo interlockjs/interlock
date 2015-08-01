@@ -3,19 +3,16 @@ var path = require("path");
 var Interlock = require("..");
 
 var ilk = new Interlock({
-  root: __dirname,
-  outputPath: path.join(__dirname, "dist"),
+  srcRoot: __dirname,
+  destRoot: path.join(__dirname, "dist"),
 
-  emit: [{
-    entry: "./app/entry-a.js",
-    dest: "entry-a.bundle.js"
-  }, {
-    entry: "./app/entry-b.js",
-    dest: "entry-b.bundle.js"
-  }, {
-    split: "./app/shared/lib-a.js",
-    dest: "[setHash].js"
-  }],
+  entry: {
+    "./app/entry-a.js": "entry-a.bundle.js",
+    "./app/entry-b.js": { dest: "entry-b.bundle.js" }
+  },
+  split: {
+    "./app/shared/lib-a.js": "[setHash].js"
+  },
 
   includeComments: true,
   sourceMaps: true,

@@ -114,7 +114,9 @@ function getPluggablesForFile (fpath) {
         pluggableLine: node.loc.start.line
       };
 
-      if (parent.arguments[0].type === "FunctionExpression") {
+      if (!parent.arguments) {
+        return;
+      } else if (parent.arguments[0].type === "FunctionExpression") {
         Object.assign(pluggable, {
           fnParams: parent.arguments[0].params,
           name: parent.arguments[0].id.name,

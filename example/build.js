@@ -17,8 +17,6 @@ var ilk = new Interlock({
   includeComments: true,
   sourceMaps: true,
 
-  implicitBundleDest: "[setHash].js",
-
   plugins: []
 });
 

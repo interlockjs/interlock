@@ -74,7 +74,7 @@ describe("lib/index", () => {
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { "dest": "bundle.js" } },
         split: {},
-        srcRoot: "/Users/daleb/dev/me/interlock",
+        srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
         destRoot: "custom destRoot",
         extensions: [".custom"],

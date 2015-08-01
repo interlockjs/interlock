@@ -36,5 +36,6 @@ out/
 # --------------------
 # App Files
 # --------------------
+npm-debug.log
 node_modules/
 dist/

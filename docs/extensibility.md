@@ -161,15 +161,22 @@ The function that it wraps can be found [here](../lib/compile/bundles/interpolat
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L35).
-The function that it wraps can be found [here](../lib/compile/modules/load-ast.js#L28-L32).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L40).
+The function that it wraps can be found [here](../lib/compile/modules/load-ast.js#L34-L38).
 
 ## parseModule
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L11-L25).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L27-L31).
+
+## parseSourceToAst
+
+This is a **synchronous pluggable**, which means that the function should return
+a real value, rather than a promise or a stream.
+
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L10-L25).
 
 ## preresolve
 

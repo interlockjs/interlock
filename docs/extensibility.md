@@ -76,8 +76,8 @@ This Pluggable's definition can be found [here](../lib/compile/index.js#L120-L12
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L65).
-The function that it wraps can be found [here](../lib/compile/modules/compile.js#L16-L63).
+This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L67).
+The function that it wraps can be found [here](../lib/compile/modules/compile.js#L17-L65).
 
 ## createModule
 
@@ -161,14 +161,14 @@ The function that it wraps can be found [here](../lib/compile/bundles/interpolat
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L31-L38).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L36-L43).
 
 ## parseSourceToAst
 
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L10-L25).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L10-L30).
 
 ## preresolve
 
@@ -182,7 +182,7 @@ This Pluggable's definition can be found [here](../lib/compile/modules/resolve.j
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L27-L29).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L32-L34).
 
 ## resolveModule
 

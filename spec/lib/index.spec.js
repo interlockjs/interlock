@@ -21,16 +21,47 @@ describe("lib/index", () => {
 
       // Invalid options.entry
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: true })); })
-        .to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: 1 })); })
-        .to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: null })); })
-        .to.throw(Error);
-      expect(() => {
-        var invalidConfig = _.merge({}, minimalValidConfig);
-        delete invalidConfig.entry;
-        new Interlock(invalidConfig);
-      }).to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+      // TODO
+      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: {} })); })
+      //   .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: { dest: true } })); })
+      //   .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+
+      // Invalid options.split
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: true })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: 1 })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: null })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      // TODO
+      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: {} })); })
+      //   .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: { dest: true } })); })
+      //   .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+
+      // Conditional options.split || options.entry requirement
+      expect(() => { new Interlock({
+          entry: { "./index.js": "bundle.js" },
+          srcRoot: path.join(__dirname, "/../..")
+        });
+      })
+        .to.not.throw(Error);
+      expect(() => { new Interlock({
+          split: { "./index.js": "bundle.js" },
+          srcRoot: path.join(__dirname, "/../..")
+        });
+      })
+        .to.not.throw(Error);
+      // TODO
+      // expect(() => {
+      //   new Interlock({ srcRoot: path.join(__dirname, "/../..") });
+      // }).to.throw(Error);
 
       // Invalid options.srcRoot
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: true })); })
@@ -68,7 +99,8 @@ describe("lib/index", () => {
         context: "custom context",
         destRoot: "custom destRoot",
         extensions: [".custom"],
-        ns: "custom-namespace"
+        ns: "custom-namespace",
+        implicitBundleDest: "custom-dest"
       });
 
       expect(ilk.options).to.deep.equal({
@@ -79,7 +111,7 @@ describe("lib/index", () => {
         destRoot: "custom destRoot",
         extensions: [".custom"],
         ns: "custom-namespace",
-        implicitBundleDest: "[setHash].js"
+        implicitBundleDest: "custom-dest"
       });
     });
   });

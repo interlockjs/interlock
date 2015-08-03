@@ -161,7 +161,7 @@ The function that it wraps can be found [here](../lib/compile/bundles/interpolat
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L36-L43).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L56-L63).
 
 ## parseSourceToAst
 
@@ -179,10 +179,31 @@ This Pluggable's definition can be found [here](../lib/compile/modules/resolve.j
 
 ## readSource
 
+This function is invoked whenever the compiler attempts to read a source-file
+from the disk.  It takes an asset object as its only input.  The properties
+available on that asset object are as follows:
+
+- `path` - the absolute path of the file
+- `ns` - the namespace of the module (either the default ns, or borrowed from its
+containing package)
+- `nsRoot` - the absolute path to the root of the namespace
+- `nsPath` - the file's path relative to the root of the namespace
+- `rawSource` - `null`, this value is provided by the `readSource` function
+- `ast` - `null`, this value will be populated later in the compilation
+- `requireNodes` - `null`, this value will be populated later in the compilation
+- `dependencies` - `null`, this value will be populated later in the compilation
+- `hash` - `null`, this value will be populated later in the compilation
+
 This is a **synchronous pluggable**, which means that the function should return
 a real value, rather than a promise or a stream.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L32-L34).
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **asset** | Object | Asset object. |
+| Return value |  | String | raw source of the file, in string format. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L52-L54).
 
 ## resolveModule
 

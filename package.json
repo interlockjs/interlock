@@ -23,6 +23,7 @@
     "ast-types": "^0.7.6",
     "babel": "^5.6.14",
     "babel-core": "^5.6.17",
+    "bluebird": "^2.9.34",
     "chokidar": "^1.0.3",
     "escodegen": "^1.6.1",
     "estemplate": "^0.4.0",

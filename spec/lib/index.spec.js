@@ -14,7 +14,7 @@ const minimalValidConfig = {
 describe("lib/index", () => {
   describe("constructor", function () {
     // TODO: Test for [] and undefined. _.merge ignores those values.
-    it.only("throws an Error if not passed invalid options", function () {
+    it("throws an Error if not passed invalid options", function () {
       // Missing or empty config
       expect(() => { new Interlock(); }).to.throw(Error);
       expect(() => { new Interlock({}); }).to.throw(Error);
@@ -26,11 +26,23 @@ describe("lib/index", () => {
         .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: null })); })
         .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
-      // TODO
-      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: {} })); })
-      //   .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
-      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: { dest: true } })); })
-      //   .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { entry: null },
+          { entry: {"fakepath": {}} }
+        );
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { entry: null },
+          { entry: {"fakepath": {dest: true}} }
+        );
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      );
 
       // Invalid options.split
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: true })); })
@@ -39,26 +51,36 @@ describe("lib/index", () => {
         .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: null })); })
         .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
-      // TODO
-      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: {} })); })
-      //   .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
-      // expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: { dest: true } })); })
-      //   .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig, { split: {"fakepath": {}} });
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { split: {"fakepath": {dest: true}} });
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      );
 
       // Conditional options.split || options.entry requirement
-      expect(() => { new Interlock({
+      expect(() => {
+        new Interlock({
           entry: { "./index.js": "bundle.js" },
           srcRoot: path.join(__dirname, "/../..")
         });
       })
         .to.not.throw(Error);
-      expect(() => { new Interlock({
+      expect(() => {
+        new Interlock({
           split: { "./index.js": "bundle.js" },
           srcRoot: path.join(__dirname, "/../..")
         });
       })
         .to.not.throw(Error);
-      expect(() => { new Interlock({
+      expect(() => {
+        new Interlock({
           split: { "./index.js": "bundle.js" },
           entry: { "./index.js": "bundle.js" },
           srcRoot: path.join(__dirname, "/../..")

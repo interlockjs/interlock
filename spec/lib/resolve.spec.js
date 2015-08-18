@@ -1,3 +1,5 @@
+/* eslint-disable max-nested-callbacks,no-new */
+
 var path = require("path");
 
 var resolve = require("../../lib/resolve");

@@ -4,7 +4,7 @@ import Joi from "joi";
 
 const cwd = process.cwd();
 
-export default Joi.object().keys({
+export const interlockConstructorInput = Joi.object().keys({
   srcRoot: Joi.string()
     .required(),
   destRoot: Joi.string()

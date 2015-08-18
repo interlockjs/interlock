@@ -76,7 +76,7 @@ This Pluggable's definition can be found [here](../lib/compile/index.js#L123-L13
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L17-L83).
+This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L17-L114).
 
 ## createModule
 

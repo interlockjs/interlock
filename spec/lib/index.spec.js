@@ -21,15 +21,74 @@ describe("lib/index", () => {
 
       // Invalid options.entry
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: true })); })
-        .to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: 1 })); })
-        .to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: null })); })
-        .to.throw(Error);
+        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
       expect(() => {
-        var invalidConfig = _.merge({}, minimalValidConfig);
-        delete invalidConfig.entry;
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { entry: null },
+          { entry: {"fakepath": {}} }
+        );
         new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { entry: null },
+          { entry: {"fakepath": {dest: true}} }
+        );
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      );
+
+      // Invalid options.split
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: true })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: 1 })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: null })); })
+        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig, { split: {"fakepath": {}} });
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      expect(() => {
+        const invalidConfig = _.merge({}, minimalValidConfig,
+          { split: {"fakepath": {dest: true}} });
+        new Interlock(invalidConfig);
+      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
+        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      );
+
+      // Conditional options.split || options.entry requirement
+      expect(() => {
+        new Interlock({
+          entry: { "./index.js": "bundle.js" },
+          srcRoot: path.join(__dirname, "/../..")
+        });
+      })
+        .to.not.throw(Error);
+      expect(() => {
+        new Interlock({
+          split: { "./index.js": "bundle.js" },
+          srcRoot: path.join(__dirname, "/../..")
+        });
+      })
+        .to.not.throw(Error);
+      expect(() => {
+        new Interlock({
+          split: { "./index.js": "bundle.js" },
+          entry: { "./index.js": "bundle.js" },
+          srcRoot: path.join(__dirname, "/../..")
+        });
+      })
+        .to.not.throw(Error);
+      expect(() => {
+        new Interlock({ srcRoot: path.join(__dirname, "/../..") });
       }).to.throw(Error);
 
       // Invalid options.srcRoot
@@ -68,7 +127,8 @@ describe("lib/index", () => {
         context: "custom context",
         destRoot: "custom destRoot",
         extensions: [".custom"],
-        ns: "custom-namespace"
+        ns: "custom-namespace",
+        implicitBundleDest: "custom-dest"
       });
 
       expect(ilk.options).to.deep.equal({
@@ -79,7 +139,7 @@ describe("lib/index", () => {
         destRoot: "custom destRoot",
         extensions: [".custom"],
         ns: "custom-namespace",
-        implicitBundleDest: "[setHash].js"
+        implicitBundleDest: "custom-dest"
       });
     });
   });

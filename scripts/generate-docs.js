@@ -64,7 +64,7 @@ function findDoc (node, parents) {
   if (node.leadingComments && node.leadingComments.length > 0) {
     return node.leadingComments[0].value;
   }
-  for (let anscestor of parents) {
+  for (const anscestor of parents) {
     if ((anscestor.type === "VariableDeclaration" ||
         anscestor.type === "ExportNamedDeclaration" ||
         anscestor.type === "ExportDefaultDeclaration") &&
@@ -93,7 +93,7 @@ function getNamedFunctions (ast) {
     }
   }
 
-  controller.traverse(ast, { enter: enter });
+  controller.traverse(ast, { enter });
   return functions;
 }
 
@@ -108,7 +108,7 @@ function getPluggablesForFile (fpath) {
 
   function enter (node, parent) {
     if (node.type === "MemberExpression" && node.object.name === "Pluggable") {
-      let pluggable = {
+      const pluggable = {
         path: relPath,
         type: node.property.name,
         pluggableLine: node.loc.start.line
@@ -134,7 +134,7 @@ function getPluggablesForFile (fpath) {
     }
   }
 
-  controller.traverse(ast, { enter: enter });
+  controller.traverse(ast, { enter });
   return pluggables;
 }
 
@@ -156,7 +156,7 @@ function getArgsMismatch (pluggable) {
       return `params length mismatch for '${pluggable.name}' in ${pluggable.path}`;
     }
 
-    for (let param of pluggable.fnParams) {
+    for (const param of pluggable.fnParams) {
       if (!paramsHash[param]) {
         return `mismatch for param '${param}' of '${pluggable.name}' in ${pluggable.path}`;
       }
@@ -200,11 +200,13 @@ function getAllPluggables () {
 function assertNoDuplicates (pluggables) {
   const pHash = {};
 
-  for (let pluggable of pluggables) {
+  for (const pluggable of pluggables) {
     if (pluggable.name in pHash) {
-      throw `duplicate pluggable '${pluggable.name}' found at\n` +
+      throw new Error(
+        `duplicate pluggable '${pluggable.name}' found at\n` +
         `  ${pHash[pluggable.name].path}:${pHash[pluggable.name].fnStart}\n` +
-        `  ${pluggable.path}:${pluggable.fnStart}`;
+        `  ${pluggable.path}:${pluggable.fnStart}`
+        );
     }
     pHash[pluggable.name] = pluggable;
   }
@@ -293,7 +295,7 @@ getAllPluggables()
     } else {
       console.log(`${red("[error]")}`, errs); // eslint-disable-line no-console
     }
-    process.exit(1);
+    process.exit(1); // eslint-disable-line no-process-exit
   });
 
 

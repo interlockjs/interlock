@@ -261,7 +261,7 @@ describe("lib/pluggable", () => {
         }, { grandchild });
 
         function parent () {
-          var self = this;
+          const self = this;
           this.val = "parent";
           return this.child().then(offspringContexts => {
             const [childCxt, grandchildCxt] = offspringContexts;

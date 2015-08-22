@@ -21,7 +21,7 @@ describe("lib/compile/construct", () => {
       const dependencies = [{ hash: "ddb179" }, { hash: "aa527f" }];
       return {
         moduleAst: constructCommonModule(origModuleBody, dependencies),
-        origModuleBody: origModuleBody
+        origModuleBody
       };
     }
 

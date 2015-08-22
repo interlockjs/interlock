@@ -160,14 +160,14 @@ The function that it wraps can be found [here](../lib/compile/bundles/interpolat
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L60-L65).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L62-L67).
 
 ## parseSourceToAst
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L14-L34).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L16-L36).
 
 ## preresolve
 
@@ -202,7 +202,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | String | raw source of the file, in string format. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L56-L58).
+This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L58-L60).
 
 ## resolveModule
 

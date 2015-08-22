@@ -14,7 +14,7 @@ const minimalValidConfig = {
 describe("lib/index", () => {
   describe("constructor", function () {
     // TODO: Test for [] and undefined. _.merge ignores those values.
-    it("throws an Error if not passed invalid options", function () {
+    it("throws an Error if not passed invalid options", function () { // eslint-disable-line max-statements,max-len
       // Missing or empty config
       expect(() => { new Interlock(); }).to.throw(Error);
       expect(() => { new Interlock({}); }).to.throw(Error);
@@ -99,14 +99,14 @@ describe("lib/index", () => {
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: null })); })
         .to.throw(Error);
       expect(() => {
-        var invalidConfig = _.merge({}, minimalValidConfig);
+        const invalidConfig = _.merge({}, minimalValidConfig);
         delete invalidConfig.srcRoot;
         new Interlock(invalidConfig);
       }).to.throw(Error);
     });
 
     it("fills in default values when not passed in", function () {
-      var ilk = new Interlock(minimalValidConfig);
+      const ilk = new Interlock(minimalValidConfig);
 
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { dest: "bundle.js" }},
@@ -121,7 +121,7 @@ describe("lib/index", () => {
     });
 
     it("allows overrides to the default config", function () {
-      var ilk = new Interlock({
+      const ilk = new Interlock({
         entry: { "./index.js": "bundle.js" },
         srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",

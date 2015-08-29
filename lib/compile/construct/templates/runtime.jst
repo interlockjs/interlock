@@ -42,9 +42,6 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
     Object.keys(moduleSet).forEach(function (moduleHash) {
       var loadedModule = moduleSet[moduleHash];
 
-      // Attempt to save to cache here, if enabled.
-      ; %= cacheSave%;
-
       var unloadedDeps = loadedModule.deps.filter(function (dependencyHash) {
         var dependency = r.modules[dependencyHash];
 
@@ -88,9 +85,6 @@ var r = window[<%= globalName %>] = window[<%= globalName %>] || {
     if (blockedModuleHash) {
       module.blocking = (module.blocking || []).concat(blockedModuleHash);
     }
-
-    // Attempt to load modules from cache, if enabled.
-    ;%= cacheGet %;
 
     if (!module.requested) {
       var head = document.getElementsByTagName("head")[0];

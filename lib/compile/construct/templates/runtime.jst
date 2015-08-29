@@ -21,7 +21,7 @@ function copyProps (dest /* sources... */) {
  * to chunks that are loaded asynchronously.  It represents the core
  * of the Interlock runtime.
  */
-var r = window[<%= globalName %>] = window[<%= globalName %>] || {
+var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || {
   modules: {},
   urls: {},
 

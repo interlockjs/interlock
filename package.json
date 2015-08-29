@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ignore-pattern example .",
+    "lint": "eslint --ext .js --ext .jst --ignore-pattern example .",
     "test": "mocha spec/run.js",
     "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
     "generate-docs": "babel-node ./scripts/generate-docs.js"

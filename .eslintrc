@@ -2,24 +2,24 @@
 parser: "babel-eslint"
 
 extends:
-    - "defaults/configurations/walmart/es6-node"
+  - "defaults/configurations/walmart/es6-node"
 
 env:
-    mocha: true
+  mocha: true
 
 globals:
-    sinon: true
-    assert: false
-    expect: true
+  sinon: true
+  assert: false
+  expect: true
 
 rules:
-    no-invalid-this: 0
-    func-style: 0
-    arrow-parens: 0
-    no-unused-expressions: 0
-    space-before-function-paren: [2, { "anonymous": "always", "named": "always" }]
-    max-nested-callbacks: 0
-    no-return-assign: 0
-    generator-star-spacing: [2, {"before": false, "after": true}]
-    max-params: [1, 5]
-    no-use-before-define: 1
+  no-invalid-this: 0
+  func-style: 0
+  arrow-parens: 0
+  no-unused-expressions: 0
+  space-before-function-paren: [2, { "anonymous": "always", "named": "always" }]
+  max-nested-callbacks: 0
+  no-return-assign: 0
+  generator-star-spacing: [2, {"before": false, "after": true}]
+  max-params: [1, 5]
+  no-use-before-define: 1

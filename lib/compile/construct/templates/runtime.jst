@@ -21,17 +21,17 @@ function copyProps (dest /* sources... */) {
  * to chunks that are loaded asynchronously.  It represents the core
  * of the Interlock runtime.
  */
-var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || {
+var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no-undef
   modules: {},
   urls: {},
 
   /**
    * Loads a module set into the Interlock runtime.
-   * 
+   *
    * If the loaded module requires other modules that are not yet loaded, requests
    * for those modules will be made.  If all dependencies are satisfied, the module
    * will be resolved and made available for requiring.
-   * 
+   *
    * @param  {Object}   moduleSet
    * @param  {Array}    moduleSet.deps  Array of module hashes that represent the dependencies
    *                                    for the module being defined.
@@ -55,7 +55,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || {
 
       var module = r.modules[moduleHash] = copyProps(r.modules[moduleHash] || {}, loadedModule);
 
-      if (!!unloadedDeps.length) {
+      if (unloadedDeps.length) {
         module.unloadedDeps = unloadedDeps;
       } else {
         r.resolve(moduleHash);
@@ -98,7 +98,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || {
         script.onload = script.onreadystatechange = null;
         head.removeChild(script);
         // UMD shim could go here --> if expected global module name is provided
-      }
+      };
 
       head.appendChild(script);
 
@@ -108,7 +108,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || {
 
   /**
    * Returns a URL for the module set that contains the requested module.
-   * 
+   *
    * @param  {String} moduleHash  Hash of the module that is needed.
    *
    * @return {String}             URL of the module set.

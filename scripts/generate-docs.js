@@ -152,7 +152,12 @@ function getArgsMismatch (pluggable) {
         return hash;
       }, {});
 
-    if (Object.keys(paramsHash).length !== pluggable.fnParams.length) {
+    const rootParams = _.chain(Object.keys(paramsHash))
+      .map(paramName => paramName.split(".")[0])
+      .uniq()
+      .value();
+
+    if (rootParams.length !== pluggable.fnParams.length) {
       return `params length mismatch for '${pluggable.name}' in ${pluggable.path}`;
     }
 

@@ -32,7 +32,7 @@ The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L15-L22).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L16-L23).
 
 ## buildOutput
 
@@ -78,6 +78,97 @@ return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L17-L114).
 
+## constructBundle
+
+The primary constructor.  Given a set of options, construct Program AST
+to be emitted as JavaScript.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **opts** | Object | Options. |
+| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |
+| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs
+will be emitted. |
+| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be
+transformed into output module AST and emitted. |
+| Parameter | **opts.initialRequire** | String | Optional. If included, the statement in the AST output
+will be to require the specified module. |
+| Return value |  | ASTnode | program AST node. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L143-L155).
+
+## constructCommonModule
+
+Given an array of AST nodes and their dependencies (possibly originating from
+a common JS module), construct an object expression that represents its run-time
+equivalent.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleBody** | Array | Array of ECMAscript AST nodes. |
+| Parameter | **deps** | Array | Array of modules upon which origin module is
+dependent. |
+| Return value |  | ASTnode | expression AST node. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L39-L47).
+
+## constructModuleSet
+
+Given an array of CJS modules (in the form of object expression AST nodes),
+construct the AST of a file that would register those modules for consumpsion
+by the Interlock run-time.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **modules** | Array | Array of modules objects. |
+| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |
+| Return value |  | Array | of AST nodes to be emitted as JavaScript. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L59-L77).
+
+## constructRegisterUrls
+
+Transforms a map of module-hashes-to-URLs to the AST equivalent.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |
+| Parameter | **globalName** | String | Global variable name of Interlock run-time. |
+| Return value |  | ASTnode | AST node. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L117-L126).
+
+## constructRuntime
+
+Construct the guts of the Interlock run-time for inclusion in file output.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **globalName** | String | Global variable name of Interlock run-time. |
+| Return value |  | Array | of AST nodes. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L86-L90).
+
 ## createModule
 
 This is an **asynchronous promise plugin**.  This means that the function
@@ -106,28 +197,28 @@ The function that it wraps can be found [here](../lib/compile/bundles/dedupe-imp
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L69-L91).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L70-L91).
 
 ## getBundles
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L36-L60).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L37-L61).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L24-L34).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L25-L35).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L62-L67).
+This Pluggable's definition can be found [here](../lib/compile/index.js#L63-L68).
 
 ## hashBundle
 
@@ -218,6 +309,22 @@ should return a promise that resolves to the expected value.
 
 This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L43).
 The function that it wraps can be found [here](../lib/compile/modules/resolve.js#L22-L41).
+
+## setLoadEntry
+
+Construct a statement to instruct the runtime to run the specified module.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleHash** | String | Hash of the module to be required. |
+| Parameter | **globalName** | String | Global variable name of Interlock run-time. |
+| Return value |  | ASTnode | AST node. |
+
+
+This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L100-L107).
 
 ## updateBundleHash
 

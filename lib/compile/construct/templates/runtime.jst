@@ -114,6 +114,18 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
     }
   },
 
+  /**
+   * Recursive function to invoke module providers.
+   *
+   * When a request comes in for a particular module that is as yet
+   * unloaded, providers are invoked in reverse order with two parameters:
+   * the `moduleHash` and the `next` provider.  It is the responsibility of
+   * each provider to invoke the next one in cases where the provider fails
+   * or is otherwise unable to fulfill the request.
+   *
+   * @param  {String} moduleHash  Hash of the requested module.
+   * @param  {Array}  providers   Remaining providers to try.
+   */
   requestSequence: function (moduleHash, providers) {
     var head = providers[0];
     if (!head) {

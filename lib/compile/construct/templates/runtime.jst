@@ -24,6 +24,29 @@ function copyProps (dest /* sources... */) {
 var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no-undef
   modules: {},
   urls: {},
+  providers: [
+    /**
+     * Default module provider.  Builds a <script> element to download and
+     * execute the module-set that contains the requested module. Once a module
+     * has completed loading, the <script> tag will be removed from the DOM.
+     **/
+    function (moduleHash, next) {
+      var head = document.getElementsByTagName("head")[0];
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.charset = "utf-8";
+      script.async = true;
+      script.src = r.getUrl(moduleHash);
+
+      script.onload = script.onreadystatechange = function () {
+        script.onload = script.onreadystatechange = null;
+        head.removeChild(script);
+      };
+      script.onerror = next;
+
+      head.appendChild(script);
+    }
+  ],
 
   /**
    * Loads a module set into the Interlock runtime.
@@ -64,17 +87,16 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
   },
 
   /**
-   * Builds a <script> element to download and execute the module-set that contains
-   * the requested module.
+   * Initiates a request for the specified module.  Providers specified as
+   * part of `r.providers` will be run in sequence in reverse order.  When
+   * one provider fails, it should call the provided `next` method, ultimately
+   * resulting in a thrown error if the module cannot be loaded.
    *
    * If a blocked module is also specified, a record of that module will be kept
    * in association with the requested module.  This way, the blocked module can
    * be resolved when the dependency becomes available.  If a particular module
    * has already been requested, the blocked module will be tracked, but an
-   * additional <script> tag will not be created.
-   *
-   * Once a module has completed loading, the <script> tag will be removed from
-   * the DOM.
+   * additional request for the module will not be initiated.
    *
    * @param  {String} moduleHash         Hash of the module that is needed.
    * @param  {String} blockedModuleHash  Hash of the module that needs it.
@@ -87,23 +109,19 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
     }
 
     if (!module.requested) {
-      var head = document.getElementsByTagName("head")[0];
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.charset = "utf-8";
-      script.async = true;
-      script.src = r.getUrl(moduleHash);
-
-      script.onload = script.onreadystatechange = function () {
-        script.onload = script.onreadystatechange = null;
-        head.removeChild(script);
-        // UMD shim could go here --> if expected global module name is provided
-      };
-
-      head.appendChild(script);
-
       module.requested = true;
+      r.requestSequence(moduleHash, [].concat(r.providers).reverse());
     }
+  },
+
+  requestSequence: function (moduleHash, providers) {
+    var head = providers[0];
+    if (!head) {
+      throw new Error("Unable to load module with hash " + moduleHash + ".");
+    }
+    head(moduleHash, function () {
+      r.getRequestSequence(moduleHash, providers.slice(1));
+    });
   },
 
   /**

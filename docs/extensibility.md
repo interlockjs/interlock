@@ -69,7 +69,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L127-L135).
+This Pluggable's definition can be found [here](../src/compile/index.js#L127-L133).
 
 ## compileModules
 
@@ -80,8 +80,8 @@ This Pluggable's definition can be found [here](../src/compile/modules/compile.j
 
 ## constructBundle
 
-The primary constructor.  Given a set of options, construct Program AST
-to be emitted as JavaScript.
+The primary constructor.  Given a set of options, construct Program AST to be emitted
+as JavaScript.
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
@@ -99,7 +99,22 @@ will be to require the specified module. |
 | Return value |  | ASTnode | program AST node. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L143-L155).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L163-L166).
+
+## constructBundleBody
+
+Builds body of output bundle, to be inserted into the IIFE.
+
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |
+| Return value |  | Array | of bundle. |
+
+
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L135-L146).
 
 ## constructCommonModule
 
@@ -201,8 +216,8 @@ This Pluggable's definition can be found [here](../src/compile/index.js#L70-L91)
 
 ## getBundles
 
-This is an **asynchronous promise plugin**.  This means that the function
-should return a promise that resolves to the expected value.
+This is an **asynchronous stream plugin**.  This means that the function should
+return a stream that emits expected values.
 
 This Pluggable's definition can be found [here](../src/compile/index.js#L37-L61).
 

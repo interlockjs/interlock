@@ -55,10 +55,10 @@ describe("src/resolve", function () {
   });
 
   it("resolves a file in node_modules package", function () {
-    const resolved = attemptResolve("ast-types/src/scope.js");
-    expect(resolved).to.have.property("ns", "ast-types");
-    expect(resolved).to.have.property("nsPath", "src/scope.js");
+    const resolved = attemptResolve("lodash/array/slice.js");
+    expect(resolved).to.have.property("ns", "lodash");
+    expect(resolved).to.have.property("nsPath", "array/slice.js");
     expect(resolved.path)
-      .to.equal(path.join(baseDir, "node_modules/ast-types", "src/scope.js"));
+      .to.equal(path.join(baseDir, "node_modules/lodash/array/slice.js"));
   });
 });

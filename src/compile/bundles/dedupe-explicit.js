@@ -10,7 +10,7 @@ function dedupeExplicit (bundlesWithDupes, modulesByAbsPath) {
       const entryModule = modulesByAbsPath[bundle.module.path];
       return _.extend({}, bundle, {
         moduleHashes: [entryModule.hash, ...entryModule.deepDependencies.map((dep) => dep.hash)],
-        entryModuleHash: entryModule.hash
+        entryModule
       });
     })
 

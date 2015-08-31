@@ -8,6 +8,7 @@
     "test": "mocha spec/run.js",
     "build": "babel -d lib/ src/",
     "prepublish": "npm run build",
+    "preversion": "npm run check && npm run build",
     "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
     "generate-docs": "babel-node ./scripts/generate-docs.js"
   },

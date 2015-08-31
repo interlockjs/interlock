@@ -34,7 +34,7 @@ export const getModuleMaps = Pluggable.promise(function getModuleMaps (seedModul
     });
 }, { compileModules });
 
-export const getBundles = Pluggable.promise(function getBundles (bootstrappedBundles, moduleMapsP) {
+export const getBundles = Pluggable.stream(function getBundles (bootstrappedBundles, moduleMapsP) {
   const explicitDedupedBundlesP = moduleMapsP
     .then(moduleMaps => this.dedupeExplicit(bootstrappedBundles, moduleMaps.byAbsPath));
 
@@ -128,10 +128,8 @@ const compile = Pluggable.promise(function compile () {
   const bootstrappedBundles = this.bootstrapBundles(this.opts.entry, this.opts.split);
   const seedModules = bootstrappedBundles.map(bundle => bundle.module);
   const moduleMapsPromise = this.getModuleMaps(seedModules);
-  return this.getBundles(bootstrappedBundles, moduleMapsPromise)
-    .then(bundles => {
-      return this.buildOutput(bundles);
-    });
+  const bundles = this.getBundles(bootstrappedBundles, moduleMapsPromise);
+  return this.buildOutput(bundles);
 }, { bootstrapBundles, getModuleMaps, getBundles, buildOutput });
 
 function addPluginsToContext (compilationContext) {

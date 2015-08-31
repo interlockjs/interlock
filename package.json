@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint --ext .js --ext .jst --ignore-pattern example .",
     "test": "mocha spec/run.js",
+    "build": "babel -d lib/ src/",
     "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
     "generate-docs": "babel-node ./scripts/generate-docs.js"
   },

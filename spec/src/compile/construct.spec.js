@@ -1,7 +1,7 @@
 import { parse } from "babel";
 import esquery from "esquery";
 import escodegen from "escodegen";
-import { constructCommonModule } from "../../../lib/compile/construct";
+import { constructCommonModule } from "../../../src/compile/construct";
 
 function render (ast) {
   return escodegen.generate(ast, {
@@ -12,7 +12,7 @@ function render (ast) {
   });
 }
 
-describe("lib/compile/construct", () => {
+describe("src/compile/construct", () => {
   describe("common module", () => {
     function simpleModule () {
       const origModuleBody = parse("module.exports = 'hello';").body;

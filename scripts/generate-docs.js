@@ -11,7 +11,7 @@ const parse = babel.parse;
 
 const rootPath = path.join(__dirname, "..");
 const outputPath = path.join(rootPath, "docs/extensibility.md");
-const libGlob = path.join(__dirname, "../lib/**/*.js");
+const srcGlob = path.join(__dirname, "../src/**/*.js");
 
 
 const PREAMBLE = `# Extensibility
@@ -174,7 +174,7 @@ function getArgsMismatch (pluggable) {
 function getAllPluggables () {
   return new Promise((resolve, reject) => {
 
-    glob(libGlob, function (err, fpaths) {
+    glob(srcGlob, function (err, fpaths) {
       if (err) {
         reject([err]);
         return;

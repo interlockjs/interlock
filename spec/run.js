@@ -13,4 +13,4 @@ global.AssertionError = chai.AssertionError;
 global.Assertion = chai.Assertion;
 global.assert = chai.assert;
 
-requireDir("./lib", { recurse: true });
+requireDir("./src", { recurse: true });

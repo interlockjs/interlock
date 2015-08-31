@@ -2,16 +2,16 @@
 
 import path from "path";
 
-import resolve from "../../lib/resolve";
+import resolve from "../../src/resolve";
 
 const baseDir = path.resolve(__dirname, "../..");
 
 
-describe("lib/resolve", function () {
+describe("src/resolve", function () {
   function attemptResolve (requireStr, extentions) {
     return resolve(
       requireStr,
-      path.join(baseDir, "lib"),
+      path.join(baseDir, "src"),
       "interlock",
       baseDir,
       extentions || [".js"]
@@ -21,22 +21,22 @@ describe("lib/resolve", function () {
   it("resolves file in same directory", function () {
     const resolved = attemptResolve("./index");
     expect(resolved).to.have.property("ns", "interlock");
-    expect(resolved).to.have.property("nsPath", "lib/index.js");
-    expect(resolved.path).to.equal(path.join(baseDir, "lib/index.js"));
+    expect(resolved).to.have.property("nsPath", "src/index.js");
+    expect(resolved.path).to.equal(path.join(baseDir, "src/index.js"));
   });
 
   it("resolves file in sub-directory", function () {
     const resolved = attemptResolve("./compile/construct/index");
     expect(resolved).to.have.property("ns", "interlock");
-    expect(resolved).to.have.property("nsPath", "lib/compile/construct/index.js");
-    expect(resolved.path).to.equal(path.join(baseDir, "lib/compile/construct/index.js"));
+    expect(resolved).to.have.property("nsPath", "src/compile/construct/index.js");
+    expect(resolved.path).to.equal(path.join(baseDir, "src/compile/construct/index.js"));
   });
 
   it("resolves current directory", function () {
     const resolved = attemptResolve("./");
     expect(resolved).to.have.property("ns", "interlock");
-    expect(resolved).to.have.property("nsPath", "lib/index.js");
-    expect(resolved.path).to.equal(path.join(baseDir, "lib/index.js"));
+    expect(resolved).to.have.property("nsPath", "src/index.js");
+    expect(resolved.path).to.equal(path.join(baseDir, "src/index.js"));
   });
 
   it("resolves a file in a separate directory branch", function () {
@@ -55,10 +55,10 @@ describe("lib/resolve", function () {
   });
 
   it("resolves a file in node_modules package", function () {
-    const resolved = attemptResolve("ast-types/lib/scope.js");
+    const resolved = attemptResolve("ast-types/src/scope.js");
     expect(resolved).to.have.property("ns", "ast-types");
-    expect(resolved).to.have.property("nsPath", "lib/scope.js");
+    expect(resolved).to.have.property("nsPath", "src/scope.js");
     expect(resolved.path)
-      .to.equal(path.join(baseDir, "node_modules/ast-types", "lib/scope.js"));
+      .to.equal(path.join(baseDir, "node_modules/ast-types", "src/scope.js"));
   });
 });

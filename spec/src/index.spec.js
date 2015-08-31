@@ -4,14 +4,14 @@ import path from "path";
 
 import _ from "lodash";
 
-import Interlock from "../../lib/index.js";
+import Interlock from "../../src/index.js";
 
 const minimalValidConfig = {
   entry: { "./index.js": "bundle.js" },
   srcRoot: path.join(__dirname, "/../..")
 };
 
-describe("lib/index", () => {
+describe("src/index", () => {
   describe("constructor", function () {
     // TODO: Test for [] and undefined. _.merge ignores those values.
     it("throws an Error if not passed invalid options", function () { // eslint-disable-line max-statements,max-len

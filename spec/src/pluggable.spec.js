@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 
-import * as Pluggable from "../../lib/pluggable";
+import * as Pluggable from "../../src/pluggable";
 
 
 function buildContext (props = {}, override = {}, transform = {}) {
@@ -10,7 +10,7 @@ function buildContext (props = {}, override = {}, transform = {}) {
 }
 
 
-describe("lib/pluggable", () => {
+describe("src/pluggable", () => {
   let sandbox;
 
   beforeEach(() => {

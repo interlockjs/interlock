@@ -17,22 +17,22 @@ Something about Pluggable.CONTINUE...
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L9-L20).
+This Pluggable's definition can be found [here](../src/compile/bundles/bootstrap.js#L9-L20).
 
 ## bootstrapBundles
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/bootstrap.js#L33).
-The function that it wraps can be found [here](../lib/compile/bundles/bootstrap.js#L22-L31).
+This Pluggable's definition can be found [here](../src/compile/bundles/bootstrap.js#L33).
+The function that it wraps can be found [here](../src/compile/bundles/bootstrap.js#L22-L31).
 
 ## bootstrapCompilation
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L16-L23).
+This Pluggable's definition can be found [here](../src/compile/index.js#L16-L23).
 
 ## buildOutput
 
@@ -54,7 +54,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | object. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L107-L119).
+This Pluggable's definition can be found [here](../src/compile/index.js#L107-L119).
 
 ## compile
 
@@ -69,14 +69,14 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L127-L135).
+This Pluggable's definition can be found [here](../src/compile/index.js#L127-L135).
 
 ## compileModules
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/compile.js#L17-L114).
+This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L17-L114).
 
 ## constructBundle
 
@@ -99,7 +99,7 @@ will be to require the specified module. |
 | Return value |  | ASTnode | program AST node. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L143-L155).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L143-L155).
 
 ## constructCommonModule
 
@@ -118,7 +118,7 @@ dependent. |
 | Return value |  | ASTnode | expression AST node. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L39-L47).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L39-L47).
 
 ## constructModuleSet
 
@@ -136,7 +136,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Array | of AST nodes to be emitted as JavaScript. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L59-L77).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L59-L77).
 
 ## constructRegisterUrls
 
@@ -152,7 +152,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | ASTnode | AST node. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L117-L126).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L117-L126).
 
 ## constructRuntime
 
@@ -167,58 +167,58 @@ should return a promise that resolves to the expected value.
 | Return value |  | Array | of AST nodes. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L86-L90).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L86-L90).
 
 ## createModule
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L4-L16).
+This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).
 
 ## dedupeExplicit
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/dedupe-explicit.js#L41).
-The function that it wraps can be found [here](../lib/compile/bundles/dedupe-explicit.js#L5-L39).
+This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-explicit.js#L41).
+The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L5-L39).
 
 ## dedupeImplicit
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/dedupe-implicit.js#L45).
-The function that it wraps can be found [here](../lib/compile/bundles/dedupe-implicit.js#L38-L43).
+This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-implicit.js#L45).
+The function that it wraps can be found [here](../src/compile/bundles/dedupe-implicit.js#L38-L43).
 
 ## emitRawBundles
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L70-L91).
+This Pluggable's definition can be found [here](../src/compile/index.js#L70-L91).
 
 ## getBundles
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L37-L61).
+This Pluggable's definition can be found [here](../src/compile/index.js#L37-L61).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L25-L35).
+This Pluggable's definition can be found [here](../src/compile/index.js#L25-L35).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/index.js#L63-L68).
+This Pluggable's definition can be found [here](../src/compile/index.js#L63-L68).
 
 ## hashBundle
 
@@ -234,45 +234,45 @@ should return a promise that resolves to the expected value.
 | Return value |  | String | SHA1 that uniquely identifies the bundle. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/hash.js#L40).
-The function that it wraps can be found [here](../lib/compile/bundles/hash.js#L27-L38).
+This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L40).
+The function that it wraps can be found [here](../src/compile/bundles/hash.js#L27-L38).
 
 ## hashModule
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/hash.js#L29).
-The function that it wraps can be found [here](../lib/compile/modules/hash.js#L19-L27).
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L29).
+The function that it wraps can be found [here](../src/compile/modules/hash.js#L19-L27).
 
 ## interpolateFilename
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/interpolate-filename.js#L14).
-The function that it wraps can be found [here](../lib/compile/bundles/interpolate-filename.js#L3-L12).
+This Pluggable's definition can be found [here](../src/compile/bundles/interpolate-filename.js#L14).
+The function that it wraps can be found [here](../src/compile/bundles/interpolate-filename.js#L3-L12).
 
 ## loadModule
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L62-L67).
+This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L62-L67).
 
 ## parseSourceToAst
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L16-L36).
+This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L16-L36).
 
 ## preresolve
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L18-L20).
+This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).
 
 ## readSource
 
@@ -300,15 +300,15 @@ should return a promise that resolves to the expected value.
 | Return value |  | String | raw source of the file, in string format. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/modules/load-ast.js#L58-L60).
+This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L58-L60).
 
 ## resolveModule
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/resolve.js#L43).
-The function that it wraps can be found [here](../lib/compile/modules/resolve.js#L22-L41).
+This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).
+The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).
 
 ## setLoadEntry
 
@@ -324,7 +324,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | ASTnode | AST node. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/construct/index.js#L100-L107).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L100-L107).
 
 ## updateBundleHash
 
@@ -340,12 +340,12 @@ should return a promise that resolves to the expected value.
 | Parameter | **bundle** | Object | The bundle object. |
 
 
-This Pluggable's definition can be found [here](../lib/compile/bundles/hash.js#L12-L16).
+This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L12-L16).
 
 ## updateModuleHash
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../lib/compile/modules/hash.js#L5-L17).
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L17).
 

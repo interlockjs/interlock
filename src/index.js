@@ -9,7 +9,7 @@ import Joi from "joi";
 
 import compile from "./compile";
 import { entries } from "./util/object";
-import { interlockConstructorInput } from "../schemas/lib/index.js";
+import { interlockConstructorInput } from "./schemas/index";
 import loadAst from "./compile/modules/load-ast";
 import compileModules from "./compile/modules/compile";
 

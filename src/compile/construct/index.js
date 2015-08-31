@@ -126,8 +126,28 @@ export const constructRegisterUrls = Pluggable.promise(
 );
 
 /**
- * The primary constructor.  Given a set of options, construct Program AST
- * to be emitted as JavaScript.
+ * Builds body of output bundle, to be inserted into the IIFE.
+ *
+ * @param  {Object}  opts  Same options object passed to constructBundleBody.
+ *
+ * @return {Array}         Body of bundle.
+ */
+export const constructBundleBody = Pluggable.promise(function constructBundleBody (opts) {
+  const globalName = opts.globalName || "__interlock__";
+
+  const runtimeP = opts.includeRuntime && this.constructRuntime(globalName);
+  const urlsP = opts.urls && this.constructRegisterUrls(opts.urls, globalName);
+  const moduleSetP = opts.modules && this.constructModuleSet(opts.modules, globalName);
+  const loadEntryP = opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, globalName);
+
+  return Promise.all([runtimeP, urlsP, moduleSetP, loadEntryP])
+    .then(([runtime, urls, moduleSet, loadEntry]) =>
+      [].concat(runtime, urls, moduleSet, loadEntry));
+}, { constructModuleSet, constructRuntime, setLoadEntry, constructRegisterUrls });
+
+/**
+ * The primary constructor.  Given a set of options, construct Program AST to be emitted
+ * as JavaScript.
  *
  * @param  {Object}  opts                 Options.
  * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.
@@ -141,15 +161,6 @@ export const constructRegisterUrls = Pluggable.promise(
  * @return {ASTnode}                      Single program AST node.
  */
 export const constructBundle = Pluggable.promise(function constructBundle (opts) {
-  const globalName = opts.globalName || "__interlock__";
-
-  const runtimeP = opts.includeRuntime && this.constructRuntime(globalName);
-  const urlsP = opts.urls && this.constructRegisterUrls(opts.urls, globalName);
-  const moduleSetP = opts.modules && this.constructModuleSet(opts.modules, globalName);
-  const loadEntryP = opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, globalName);
-
-  return Promise.all([runtimeP, urlsP, moduleSetP, loadEntryP])
-    .then(([runtime, urls, moduleSet, loadEntry]) => iifeTmpl({
-      body: { "BODY": [].concat(runtime, urls, moduleSet, loadEntry).filter(x => x) }
-    }));
-}, { constructModuleSet, constructRuntime, setLoadEntry, constructRegisterUrls });
+  return this.constructBundleBody(opts)
+    .then(body => iifeTmpl({ body: { "BODY": body.filter(x => x) } }));
+}, { constructBundleBody });

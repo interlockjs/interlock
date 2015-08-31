@@ -122,11 +122,13 @@ export default function resolve (requireStr, contextPath, ns, nsRoot, extensions
   });
 
   if (resolvedPath) {
+    const nsPath = path.relative(nsRoot, resolvedPath);
     return {
       path: resolvedPath,
       ns,
-      nsPath: path.relative(nsRoot, resolvedPath),
-      nsRoot
+      nsPath,
+      nsRoot,
+      uri: `${ns}:${nsPath}`
     };
   }
 

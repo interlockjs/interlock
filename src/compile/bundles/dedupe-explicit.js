@@ -38,4 +38,4 @@ function dedupeExplicit (bundlesWithDupes, modulesByAbsPath) {
     });
 }
 
-export default Pluggable.stream(dedupeExplicit);
+export default Pluggable.promise(dedupeExplicit);

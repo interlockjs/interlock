@@ -54,7 +54,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | object. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L107-L119).
+This Pluggable's definition can be found [here](../src/compile/index.js#L104-L116).
 
 ## compile
 
@@ -69,14 +69,14 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L127-L133).
+This Pluggable's definition can be found [here](../src/compile/index.js#L124-L130).
 
 ## compileModules
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L17-L114).
+This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L17-L119).
 
 ## constructBundle
 
@@ -193,8 +193,8 @@ This Pluggable's definition can be found [here](../src/compile/modules/resolve.j
 
 ## dedupeExplicit
 
-This is an **asynchronous stream plugin**.  This means that the function should
-return a stream that emits expected values.
+This is an **asynchronous promise plugin**.  This means that the function
+should return a promise that resolves to the expected value.
 
 This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-explicit.js#L41).
 The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L5-L39).
@@ -212,14 +212,14 @@ The function that it wraps can be found [here](../src/compile/bundles/dedupe-imp
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L70-L91).
+This Pluggable's definition can be found [here](../src/compile/index.js#L67-L88).
 
 ## getBundles
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L37-L61).
+This Pluggable's definition can be found [here](../src/compile/index.js#L37-L57).
 
 ## getModuleMaps
 
@@ -233,7 +233,7 @@ This Pluggable's definition can be found [here](../src/compile/index.js#L25-L35)
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L63-L68).
+This Pluggable's definition can be found [here](../src/compile/index.js#L59-L65).
 
 ## hashBundle
 

@@ -109,7 +109,12 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
       most.concat(descendants, most.fromPromise(updatedModulePromise));
   };
 
-  return seedModules.flatMap(genModules);
+  return seedModules
+    .flatMap(genModules)
+    // Repeats are (necessarily) generated as part of module generation, where
+    // two modules share as a dependency the same other module.  These repeats
+    // should be filtered out of the resulting stream.
+    .skipRepeats();
 
 }, { resolve, loadAst, hashModule });
 

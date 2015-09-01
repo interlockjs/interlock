@@ -34,7 +34,7 @@
     "joi": "^6.5.0",
     "lodash": "^3.8.0",
     "mkdirp": "^0.5.1",
-    "most": "^0.14.0",
+    "most": "^0.15.0",
     "source-map": "^0.4.2"
   },
   "devDependencies": {

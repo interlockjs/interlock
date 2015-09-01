@@ -40,10 +40,6 @@ export const getBundles = Pluggable.stream(function getBundles (bootstrappedBund
 
   return most
     .fromPromise(Promise.all([moduleMapsP, explicitDedupedBundlesP]))
-    .take(1)
-    // TODO: The below flapMap method is being invoked twice, even with the take(1) above.
-    // All subsequent methods in the chain fire 2x what they should. Identify the reason why
-    // this is happening.
     .flatMap(resolved => {
       const [{byHash}, explicitBundles] = resolved;
       return this.dedupeImplicit(explicitBundles)
@@ -61,6 +57,7 @@ export const getBundles = Pluggable.stream(function getBundles (bootstrappedBund
 }, { dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 
 export const getUrls = Pluggable.promise(function getUrls (bundles) {
+  bundles = bundles.multicast();
   return bundles.reduce((urls, bundle) => {
     bundle.moduleHashes.forEach(hash => urls[hash] = bundle.dest);
     return urls;

@@ -11,6 +11,7 @@ import hashBundle from "./bundles/hash";
 import interpolateFilename from "./bundles/interpolate-filename";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
+import { toArray } from "../util/stream";
 
 
 export const bootstrapCompilation = Pluggable.promise(function bootstrapCompilation (opts) {
@@ -57,15 +58,14 @@ export const getBundles = Pluggable.stream(function getBundles (bootstrappedBund
 }, { dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 
 export const getUrls = Pluggable.promise(function getUrls (bundles) {
-  bundles = bundles.multicast();
   return bundles.reduce((urls, bundle) => {
     bundle.moduleHashes.forEach(hash => urls[hash] = bundle.dest);
     return urls;
   }, {});
 });
 
-export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundles, urls) {
-  return bundles
+export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundlesArr, urls) {
+  return most.from(bundlesArr)
     .map(bundle => this.constructBundle({
       modules: bundle.modules,
       includeRuntime: bundle.includeRuntime,
@@ -102,16 +102,19 @@ export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundles,
  * @return {Promise}          Compilation object.
  */
 export const buildOutput = Pluggable.promise(function buildOutput (bundles) {
-  return this.getUrls(bundles).then(urls => {
-    return this.emitRawBundles(bundles, urls)
-      .reduce((output, bundle) => {
-        output.bundles[bundle.dest] = bundle;
-        return output;
-      }, {
-        cache: this.cache,
-        bundles: {},
-        opts: this.opts
-      });
+  const bundlesP = toArray(bundles);
+  return bundlesP.then(bundlesArr => {
+    return this.getUrls(bundlesArr).then(urls => {
+      return this.emitRawBundles(bundlesArr, urls)
+        .reduce((output, bundle) => {
+          output.bundles[bundle.dest] = bundle;
+          return output;
+        }, {
+          cache: this.cache,
+          bundles: {},
+          opts: this.opts
+        });
+    });
   });
 }, { getUrls, emitRawBundles });
 

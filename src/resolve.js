@@ -108,7 +108,8 @@ export default function resolve (requireStr, contextPath, ns, nsRoot, extensions
       path: resolvedSimple.resolvedPath,
       ns,
       nsPath: resolvedSimple.nsPath,
-      nsRoot
+      nsRoot,
+      uri: `${ns}:${resolvedSimple.nsPath}`
     };
   }
 

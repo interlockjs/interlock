@@ -155,8 +155,8 @@ export const constructBundleBody = Pluggable.promise(function constructBundleBod
  *                                        will be emitted.
  * @param  {Array}   opts.modules         Optional. If included, the module objects will be
  *                                        transformed into output module AST and emitted.
- * @param  {String}  opts.initialRequire  Optional. If included, the statement in the AST output
- *                                        will be to require the specified module.
+ * @param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered
+ *                                        to invoke the specified module on load.
  *
  * @return {ASTnode}                      Single program AST node.
  */

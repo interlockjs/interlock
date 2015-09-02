@@ -13,7 +13,7 @@ const bootstrapBundle = Pluggable.promise(function bootstrapBundle (srcPath, bun
       return {
         module,
         dest: bundlDef.dest,
-        entry: isEntryPt,
+        isEntry: isEntryPt,
         includeRuntime: isEntryPt && !bundlDef.excludeRuntime
       };
     });

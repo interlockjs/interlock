@@ -7,10 +7,10 @@ function dedupeExplicit (bundlesWithDupes, modulesByAbsPath) {
   return bundlesWithDupes
     // Generate flat, naive dependency arrays.
     .map(bundle => {
-      const entryModule = modulesByAbsPath[bundle.module.path];
+      const module = modulesByAbsPath[bundle.module.path];
       return _.extend({}, bundle, {
-        moduleHashes: [entryModule.hash, ...entryModule.deepDependencies.map((dep) => dep.hash)],
-        entryModule
+        moduleHashes: [module.hash, ...module.deepDependencies.map((dep) => dep.hash)],
+        module
       });
     })
 

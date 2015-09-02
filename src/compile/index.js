@@ -69,8 +69,8 @@ export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundles,
     .map(bundle => this.constructBundle({
       modules: bundle.modules,
       includeRuntime: bundle.includeRuntime,
-      urls: bundle.entry ? urls : null,
-      entryModuleHash: bundle.entryModule && bundle.entryModule.hash || null
+      urls: bundle.isEntry ? urls : null,
+      entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
     }).then(bundleAst => escodegen.generate(bundleAst, {
       format: { indent: { style: "  " } },
       sourceMap: !!this.opts.sourceMaps,

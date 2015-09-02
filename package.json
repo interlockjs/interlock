@@ -1,0 +1,55 @@
+{
+  "name": "interlock",
+  "version": "0.2.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ext .js --ext .jst .",
+    "test": "mocha spec/run.js",
+    "build": "babel -d lib/ src/ && npm run copy-templates",
+    "copy-templates": "cp -R src/compile/construct/templates lib/compile/construct/templates",
+    "prepublish": "npm run build",
+    "preversion": "npm run check && npm run build",
+    "check": "npm run lint && npm run test && ./scripts/validate-docs.sh",
+    "generate-docs": "babel-node ./scripts/generate-docs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/interlockjs/interlock"
+  },
+  "author": "Dale Bustad <dale@divmain.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/interlockjs/interlock/issues"
+  },
+  "homepage": "https://github.com/interlockjs/interlock",
+  "dependencies": {
+    "ast-types": "^0.7.8",
+    "babel": "^5.8.21",
+    "babel-core": "^5.8.22",
+    "bluebird": "^2.9.34",
+    "chokidar": "^1.0.3",
+    "escodegen": "^1.6.1",
+    "estemplate": "^0.4.0",
+    "joi": "^6.5.0",
+    "lodash": "^3.8.0",
+    "mkdirp": "^0.5.1",
+    "most": "^0.15.0",
+    "source-map": "^0.4.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.0.5",
+    "chai": "^2.3.0",
+    "comment-parser": "^0.3.0",
+    "eslint": "^1.1.0",
+    "eslint-config-defaults": "^4.2.0",
+    "eslint-plugin-filenames": "^0.1.2",
+    "esquery": "^0.4.0",
+    "estraverse": "^4.1.0",
+    "glob": "^5.0.14",
+    "mocha": "^2.2.4",
+    "require-dir": "^0.3.0",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.8.0"
+  }
+}

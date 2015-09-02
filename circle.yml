@@ -1,0 +1,7 @@
+machine:
+  node:
+    version: iojs-v3.2.0
+
+test:
+  override:
+    - npm run check

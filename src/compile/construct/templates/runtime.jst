@@ -132,7 +132,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
       throw new Error("Unable to load module with hash " + moduleHash + ".");
     }
     head(moduleHash, function () {
-      r.getRequestSequence(moduleHash, providers.slice(1));
+      r.requestSequence(moduleHash, providers.slice(1));
     });
   },
 

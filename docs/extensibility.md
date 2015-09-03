@@ -32,7 +32,7 @@ The function that it wraps can be found [here](../src/compile/bundles/bootstrap.
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L16-L23).
+This Pluggable's definition can be found [here](../src/compile/index.js#L17-L24).
 
 ## buildOutput
 
@@ -54,7 +54,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | object. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L104-L116).
+This Pluggable's definition can be found [here](../src/compile/index.js#L104-L119).
 
 ## compile
 
@@ -69,7 +69,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L124-L130).
+This Pluggable's definition can be found [here](../src/compile/index.js#L127-L133).
 
 ## compileModules
 
@@ -94,8 +94,8 @@ should return a promise that resolves to the expected value.
 will be emitted. |
 | Parameter | **opts.modules** | Array | Optional. If included, the module objects will be
 transformed into output module AST and emitted. |
-| Parameter | **opts.initialRequire** | String | Optional. If included, the statement in the AST output
-will be to require the specified module. |
+| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered
+to invoke the specified module on load. |
 | Return value |  | ASTnode | program AST node. |
 
 
@@ -219,21 +219,21 @@ This Pluggable's definition can be found [here](../src/compile/index.js#L67-L88)
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L37-L57).
+This Pluggable's definition can be found [here](../src/compile/index.js#L38-L58).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L25-L35).
+This Pluggable's definition can be found [here](../src/compile/index.js#L26-L36).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L59-L65).
+This Pluggable's definition can be found [here](../src/compile/index.js#L60-L65).
 
 ## hashBundle
 

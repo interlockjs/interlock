@@ -1,7 +1,9 @@
+import _ from "lodash";
 import { Plugin, transform } from "babel-core";
+
 import transformAmd from "./transform-amd";
 
-export default function coerceToCommonJs (origAst) {
+export default function transformModuleAst (origAst, babelUserConfig = {}) {
   const synchronousRequires = [];
 
   const getRequires = new Plugin("get-requires", {
@@ -17,10 +19,13 @@ export default function coerceToCommonJs (origAst) {
     }
   });
 
-  const {ast} = transform.fromAst(origAst, null, {
-    whitelist: ["es6.modules"],
+  const config = _.extend({}, babelUserConfig, {
+    whitelist: babelUserConfig.whitelist ?
+      _.uniq(["es6.modules", ...(babelUserConfig.whitelist || [])]) :
+      undefined,
     code: false,
-    plugins: [{
+    ast: true,
+    plugins: [...(babelUserConfig.plugins || []), {
       transformer: transformAmd(),
       position: "after"
     }, {
@@ -29,5 +34,6 @@ export default function coerceToCommonJs (origAst) {
     }]
   });
 
+  const { ast } = transform.fromAst(origAst, null, config);
   return {ast, synchronousRequires};
 }

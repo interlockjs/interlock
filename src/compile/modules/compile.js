@@ -11,7 +11,7 @@ import resolve from "./resolve";
 import loadAst from "./load-ast";
 import hashModule from "./hash";
 
-import coerceToCommonJs from "./coerce-to-common-js";
+import transformModuleAst from "./transform-module-ast";
 import updateRequires from "./update-requires";
 
 const compileModules = Pluggable.stream(function compileModules (seedModules) {
@@ -39,7 +39,7 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
     }
 
     const contextPath = path.dirname(module.path);
-    const {ast, synchronousRequires} = coerceToCommonJs(module.ast);
+    const {ast, synchronousRequires} = transformModuleAst(module.ast, this.opts.babelConfig);
     module = Object.assign({}, module, { ast: ast.program });
 
     // A stream of tuples, where the first element is a require string from the
@@ -116,7 +116,7 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
     // should be filtered out of the resulting stream.
     .skipRepeats();
 
-}, { resolve, loadAst, hashModule });
+}, { resolve, loadAst, hashModule, transformModuleAst });
 
 export default compileModules;
 

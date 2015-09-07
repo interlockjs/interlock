@@ -5,3 +5,7 @@ machine:
 test:
   override:
     - npm run check
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/ec8fbe5ef76183d4a766

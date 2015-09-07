@@ -17,7 +17,11 @@ var ilk = new Interlock({
   includeComments: true,
   sourceMaps: true,
 
-  plugins: []
+  plugins: [],
+
+  babelConfig: {
+    plugins: [require("./example-plugin")]
+  }
 });
 
 

@@ -1,3 +1,6 @@
+import Promise from "bluebird";
+
+
 export const CONTINUE = Symbol.for("interlock.continue");
 
 

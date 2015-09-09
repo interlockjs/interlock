@@ -1,6 +1,7 @@
 import most from "most";
 import escodegen from "escodegen";
 import _ from "lodash";
+import Promise from "bluebird";
 
 import * as Pluggable from "../pluggable";
 import { CONTINUE } from "../pluggable";

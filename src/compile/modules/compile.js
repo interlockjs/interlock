@@ -3,6 +3,7 @@ import path from "path";
 import most from "most";
 import _ from "lodash";
 import { transform } from "babel-core";
+import Promise from "bluebird";
 
 import * as Pluggable from "../../pluggable";
 import { toArray, toHash } from "../../util/stream";

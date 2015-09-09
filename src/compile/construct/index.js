@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import most from "most";
+import Promise from "bluebird";
 import { builders as b } from "ast-types";
 
 import * as Pluggable from "../../pluggable";

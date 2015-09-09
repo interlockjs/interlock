@@ -1,4 +1,5 @@
 import most from "most";
+import Promise from "bluebird";
 
 import { getTraversableAst } from "./traverse";
 import { NODE, ARRAY } from "./types";

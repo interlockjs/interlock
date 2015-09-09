@@ -163,6 +163,8 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
    * Called when the fn for a module is available and ready to be executed.  Any
    * modules which specified the given moduleHash as a dependency will be
    * recursively resolved if all dependencies and their dependecies are now met.
+   * Similarly, any callbacks waiting for the module to be resolved will be
+   * invoked.
    *
    * @param  {String} moduleHash  Hash of the module that is needed.
    */
@@ -178,7 +180,9 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
         r.resolve(blockedModuleHash);
       }
     });
+    (module.cbs || []).forEach(function (cb) { cb(); });
 
+    // This indicates that the module and all of its dependencies have successfully loaded.
     module.blocking = null;
     if (module.entry) { r.require(moduleHash); }
   },

@@ -208,7 +208,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
     if (module.exports) { return module.exports; }
 
     var moduleObj = { exports: {} };
-    module.fn.call(null, r.require.bind(r), moduleObj, moduleObj.exports);
+    module.fn.call(window, r.require.bind(r), moduleObj, moduleObj.exports);
     return module.exports = moduleObj.exports;
   }
 };

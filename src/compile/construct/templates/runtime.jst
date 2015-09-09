@@ -69,6 +69,12 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
         var dependency = r.modules[dependencyHash];
 
         if (!dependency || dependency.blocking) {
+          if (dependencyHash in moduleSet) {
+            // Avoid submitting request for module that will soon be provided.
+            r.modules[dependencyHash] = copyProps(r.modules[dependencyHash] || {}, {
+              requested: true
+            });
+          }
           r.request(dependencyHash, moduleHash);
           return true;
         }

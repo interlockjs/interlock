@@ -11,6 +11,7 @@ const parse = babel.parse;
 
 const rootPath = path.join(__dirname, "..");
 const outputPath = path.join(rootPath, "docs/extensibility.md");
+const jsonOutputPath = path.join(rootPath, "docs/compilation.json");
 const srcGlob = path.join(__dirname, "../src/**/*.js");
 
 
@@ -97,6 +98,13 @@ function getNamedFunctions (ast) {
   return functions;
 }
 
+function getEdges(objNode) {
+  if (!objNode || objNode.type !== "ObjectExpression") {
+    return [];
+  }
+  return _.map(objNode.properties, prop => prop.key.name);
+}
+
 function getPluggablesForFile (fpath) {
   const ast = loadAst(fpath);
   const relPath = path.relative(rootPath, fpath);
@@ -107,16 +115,18 @@ function getPluggablesForFile (fpath) {
   const controller = new estraverse.Controller();
 
   function enter (node, parent) {
-    if (node.type === "MemberExpression" && node.object.name === "Pluggable") {
+    if (node.type === "MemberExpression" &&
+        node.object.name === "Pluggable" &&
+        parent.arguments) {
+
       const pluggable = {
         path: relPath,
         type: node.property.name,
-        pluggableLine: node.loc.start.line
+        pluggableLine: node.loc.start.line,
+        edges: getEdges(parent.arguments[1])
       };
 
-      if (!parent.arguments) {
-        return;
-      } else if (parent.arguments[0].type === "FunctionExpression") {
+      if (parent.arguments[0].type === "FunctionExpression") {
         Object.assign(pluggable, {
           fnParams: parent.arguments[0].params,
           name: parent.arguments[0].id.name,
@@ -280,8 +290,26 @@ function trim (markdownText) {
     .join("\n");
 }
 
-getAllPluggables()
+function buildJson (pluggables) {
+  const byFnName = {};
+  pluggables.forEach(p => byFnName[p.name] = p);
+
+  function build (name) {
+    const node = byFnName[name];
+    const children = node.edges.map(build);
+    const markdown = renderToMarkdown(node);
+    const treeNode = { name, node, children, markdown };
+    if (!children.length) { treeNode.size = 1; }
+    return treeNode;
+  }
+
+  return build("compile");
+}
+
+const pluggables = getAllPluggables()
   .then(assertNoDuplicates)
+
+pluggables
   .then(sortPluggables)
   .then(pluggables => {
     return _.chain(pluggables)
@@ -303,4 +331,10 @@ getAllPluggables()
     process.exit(1); // eslint-disable-line no-process-exit
   });
 
-
+pluggables
+  .then(buildJson)
+  .catch(console.log.bind(console))
+  .then(json => {
+    fs.writeFileSync(jsonOutputPath, JSON.stringify(json, null, 2));
+    console.log(`${green("[ok]")} JSON generated successfully`); // eslint-disable-line no-console
+  });

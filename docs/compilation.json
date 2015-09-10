@@ -1,0 +1,1145 @@
+{
+  "name": "compile",
+  "node": {
+    "path": "src/compile/index.js",
+    "type": "promise",
+    "pluggableLine": 128,
+    "edges": [
+      "bootstrapBundles",
+      "getModuleMaps",
+      "getBundles",
+      "buildOutput"
+    ],
+    "fnParams": [],
+    "name": "compile",
+    "fnStart": 128,
+    "fnEnd": 134,
+    "doc": "*\n * Performs and end-to-end compilation.  Its return value is a promise\n * that will resolve to the output of [buildOutput](#buildoutput).\n *\n * @return {Promise}  compilation      Resolves to the compilation output.\n ",
+    "parsedDoc": {
+      "tags": [
+        {
+          "tag": "return",
+          "type": "Promise",
+          "name": "compilation",
+          "optional": false,
+          "description": "Resolves to the compilation output.",
+          "line": 4,
+          "source": "@return {Promise}  compilation      Resolves to the compilation output."
+        }
+      ],
+      "line": 0,
+      "description": "Performs and end-to-end compilation.  Its return value is a promise\nthat will resolve to the output of [buildOutput](#buildoutput).",
+      "source": "Performs and end-to-end compilation.  Its return value is a promise\nthat will resolve to the output of [buildOutput](#buildoutput).\n\n@return {Promise}  compilation      Resolves to the compilation output."
+    }
+  },
+  "children": [
+    {
+      "name": "bootstrapBundles",
+      "node": {
+        "path": "src/compile/bundles/bootstrap.js",
+        "type": "stream",
+        "pluggableLine": 33,
+        "edges": [
+          "bootstrapBundle"
+        ],
+        "fnParams": [
+          "entryPointDefs",
+          "splitPointDefs"
+        ],
+        "name": "bootstrapBundles",
+        "fnStart": 22,
+        "fnEnd": 31,
+        "doc": null,
+        "parsedDoc": null
+      },
+      "children": [
+        {
+          "name": "bootstrapBundle",
+          "node": {
+            "path": "src/compile/bundles/bootstrap.js",
+            "type": "promise",
+            "pluggableLine": 9,
+            "edges": [
+              "resolveModule",
+              "loadModule"
+            ],
+            "fnParams": [
+              "srcPath",
+              "bundlDef",
+              "isEntryPt"
+            ],
+            "name": "bootstrapBundle",
+            "fnStart": 9,
+            "fnEnd": 20,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [
+            {
+              "name": "resolveModule",
+              "node": {
+                "path": "src/compile/modules/resolve.js",
+                "type": "promise",
+                "pluggableLine": 43,
+                "edges": [
+                  "preresolve",
+                  "createModule"
+                ],
+                "fnParams": [
+                  "requireStr",
+                  "contextPath",
+                  "ns",
+                  "nsRoot",
+                  "extensions"
+                ],
+                "name": "resolveModule",
+                "fnStart": 22,
+                "fnEnd": 41,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [
+                {
+                  "name": "preresolve",
+                  "node": {
+                    "path": "src/compile/modules/resolve.js",
+                    "type": "promise",
+                    "pluggableLine": 18,
+                    "edges": [],
+                    "fnParams": [
+                      "requireStr"
+                    ],
+                    "name": "preresolve",
+                    "fnStart": 18,
+                    "fnEnd": 20,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## preresolve\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).\n\n  ",
+                  "size": 1
+                },
+                {
+                  "name": "createModule",
+                  "node": {
+                    "path": "src/compile/modules/resolve.js",
+                    "type": "promise",
+                    "pluggableLine": 4,
+                    "edges": [],
+                    "fnParams": [
+                      "overrides"
+                    ],
+                    "name": "createModule",
+                    "fnStart": 4,
+                    "fnEnd": 16,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## createModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## resolveModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).\n\n  "
+            },
+            {
+              "name": "loadModule",
+              "node": {
+                "path": "src/compile/modules/load.js",
+                "type": "promise",
+                "pluggableLine": 62,
+                "edges": [
+                  "readSource",
+                  "parseSourceToAst"
+                ],
+                "fnParams": [
+                  "asset"
+                ],
+                "name": "loadModule",
+                "fnStart": 62,
+                "fnEnd": 67,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [
+                {
+                  "name": "readSource",
+                  "node": {
+                    "path": "src/compile/modules/load.js",
+                    "type": "promise",
+                    "pluggableLine": 58,
+                    "edges": [],
+                    "fnParams": [
+                      "asset"
+                    ],
+                    "name": "readSource",
+                    "fnStart": 58,
+                    "fnEnd": 60,
+                    "doc": "*\n * This function is invoked whenever the compiler attempts to read a source-file\n * from the disk.  It takes an asset object as its only input.  The properties\n * available on that asset object are as follows:\n *\n *  - `path` - the absolute path of the file\n *  - `ns` - the namespace of the module (either the default ns, or borrowed from its\n *    containing package)\n *  - `nsRoot` - the absolute path to the root of the namespace\n *  - `nsPath` - the file's path relative to the root of the namespace\n *  - `rawSource` - `null`, this value is provided by the `readSource` function\n *  - `ast` - `null`, this value will be populated later in the compilation\n *  - `requireNodes` - `null`, this value will be populated later in the compilation\n *  - `dependencies` - `null`, this value will be populated later in the compilation\n *  - `hash` - `null`, this value will be populated later in the compilation\n *\n * @param  {Object} asset  Asset object.\n *\n * @return {String}        The raw source of the file, in string format.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "asset",
+                          "optional": false,
+                          "description": "Asset object.",
+                          "line": 16,
+                          "source": "@param  {Object} asset  Asset object."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "String",
+                          "name": "The",
+                          "optional": false,
+                          "description": "raw source of the file, in string format.",
+                          "line": 18,
+                          "source": "@return {String}        The raw source of the file, in string format."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation",
+                      "source": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n - `path` - the absolute path of the file\n - `ns` - the namespace of the module (either the default ns, or borrowed from its\n   containing package)\n - `nsRoot` - the absolute path to the root of the namespace\n - `nsPath` - the file's path relative to the root of the namespace\n - `rawSource` - `null`, this value is provided by the `readSource` function\n - `ast` - `null`, this value will be populated later in the compilation\n - `requireNodes` - `null`, this value will be populated later in the compilation\n - `dependencies` - `null`, this value will be populated later in the compilation\n - `hash` - `null`, this value will be populated later in the compilation\n\n@param  {Object} asset  Asset object.\n\n@return {String}        The raw source of the file, in string format."
+                    }
+                  },
+                  "children": [],
+                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **asset** | Object | Asset object. |\n| Return value |  | String | raw source of the file, in string format. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L58-L60).\n\n  ",
+                  "size": 1
+                },
+                {
+                  "name": "parseSourceToAst",
+                  "node": {
+                    "path": "src/compile/modules/load.js",
+                    "type": "promise",
+                    "pluggableLine": 16,
+                    "edges": [],
+                    "fnParams": [
+                      "raw",
+                      "sourceFile"
+                    ],
+                    "name": "parseSourceToAst",
+                    "fnStart": 16,
+                    "fnEnd": 36,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## parseSourceToAst\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L16-L36).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## loadModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L62-L67).\n\n  "
+            }
+          ],
+          "markdown": "## bootstrapBundle\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/bootstrap.js#L9-L20).\n\n  "
+        }
+      ],
+      "markdown": "## bootstrapBundles\n  \n    This is an **asynchronous stream plugin**.  This means that the function should\n    return a stream that emits expected values.\n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/bootstrap.js#L33).\n      The function that it wraps can be found [here](../src/compile/bundles/bootstrap.js#L22-L31).\n\n  "
+    },
+    {
+      "name": "getModuleMaps",
+      "node": {
+        "path": "src/compile/index.js",
+        "type": "promise",
+        "pluggableLine": 27,
+        "edges": [
+          "compileModules"
+        ],
+        "fnParams": [
+          "seedModules"
+        ],
+        "name": "getModuleMaps",
+        "fnStart": 27,
+        "fnEnd": 37,
+        "doc": null,
+        "parsedDoc": null
+      },
+      "children": [
+        {
+          "name": "compileModules",
+          "node": {
+            "path": "src/compile/modules/compile.js",
+            "type": "stream",
+            "pluggableLine": 18,
+            "edges": [
+              "resolveModule",
+              "loadModule",
+              "hashModule"
+            ],
+            "fnParams": [
+              "seedModules"
+            ],
+            "name": "compileModules",
+            "fnStart": 18,
+            "fnEnd": 120,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [
+            {
+              "name": "resolveModule",
+              "node": {
+                "path": "src/compile/modules/resolve.js",
+                "type": "promise",
+                "pluggableLine": 43,
+                "edges": [
+                  "preresolve",
+                  "createModule"
+                ],
+                "fnParams": [
+                  "requireStr",
+                  "contextPath",
+                  "ns",
+                  "nsRoot",
+                  "extensions"
+                ],
+                "name": "resolveModule",
+                "fnStart": 22,
+                "fnEnd": 41,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [
+                {
+                  "name": "preresolve",
+                  "node": {
+                    "path": "src/compile/modules/resolve.js",
+                    "type": "promise",
+                    "pluggableLine": 18,
+                    "edges": [],
+                    "fnParams": [
+                      "requireStr"
+                    ],
+                    "name": "preresolve",
+                    "fnStart": 18,
+                    "fnEnd": 20,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## preresolve\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).\n\n  ",
+                  "size": 1
+                },
+                {
+                  "name": "createModule",
+                  "node": {
+                    "path": "src/compile/modules/resolve.js",
+                    "type": "promise",
+                    "pluggableLine": 4,
+                    "edges": [],
+                    "fnParams": [
+                      "overrides"
+                    ],
+                    "name": "createModule",
+                    "fnStart": 4,
+                    "fnEnd": 16,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## createModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## resolveModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).\n\n  "
+            },
+            {
+              "name": "loadModule",
+              "node": {
+                "path": "src/compile/modules/load.js",
+                "type": "promise",
+                "pluggableLine": 62,
+                "edges": [
+                  "readSource",
+                  "parseSourceToAst"
+                ],
+                "fnParams": [
+                  "asset"
+                ],
+                "name": "loadModule",
+                "fnStart": 62,
+                "fnEnd": 67,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [
+                {
+                  "name": "readSource",
+                  "node": {
+                    "path": "src/compile/modules/load.js",
+                    "type": "promise",
+                    "pluggableLine": 58,
+                    "edges": [],
+                    "fnParams": [
+                      "asset"
+                    ],
+                    "name": "readSource",
+                    "fnStart": 58,
+                    "fnEnd": 60,
+                    "doc": "*\n * This function is invoked whenever the compiler attempts to read a source-file\n * from the disk.  It takes an asset object as its only input.  The properties\n * available on that asset object are as follows:\n *\n *  - `path` - the absolute path of the file\n *  - `ns` - the namespace of the module (either the default ns, or borrowed from its\n *    containing package)\n *  - `nsRoot` - the absolute path to the root of the namespace\n *  - `nsPath` - the file's path relative to the root of the namespace\n *  - `rawSource` - `null`, this value is provided by the `readSource` function\n *  - `ast` - `null`, this value will be populated later in the compilation\n *  - `requireNodes` - `null`, this value will be populated later in the compilation\n *  - `dependencies` - `null`, this value will be populated later in the compilation\n *  - `hash` - `null`, this value will be populated later in the compilation\n *\n * @param  {Object} asset  Asset object.\n *\n * @return {String}        The raw source of the file, in string format.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "asset",
+                          "optional": false,
+                          "description": "Asset object.",
+                          "line": 16,
+                          "source": "@param  {Object} asset  Asset object."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "String",
+                          "name": "The",
+                          "optional": false,
+                          "description": "raw source of the file, in string format.",
+                          "line": 18,
+                          "source": "@return {String}        The raw source of the file, in string format."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation",
+                      "source": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n - `path` - the absolute path of the file\n - `ns` - the namespace of the module (either the default ns, or borrowed from its\n   containing package)\n - `nsRoot` - the absolute path to the root of the namespace\n - `nsPath` - the file's path relative to the root of the namespace\n - `rawSource` - `null`, this value is provided by the `readSource` function\n - `ast` - `null`, this value will be populated later in the compilation\n - `requireNodes` - `null`, this value will be populated later in the compilation\n - `dependencies` - `null`, this value will be populated later in the compilation\n - `hash` - `null`, this value will be populated later in the compilation\n\n@param  {Object} asset  Asset object.\n\n@return {String}        The raw source of the file, in string format."
+                    }
+                  },
+                  "children": [],
+                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **asset** | Object | Asset object. |\n| Return value |  | String | raw source of the file, in string format. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L58-L60).\n\n  ",
+                  "size": 1
+                },
+                {
+                  "name": "parseSourceToAst",
+                  "node": {
+                    "path": "src/compile/modules/load.js",
+                    "type": "promise",
+                    "pluggableLine": 16,
+                    "edges": [],
+                    "fnParams": [
+                      "raw",
+                      "sourceFile"
+                    ],
+                    "name": "parseSourceToAst",
+                    "fnStart": 16,
+                    "fnEnd": 36,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## parseSourceToAst\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L16-L36).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## loadModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L62-L67).\n\n  "
+            },
+            {
+              "name": "hashModule",
+              "node": {
+                "path": "src/compile/modules/hash.js",
+                "type": "promise",
+                "pluggableLine": 29,
+                "edges": [
+                  "updateModuleHash"
+                ],
+                "fnParams": [
+                  "module"
+                ],
+                "name": "hashModule",
+                "fnStart": 19,
+                "fnEnd": 27,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [
+                {
+                  "name": "updateModuleHash",
+                  "node": {
+                    "path": "src/compile/modules/hash.js",
+                    "type": "promise",
+                    "pluggableLine": 5,
+                    "edges": [],
+                    "fnParams": [
+                      "args"
+                    ],
+                    "name": "updateModuleHash",
+                    "fnStart": 5,
+                    "fnEnd": 17,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## updateModuleHash\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L17).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## hashModule\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L29).\n      The function that it wraps can be found [here](../src/compile/modules/hash.js#L19-L27).\n\n  "
+            }
+          ],
+          "markdown": "## compileModules\n  \n    This is an **asynchronous stream plugin**.  This means that the function should\n    return a stream that emits expected values.\n  \n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L18-L120).\n\n  "
+        }
+      ],
+      "markdown": "## getModuleMaps\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L27-L37).\n\n  "
+    },
+    {
+      "name": "getBundles",
+      "node": {
+        "path": "src/compile/index.js",
+        "type": "stream",
+        "pluggableLine": 39,
+        "edges": [
+          "dedupeExplicit",
+          "dedupeImplicit",
+          "hashBundle",
+          "interpolateFilename"
+        ],
+        "fnParams": [
+          "bootstrappedBundles",
+          "moduleMapsP"
+        ],
+        "name": "getBundles",
+        "fnStart": 39,
+        "fnEnd": 59,
+        "doc": null,
+        "parsedDoc": null
+      },
+      "children": [
+        {
+          "name": "dedupeExplicit",
+          "node": {
+            "path": "src/compile/bundles/dedupe-explicit.js",
+            "type": "promise",
+            "pluggableLine": 41,
+            "edges": [],
+            "fnParams": [
+              "bundlesWithDupes",
+              "modulesByAbsPath"
+            ],
+            "name": "dedupeExplicit",
+            "fnStart": 5,
+            "fnEnd": 39,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [],
+          "markdown": "## dedupeExplicit\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-explicit.js#L41).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L5-L39).\n\n  ",
+          "size": 1
+        },
+        {
+          "name": "dedupeImplicit",
+          "node": {
+            "path": "src/compile/bundles/dedupe-implicit.js",
+            "type": "stream",
+            "pluggableLine": 45,
+            "edges": [],
+            "fnParams": [
+              "explicitBundles"
+            ],
+            "name": "dedupeImplicit",
+            "fnStart": 38,
+            "fnEnd": 43,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [],
+          "markdown": "## dedupeImplicit\n  \n    This is an **asynchronous stream plugin**.  This means that the function should\n    return a stream that emits expected values.\n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-implicit.js#L45).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-implicit.js#L38-L43).\n\n  ",
+          "size": 1
+        },
+        {
+          "name": "hashBundle",
+          "node": {
+            "path": "src/compile/bundles/hash.js",
+            "type": "promise",
+            "pluggableLine": 40,
+            "edges": [
+              "updateBundleHash"
+            ],
+            "fnParams": [
+              "bundle"
+            ],
+            "name": "hashBundle",
+            "fnStart": 27,
+            "fnEnd": 38,
+            "doc": "*\n * Calculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for\n * the actual calculations.\n *\n * @param  {Object} bundle  Bundle.\n *\n * @returns {String}        40-character SHA1 that uniquely identifies the bundle.\n ",
+            "parsedDoc": {
+              "tags": [
+                {
+                  "tag": "param",
+                  "type": "Object",
+                  "name": "bundle",
+                  "optional": false,
+                  "description": "Bundle.",
+                  "line": 4,
+                  "source": "@param  {Object} bundle  Bundle."
+                },
+                {
+                  "tag": "returns",
+                  "type": "String",
+                  "name": "40-character",
+                  "optional": false,
+                  "description": "SHA1 that uniquely identifies the bundle.",
+                  "line": 6,
+                  "source": "@returns {String}        40-character SHA1 that uniquely identifies the bundle."
+                }
+              ],
+              "line": 0,
+              "description": "Calculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for\nthe actual calculations.",
+              "source": "Calculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for\nthe actual calculations.\n\n@param  {Object} bundle  Bundle.\n\n@returns {String}        40-character SHA1 that uniquely identifies the bundle."
+            }
+          },
+          "children": [
+            {
+              "name": "updateBundleHash",
+              "node": {
+                "path": "src/compile/bundles/hash.js",
+                "type": "promise",
+                "pluggableLine": 12,
+                "edges": [],
+                "fnParams": [
+                  "update",
+                  "bundle"
+                ],
+                "name": "updateBundleHash",
+                "fnStart": 12,
+                "fnEnd": 16,
+                "doc": "*\n * Calculate the bundle's hash by invoking `update` with data from the bundle.\n * `update` should be called with string data only.\n *\n * @param  {Function} update  Updates the ongoing computation of bundle hash.\n * @param  {Object}   bundle  The bundle object.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Function",
+                      "name": "update",
+                      "optional": false,
+                      "description": "Updates the ongoing computation of bundle hash.",
+                      "line": 4,
+                      "source": "@param  {Function} update  Updates the ongoing computation of bundle hash."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "bundle",
+                      "optional": false,
+                      "description": "The bundle object.",
+                      "line": 5,
+                      "source": "@param  {Object}   bundle  The bundle object."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Calculate the bundle's hash by invoking `update` with data from the bundle.\n`update` should be called with string data only.",
+                  "source": "Calculate the bundle's hash by invoking `update` with data from the bundle.\n`update` should be called with string data only.\n\n@param  {Function} update  Updates the ongoing computation of bundle hash.\n@param  {Object}   bundle  The bundle object."
+                }
+              },
+              "children": [],
+              "markdown": "## updateBundleHash\n  \nCalculate the bundle's hash by invoking `update` with data from the bundle.\n`update` should be called with string data only.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **update** | Function | Updates the ongoing computation of bundle hash. |\n| Parameter | **bundle** | Object | The bundle object. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L12-L16).\n\n  ",
+              "size": 1
+            }
+          ],
+          "markdown": "## hashBundle\n  \nCalculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for\nthe actual calculations.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle. |\n| Return value |  | String | SHA1 that uniquely identifies the bundle. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L40).\n      The function that it wraps can be found [here](../src/compile/bundles/hash.js#L27-L38).\n\n  "
+        },
+        {
+          "name": "interpolateFilename",
+          "node": {
+            "path": "src/compile/bundles/interpolate-filename.js",
+            "type": "promise",
+            "pluggableLine": 14,
+            "edges": [],
+            "fnParams": [
+              "bundle"
+            ],
+            "name": "interpolateFilename",
+            "fnStart": 3,
+            "fnEnd": 12,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [],
+          "markdown": "## interpolateFilename\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/interpolate-filename.js#L14).\n      The function that it wraps can be found [here](../src/compile/bundles/interpolate-filename.js#L3-L12).\n\n  ",
+          "size": 1
+        }
+      ],
+      "markdown": "## getBundles\n  \n    This is an **asynchronous stream plugin**.  This means that the function should\n    return a stream that emits expected values.\n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L39-L59).\n\n  "
+    },
+    {
+      "name": "buildOutput",
+      "node": {
+        "path": "src/compile/index.js",
+        "type": "promise",
+        "pluggableLine": 105,
+        "edges": [
+          "getUrls",
+          "emitRawBundles"
+        ],
+        "fnParams": [
+          "bundles"
+        ],
+        "name": "buildOutput",
+        "fnStart": 105,
+        "fnEnd": 120,
+        "doc": "*\n * Given a stream of bundles, reduces those bundles down into a promise that\n * resolves into a final compilation object.\n *\n * This compilation object will have three key/value pairs:\n *\n * - cache:    populated cache from the compilation\n * - bundles:  a mapping of destination paths to `raw` code\n * - opts:     the original options passed to the compilation)\n *\n * @param  {Stream} bundles   Bundles generated by [getBundles](#getbundles).\n *\n * @return {Promise}          Compilation object.\n ",
+        "parsedDoc": {
+          "tags": [
+            {
+              "tag": "param",
+              "type": "Stream",
+              "name": "bundles",
+              "optional": false,
+              "description": "Bundles generated by [getBundles](#getbundles).",
+              "line": 10,
+              "source": "@param  {Stream} bundles   Bundles generated by [getBundles](#getbundles)."
+            },
+            {
+              "tag": "return",
+              "type": "Promise",
+              "name": "Compilation",
+              "optional": false,
+              "description": "object.",
+              "line": 12,
+              "source": "@return {Promise}          Compilation object."
+            }
+          ],
+          "line": 0,
+          "description": "Given a stream of bundles, reduces those bundles down into a promise that\nresolves into a final compilation object.\n\nThis compilation object will have three key/value pairs:\n\n- cache:    populated cache from the compilation\n- bundles:  a mapping of destination paths to `raw` code\n- opts:     the original options passed to the compilation)",
+          "source": "Given a stream of bundles, reduces those bundles down into a promise that\nresolves into a final compilation object.\n\nThis compilation object will have three key/value pairs:\n\n- cache:    populated cache from the compilation\n- bundles:  a mapping of destination paths to `raw` code\n- opts:     the original options passed to the compilation)\n\n@param  {Stream} bundles   Bundles generated by [getBundles](#getbundles).\n\n@return {Promise}          Compilation object."
+        }
+      },
+      "children": [
+        {
+          "name": "getUrls",
+          "node": {
+            "path": "src/compile/index.js",
+            "type": "promise",
+            "pluggableLine": 61,
+            "edges": [],
+            "fnParams": [
+              "bundles"
+            ],
+            "name": "getUrls",
+            "fnStart": 61,
+            "fnEnd": 66,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [],
+          "markdown": "## getUrls\n  \n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L61-L66).\n\n  ",
+          "size": 1
+        },
+        {
+          "name": "emitRawBundles",
+          "node": {
+            "path": "src/compile/index.js",
+            "type": "stream",
+            "pluggableLine": 68,
+            "edges": [
+              "constructBundle"
+            ],
+            "fnParams": [
+              "bundlesArr",
+              "urls"
+            ],
+            "name": "emitRawBundles",
+            "fnStart": 68,
+            "fnEnd": 89,
+            "doc": null,
+            "parsedDoc": null
+          },
+          "children": [
+            {
+              "name": "constructBundle",
+              "node": {
+                "path": "src/compile/construct/index.js",
+                "type": "promise",
+                "pluggableLine": 164,
+                "edges": [
+                  "constructBundleBody"
+                ],
+                "fnParams": [
+                  "opts"
+                ],
+                "name": "constructBundle",
+                "fnStart": 164,
+                "fnEnd": 167,
+                "doc": "*\n * The primary constructor.  Given a set of options, construct Program AST to be emitted\n * as JavaScript.\n *\n * @param  {Object}  opts                 Options.\n * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n * @param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\n *                                        will be emitted.\n * @param  {Array}   opts.modules         Optional. If included, the module objects will be\n *                                        transformed into output module AST and emitted.\n * @param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\n *                                        to invoke the specified module on load.\n *\n * @return {ASTnode}                      Single program AST node.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "opts",
+                      "optional": false,
+                      "description": "Options.",
+                      "line": 4,
+                      "source": "@param  {Object}  opts                 Options."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Boolean",
+                      "name": "opts.includeRuntime",
+                      "optional": false,
+                      "description": "Indicates whether Interlock run-time should be emitted.",
+                      "line": 5,
+                      "source": "@param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "opts.urls",
+                      "optional": false,
+                      "description": "Optional. If included, map of module hashes to URLs\nwill be emitted.",
+                      "line": 6,
+                      "source": "@param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\nwill be emitted."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Array",
+                      "name": "opts.modules",
+                      "optional": false,
+                      "description": "Optional. If included, the module objects will be\ntransformed into output module AST and emitted.",
+                      "line": 8,
+                      "source": "@param  {Array}   opts.modules         Optional. If included, the module objects will be\ntransformed into output module AST and emitted."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "opts.entryModuleHash",
+                      "optional": false,
+                      "description": "Optional. If included, a statement will be rendered\nto invoke the specified module on load.",
+                      "line": 10,
+                      "source": "@param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\nto invoke the specified module on load."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "ASTnode",
+                      "name": "Single",
+                      "optional": false,
+                      "description": "program AST node.",
+                      "line": 13,
+                      "source": "@return {ASTnode}                      Single program AST node."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "The primary constructor.  Given a set of options, construct Program AST to be emitted\nas JavaScript.",
+                  "source": "The primary constructor.  Given a set of options, construct Program AST to be emitted\nas JavaScript.\n\n@param  {Object}  opts                 Options.\n@param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n@param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\n                                       will be emitted.\n@param  {Array}   opts.modules         Optional. If included, the module objects will be\n                                       transformed into output module AST and emitted.\n@param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\n                                       to invoke the specified module on load.\n\n@return {ASTnode}                      Single program AST node."
+                }
+              },
+              "children": [
+                {
+                  "name": "constructBundleBody",
+                  "node": {
+                    "path": "src/compile/construct/index.js",
+                    "type": "promise",
+                    "pluggableLine": 136,
+                    "edges": [
+                      "constructModuleSet",
+                      "constructRuntime",
+                      "setLoadEntry",
+                      "constructRegisterUrls"
+                    ],
+                    "fnParams": [
+                      "opts"
+                    ],
+                    "name": "constructBundleBody",
+                    "fnStart": 136,
+                    "fnEnd": 147,
+                    "doc": "*\n * Builds body of output bundle, to be inserted into the IIFE.\n *\n * @param  {Object}  opts  Same options object passed to constructBundleBody.\n *\n * @return {Array}         Body of bundle.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "opts",
+                          "optional": false,
+                          "description": "Same options object passed to constructBundleBody.",
+                          "line": 3,
+                          "source": "@param  {Object}  opts  Same options object passed to constructBundleBody."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "Array",
+                          "name": "Body",
+                          "optional": false,
+                          "description": "of bundle.",
+                          "line": 5,
+                          "source": "@return {Array}         Body of bundle."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "Builds body of output bundle, to be inserted into the IIFE.",
+                      "source": "Builds body of output bundle, to be inserted into the IIFE.\n\n@param  {Object}  opts  Same options object passed to constructBundleBody.\n\n@return {Array}         Body of bundle."
+                    }
+                  },
+                  "children": [
+                    {
+                      "name": "constructModuleSet",
+                      "node": {
+                        "path": "src/compile/construct/index.js",
+                        "type": "promise",
+                        "pluggableLine": 60,
+                        "edges": [
+                          "constructCommonModule"
+                        ],
+                        "fnParams": [
+                          "modules",
+                          "globalName"
+                        ],
+                        "name": "constructModuleSet",
+                        "fnStart": 60,
+                        "fnEnd": 78,
+                        "doc": "*\n * Given an array of CJS modules (in the form of object expression AST nodes),\n * construct the AST of a file that would register those modules for consumpsion\n * by the Interlock run-time.\n *\n * @param  {Array}  modules        Array of modules objects.\n * @param  {String} globalName     Global variable name of the Interlock run-time.\n *\n * @return {Array}                 Array of AST nodes to be emitted as JavaScript.\n ",
+                        "parsedDoc": {
+                          "tags": [
+                            {
+                              "tag": "param",
+                              "type": "Array",
+                              "name": "modules",
+                              "optional": false,
+                              "description": "Array of modules objects.",
+                              "line": 5,
+                              "source": "@param  {Array}  modules        Array of modules objects."
+                            },
+                            {
+                              "tag": "param",
+                              "type": "String",
+                              "name": "globalName",
+                              "optional": false,
+                              "description": "Global variable name of the Interlock run-time.",
+                              "line": 6,
+                              "source": "@param  {String} globalName     Global variable name of the Interlock run-time."
+                            },
+                            {
+                              "tag": "return",
+                              "type": "Array",
+                              "name": "Array",
+                              "optional": false,
+                              "description": "of AST nodes to be emitted as JavaScript.",
+                              "line": 8,
+                              "source": "@return {Array}                 Array of AST nodes to be emitted as JavaScript."
+                            }
+                          ],
+                          "line": 0,
+                          "description": "Given an array of CJS modules (in the form of object expression AST nodes),\nconstruct the AST of a file that would register those modules for consumpsion\nby the Interlock run-time.",
+                          "source": "Given an array of CJS modules (in the form of object expression AST nodes),\nconstruct the AST of a file that would register those modules for consumpsion\nby the Interlock run-time.\n\n@param  {Array}  modules        Array of modules objects.\n@param  {String} globalName     Global variable name of the Interlock run-time.\n\n@return {Array}                 Array of AST nodes to be emitted as JavaScript."
+                        }
+                      },
+                      "children": [
+                        {
+                          "name": "constructCommonModule",
+                          "node": {
+                            "path": "src/compile/construct/index.js",
+                            "type": "promise",
+                            "pluggableLine": 40,
+                            "edges": [],
+                            "fnParams": [
+                              "moduleBody",
+                              "deps"
+                            ],
+                            "name": "constructCommonModule",
+                            "fnStart": 40,
+                            "fnEnd": 48,
+                            "doc": "*\n * Given an array of AST nodes and their dependencies (possibly originating from\n * a common JS module), construct an object expression that represents its run-time\n * equivalent.\n *\n * @param  {Array}  moduleBody  Array of ECMAscript AST nodes.\n * @param  {Array}  deps        Array of modules upon which origin module is\n *                              dependent.\n *\n * @return {ASTnode}            Object expression AST node.\n ",
+                            "parsedDoc": {
+                              "tags": [
+                                {
+                                  "tag": "param",
+                                  "type": "Array",
+                                  "name": "moduleBody",
+                                  "optional": false,
+                                  "description": "Array of ECMAscript AST nodes.",
+                                  "line": 5,
+                                  "source": "@param  {Array}  moduleBody  Array of ECMAscript AST nodes."
+                                },
+                                {
+                                  "tag": "param",
+                                  "type": "Array",
+                                  "name": "deps",
+                                  "optional": false,
+                                  "description": "Array of modules upon which origin module is\ndependent.",
+                                  "line": 6,
+                                  "source": "@param  {Array}  deps        Array of modules upon which origin module is\ndependent."
+                                },
+                                {
+                                  "tag": "return",
+                                  "type": "ASTnode",
+                                  "name": "Object",
+                                  "optional": false,
+                                  "description": "expression AST node.",
+                                  "line": 9,
+                                  "source": "@return {ASTnode}            Object expression AST node."
+                                }
+                              ],
+                              "line": 0,
+                              "description": "Given an array of AST nodes and their dependencies (possibly originating from\na common JS module), construct an object expression that represents its run-time\nequivalent.",
+                              "source": "Given an array of AST nodes and their dependencies (possibly originating from\na common JS module), construct an object expression that represents its run-time\nequivalent.\n\n@param  {Array}  moduleBody  Array of ECMAscript AST nodes.\n@param  {Array}  deps        Array of modules upon which origin module is\n                             dependent.\n\n@return {ASTnode}            Object expression AST node."
+                            }
+                          },
+                          "children": [],
+                          "markdown": "## constructCommonModule\n  \nGiven an array of AST nodes and their dependencies (possibly originating from\na common JS module), construct an object expression that represents its run-time\nequivalent.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleBody** | Array | Array of ECMAscript AST nodes. |\n| Parameter | **deps** | Array | Array of modules upon which origin module is\ndependent. |\n| Return value |  | ASTnode | expression AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L40-L48).\n\n  ",
+                          "size": 1
+                        }
+                      ],
+                      "markdown": "## constructModuleSet\n  \nGiven an array of CJS modules (in the form of object expression AST nodes),\nconstruct the AST of a file that would register those modules for consumpsion\nby the Interlock run-time.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of modules objects. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Return value |  | Array | of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L60-L78).\n\n  "
+                    },
+                    {
+                      "name": "constructRuntime",
+                      "node": {
+                        "path": "src/compile/construct/index.js",
+                        "type": "promise",
+                        "pluggableLine": 87,
+                        "edges": [],
+                        "fnParams": [
+                          "globalName"
+                        ],
+                        "name": "constructRuntime",
+                        "fnStart": 87,
+                        "fnEnd": 91,
+                        "doc": "*\n * Construct the guts of the Interlock run-time for inclusion in file output.\n *\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {Array}              Array of AST nodes.\n ",
+                        "parsedDoc": {
+                          "tags": [
+                            {
+                              "tag": "param",
+                              "type": "String",
+                              "name": "globalName",
+                              "optional": false,
+                              "description": "Global variable name of Interlock run-time.",
+                              "line": 3,
+                              "source": "@param  {String} globalName  Global variable name of Interlock run-time."
+                            },
+                            {
+                              "tag": "return",
+                              "type": "Array",
+                              "name": "Array",
+                              "optional": false,
+                              "description": "of AST nodes.",
+                              "line": 5,
+                              "source": "@return {Array}              Array of AST nodes."
+                            }
+                          ],
+                          "line": 0,
+                          "description": "Construct the guts of the Interlock run-time for inclusion in file output.",
+                          "source": "Construct the guts of the Interlock run-time for inclusion in file output.\n\n@param  {String} globalName  Global variable name of Interlock run-time.\n\n@return {Array}              Array of AST nodes."
+                        }
+                      },
+                      "children": [],
+                      "markdown": "## constructRuntime\n  \nConstruct the guts of the Interlock run-time for inclusion in file output.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | Array | of AST nodes. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L87-L91).\n\n  ",
+                      "size": 1
+                    },
+                    {
+                      "name": "setLoadEntry",
+                      "node": {
+                        "path": "src/compile/construct/index.js",
+                        "type": "promise",
+                        "pluggableLine": 101,
+                        "edges": [],
+                        "fnParams": [
+                          "moduleHash",
+                          "globalName"
+                        ],
+                        "name": "setLoadEntry",
+                        "fnStart": 101,
+                        "fnEnd": 108,
+                        "doc": "*\n * Construct a statement to instruct the runtime to run the specified module.\n *\n * @param  {String} moduleHash  Hash of the module to be required.\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {ASTnode}            Single AST node.\n ",
+                        "parsedDoc": {
+                          "tags": [
+                            {
+                              "tag": "param",
+                              "type": "String",
+                              "name": "moduleHash",
+                              "optional": false,
+                              "description": "Hash of the module to be required.",
+                              "line": 3,
+                              "source": "@param  {String} moduleHash  Hash of the module to be required."
+                            },
+                            {
+                              "tag": "param",
+                              "type": "String",
+                              "name": "globalName",
+                              "optional": false,
+                              "description": "Global variable name of Interlock run-time.",
+                              "line": 4,
+                              "source": "@param  {String} globalName  Global variable name of Interlock run-time."
+                            },
+                            {
+                              "tag": "return",
+                              "type": "ASTnode",
+                              "name": "Single",
+                              "optional": false,
+                              "description": "AST node.",
+                              "line": 6,
+                              "source": "@return {ASTnode}            Single AST node."
+                            }
+                          ],
+                          "line": 0,
+                          "description": "Construct a statement to instruct the runtime to run the specified module.",
+                          "source": "Construct a statement to instruct the runtime to run the specified module.\n\n@param  {String} moduleHash  Hash of the module to be required.\n@param  {String} globalName  Global variable name of Interlock run-time.\n\n@return {ASTnode}            Single AST node."
+                        }
+                      },
+                      "children": [],
+                      "markdown": "## setLoadEntry\n  \nConstruct a statement to instruct the runtime to run the specified module.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleHash** | String | Hash of the module to be required. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L101-L108).\n\n  ",
+                      "size": 1
+                    },
+                    {
+                      "name": "constructRegisterUrls",
+                      "node": {
+                        "path": "src/compile/construct/index.js",
+                        "type": "promise",
+                        "pluggableLine": 118,
+                        "edges": [],
+                        "fnParams": [
+                          "urls",
+                          "globalName"
+                        ],
+                        "name": "constructRegisterUrls",
+                        "fnStart": 118,
+                        "fnEnd": 127,
+                        "doc": "*\n * Transforms a map of module-hashes-to-URLs to the AST equivalent.\n *\n * @param  {Object} urls        Keys are module hashes, values are URL strings.\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {ASTnode}            Single AST node.\n ",
+                        "parsedDoc": {
+                          "tags": [
+                            {
+                              "tag": "param",
+                              "type": "Object",
+                              "name": "urls",
+                              "optional": false,
+                              "description": "Keys are module hashes, values are URL strings.",
+                              "line": 3,
+                              "source": "@param  {Object} urls        Keys are module hashes, values are URL strings."
+                            },
+                            {
+                              "tag": "param",
+                              "type": "String",
+                              "name": "globalName",
+                              "optional": false,
+                              "description": "Global variable name of Interlock run-time.",
+                              "line": 4,
+                              "source": "@param  {String} globalName  Global variable name of Interlock run-time."
+                            },
+                            {
+                              "tag": "return",
+                              "type": "ASTnode",
+                              "name": "Single",
+                              "optional": false,
+                              "description": "AST node.",
+                              "line": 6,
+                              "source": "@return {ASTnode}            Single AST node."
+                            }
+                          ],
+                          "line": 0,
+                          "description": "Transforms a map of module-hashes-to-URLs to the AST equivalent.",
+                          "source": "Transforms a map of module-hashes-to-URLs to the AST equivalent.\n\n@param  {Object} urls        Keys are module hashes, values are URL strings.\n@param  {String} globalName  Global variable name of Interlock run-time.\n\n@return {ASTnode}            Single AST node."
+                        }
+                      },
+                      "children": [],
+                      "markdown": "## constructRegisterUrls\n  \nTransforms a map of module-hashes-to-URLs to the AST equivalent.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L118-L127).\n\n  ",
+                      "size": 1
+                    }
+                  ],
+                  "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | of bundle. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L136-L147).\n\n  "
+                }
+              ],
+              "markdown": "## constructBundle\n  \nThe primary constructor.  Given a set of options, construct Program AST to be emitted\nas JavaScript.\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs\nwill be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be\ntransformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered\nto invoke the specified module on load. |\n| Return value |  | ASTnode | program AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L164-L167).\n\n  "
+            }
+          ],
+          "markdown": "## emitRawBundles\n  \n    This is an **asynchronous stream plugin**.  This means that the function should\n    return a stream that emits expected values.\n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L68-L89).\n\n  "
+        }
+      ],
+      "markdown": "## buildOutput\n  \nGiven a stream of bundles, reduces those bundles down into a promise that\nresolves into a final compilation object.\n\nThis compilation object will have three key/value pairs:\n\n- cache:    populated cache from the compilation\n- bundles:  a mapping of destination paths to `raw` code\n- opts:     the original options passed to the compilation)\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundles** | Stream | Bundles generated by [getBundles](#getbundles). |\n| Return value |  | Promise | object. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L105-L120).\n\n  "
+    }
+  ],
+  "markdown": "## compile\n  \nPerforms and end-to-end compilation.  Its return value is a promise\nthat will resolve to the output of [buildOutput](#buildoutput).\n\n    This is an **asynchronous promise plugin**.  This means that the function\n    should return a promise that resolves to the expected value.\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Return value |  | Promise | Resolves to the compilation output. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L128-L134).\n\n  "
+}

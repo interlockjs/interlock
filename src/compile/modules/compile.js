@@ -8,8 +8,8 @@ import Promise from "bluebird";
 import * as Pluggable from "../../pluggable";
 import { toArray, toHash } from "../../util/stream";
 
-import resolve from "./resolve";
-import loadAst from "./load-ast";
+import resolveModule from "./resolve";
+import loadModule from "./load";
 import hashModule from "./hash";
 
 import transformModuleAst from "./transform-module-ast";
@@ -47,7 +47,7 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
     // source module, and the second element is the resolved (but un-generated)
     // asset.
     const resolvedDeps = most.from(synchronousRequires)
-      .map(requireStr => this.resolve(requireStr, contextPath, module.ns, module.nsRoot)
+      .map(requireStr => this.resolveModule(requireStr, contextPath, module.ns, module.nsRoot)
         .then(asset => [requireStr, asset]))
       .await();
 
@@ -59,7 +59,7 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
 
     // A stream of all (un-generated) shallow dependencies.
     const directDeps = resolvedDeps
-      .map(([, asset]) => Promise.resolve(modulesByAbsPath[asset.path] || this.loadAst(asset)))
+      .map(([, asset]) => Promise.resolve(modulesByAbsPath[asset.path] || this.loadModule(asset)))
       .await();
 
     // A stream of all deep dependencies of the source module, fully generated.
@@ -117,7 +117,7 @@ const compileModules = Pluggable.stream(function compileModules (seedModules) {
     // should be filtered out of the resulting stream.
     .skipRepeats();
 
-}, { resolve, loadAst, hashModule, transformModuleAst });
+}, { resolveModule, loadModule, hashModule });
 
 export default compileModules;
 

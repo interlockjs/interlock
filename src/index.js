@@ -10,7 +10,7 @@ import Joi from "joi";
 import compile from "./compile";
 import { entries } from "./util/object";
 import { interlockConstructorInput } from "./schemas/index";
-import loadAst from "./compile/modules/load-ast";
+import loadModule from "./compile/modules/load";
 import compileModules from "./compile/modules/compile";
 
 
@@ -115,7 +115,7 @@ function getRefreshedAsset (compilation, changedFilePath) {
     hash: null
   });
 
-  return loadAst.call(compilation, newAsset);
+  return loadModule.call(compilation, newAsset);
 }
 
 Interlock.prototype.watch = function (save = false) {

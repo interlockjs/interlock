@@ -32,7 +32,7 @@ The function that it wraps can be found [here](../src/compile/bundles/bootstrap.
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L17-L24).
+This Pluggable's definition can be found [here](../src/compile/index.js#L18-L25).
 
 ## buildOutput
 
@@ -54,7 +54,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | object. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L104-L119).
+This Pluggable's definition can be found [here](../src/compile/index.js#L105-L120).
 
 ## compile
 
@@ -69,14 +69,14 @@ should return a promise that resolves to the expected value.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L127-L133).
+This Pluggable's definition can be found [here](../src/compile/index.js#L128-L134).
 
 ## compileModules
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L17-L119).
+This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L18-L120).
 
 ## constructBundle
 
@@ -99,7 +99,7 @@ to invoke the specified module on load. |
 | Return value |  | ASTnode | program AST node. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L163-L166).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L164-L167).
 
 ## constructBundleBody
 
@@ -114,7 +114,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Array | of bundle. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L135-L146).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L136-L147).
 
 ## constructCommonModule
 
@@ -133,7 +133,7 @@ dependent. |
 | Return value |  | ASTnode | expression AST node. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L39-L47).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L40-L48).
 
 ## constructModuleSet
 
@@ -151,7 +151,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Array | of AST nodes to be emitted as JavaScript. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L59-L77).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L60-L78).
 
 ## constructRegisterUrls
 
@@ -167,7 +167,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | ASTnode | AST node. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L117-L126).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L118-L127).
 
 ## constructRuntime
 
@@ -182,7 +182,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | Array | of AST nodes. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L86-L90).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L87-L91).
 
 ## createModule
 
@@ -212,28 +212,28 @@ The function that it wraps can be found [here](../src/compile/bundles/dedupe-imp
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L67-L88).
+This Pluggable's definition can be found [here](../src/compile/index.js#L68-L89).
 
 ## getBundles
 
 This is an **asynchronous stream plugin**.  This means that the function should
 return a stream that emits expected values.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L38-L58).
+This Pluggable's definition can be found [here](../src/compile/index.js#L39-L59).
 
 ## getModuleMaps
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L26-L36).
+This Pluggable's definition can be found [here](../src/compile/index.js#L27-L37).
 
 ## getUrls
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L60-L65).
+This Pluggable's definition can be found [here](../src/compile/index.js#L61-L66).
 
 ## hashBundle
 
@@ -273,14 +273,14 @@ The function that it wraps can be found [here](../src/compile/bundles/interpolat
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L62-L67).
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L62-L67).
 
 ## parseSourceToAst
 
 This is an **asynchronous promise plugin**.  This means that the function
 should return a promise that resolves to the expected value.
 
-This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L16-L36).
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L16-L36).
 
 ## preresolve
 
@@ -315,7 +315,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | String | raw source of the file, in string format. |
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/load-ast.js#L58-L60).
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L58-L60).
 
 ## resolveModule
 
@@ -339,7 +339,7 @@ should return a promise that resolves to the expected value.
 | Return value |  | ASTnode | AST node. |
 
 
-This Pluggable's definition can be found [here](../src/compile/construct/index.js#L100-L107).
+This Pluggable's definition can be found [here](../src/compile/construct/index.js#L101-L108).
 
 ## updateBundleHash
 

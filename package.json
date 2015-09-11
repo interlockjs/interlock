@@ -35,11 +35,11 @@
     "lodash": "^3.8.0",
     "mkdirp": "^0.5.1",
     "most": "^0.15.0",
-    "source-map": "^0.4.2"
+    "source-map": "^0.5.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.0.5",
-    "chai": "^2.3.0",
+    "chai": "^3.2.0",
     "comment-parser": "^0.3.0",
     "eslint": "^1.1.0",
     "eslint-config-defaults": "^4.2.0",

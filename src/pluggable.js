@@ -1,5 +1,7 @@
 import Promise from "bluebird";
 
+import { PROFILER_ACTIVE, createEvent } from "./profiler";
+
 
 export const CONTINUE = Symbol.for("interlock.continue");
 
@@ -54,6 +56,8 @@ export function stream (fn, dependencies = {}) {
 
 export function promise (fn, dependencies = {}) {
   function pluggableFn () {
+    let concludeEvent;
+    if (PROFILER_ACTIVE) { concludeEvent = createEvent(fn.name); }
     const invokedCxt = this || {};  // eslint-disable-line consistent-this
 
     const context = getContext(this, dependencies);
@@ -78,7 +82,9 @@ export function promise (fn, dependencies = {}) {
         Promise.resolve(transform.call(context, previousResult, args)));
     }
 
-    return chainedResult;
+    return PROFILER_ACTIVE ?
+      chainedResult.then(val => { concludeEvent(); return val; }) :
+      chainedResult;
   }
 
   pluggableFn.__isPluggable__ = true;

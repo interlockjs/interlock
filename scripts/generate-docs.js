@@ -98,7 +98,7 @@ function getNamedFunctions (ast) {
   return functions;
 }
 
-function getEdges(objNode) {
+function getEdges (objNode) {
   if (!objNode || objNode.type !== "ObjectExpression") {
     return [];
   }
@@ -307,12 +307,12 @@ function buildJson (pluggables) {
 }
 
 const pluggables = getAllPluggables()
-  .then(assertNoDuplicates)
+  .then(assertNoDuplicates);
 
 pluggables
   .then(sortPluggables)
-  .then(pluggables => {
-    return _.chain(pluggables)
+  .then(_pluggables => {
+    return _.chain(_pluggables)
       .map(renderToMarkdown)
       .map(trim)
       .reduce((bigMd, pluggableMd) => bigMd + pluggableMd, PREAMBLE)
@@ -333,7 +333,7 @@ pluggables
 
 pluggables
   .then(buildJson)
-  .catch(console.log.bind(console))
+  .catch(console.log.bind(console)) // eslint-disable-line no-console
   .then(json => {
     fs.writeFileSync(jsonOutputPath, JSON.stringify(json, null, 2));
     console.log(`${green("[ok]")} JSON generated successfully`); // eslint-disable-line no-console

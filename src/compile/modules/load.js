@@ -4,9 +4,8 @@ import path from "path";
 import Promise from "bluebird";
 import { parse } from "babel-core";
 
-import { getTraversableAst } from "../../ast/traverse";
-import { deepAssign } from "../../util/object";
 import transform from "../../ast/transform";
+import { deepAssign } from "../../util/object";
 import * as Pluggable from "../../pluggable";
 
 
@@ -21,14 +20,13 @@ const parseSourceToAst = Pluggable.promise(function parseSourceToAst (raw, sourc
       locations: true,
       ranges: true
     });
-    const traversable = getTraversableAst(babelAst);
 
-    return transform(traversable, tuple => {
-      const { node/*, type, key, children, parents*/ } = tuple;
+    return transform(babelAst, tuple => {
+      const { node/*, type, parents*/ } = tuple;
       if (node.loc) {
-        return deepAssign(tuple, "node.loc.source", sourceFile);
+        return deepAssign(node, "loc.source", sourceFile);
       }
-      return tuple;
+      return node;
     });
   } catch (err) {
     return Promise.reject(`Unable to parse file: ${sourceFile}\n${err.toString()}`);

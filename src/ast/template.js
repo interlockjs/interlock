@@ -1,12 +1,13 @@
 import { parse } from "babel-core";
+import _ from "lodash";
 
 import { deepAssign } from "../util/object";
 
 import transformAst from "./transform";
-import { getTraversableAst } from "./traverse";
+
 
 function template (strTemplate, modifier) {
-  const traversable = getTraversableAst(parse(strTemplate));
+  const templateAst = parse(strTemplate);
 
   return (replacements = {}) => {
     const bodyActions = Object.keys(replacements.body || {})
@@ -18,19 +19,19 @@ function template (strTemplate, modifier) {
             node.body[0].type === "ExpressionStatement" &&
             node.body[0].expression.type === "Identifier" &&
             node.body[0].expression.name === placeholder) {
-          return deepAssign(tuple, "node.body", replacements.body[placeholder]);
+          return deepAssign(node, "body", replacements.body[placeholder]);
         }
 
-        return tuple;
+        return node;
       });
 
     const identifierActions = Object.keys(replacements.identifier || {})
       .map(placeholder => tuple => {
         const { node } = tuple;
         if (node.type === "Identifier" && node.name === placeholder) {
-          return deepAssign(tuple, "node", replacements.identifier[placeholder]);
+          return _.cloneDeep(replacements.identifier[placeholder]);
         }
-        return tuple;
+        return node;
       });
 
     // TODO: `statementsActions`
@@ -38,18 +39,20 @@ function template (strTemplate, modifier) {
     //  - parent should flatten arrays after chidren are processed
 
     const actions = [].concat(bodyActions, identifierActions);
-    return transformAst(traversable, tuple => {
+    const programAst = transformAst(templateAst, tuple => {
       for (const action of actions) {
         const result = action(tuple);
-        if (result !== tuple) { return result; }
+        if (result !== tuple.node) { return result; }
       }
-      return tuple;
-    }).then(modifier);
+      return tuple.node;
+    });
+
+    return modifier(programAst);
   };
 }
 
 export function programTmpl (strTemplate) {
-  return template(strTemplate);
+  return template(strTemplate, programAst => programAst);
 }
 
 export function bodyTmpl (strTemplate) {

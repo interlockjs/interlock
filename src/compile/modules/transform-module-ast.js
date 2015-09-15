@@ -4,7 +4,7 @@ import { Plugin, transform } from "babel-core";
 import transformAmd from "./transform-amd";
 
 export default function transformModuleAst (origAst, babelUserConfig = {}) {
-  const synchronousRequires = [];
+  let synchronousRequires = [];
 
   const getRequires = new Plugin("get-requires", {
     visitor: {
@@ -34,6 +34,8 @@ export default function transformModuleAst (origAst, babelUserConfig = {}) {
     }]
   });
 
+  synchronousRequires = _.uniq(synchronousRequires);
+
   const { ast } = transform.fromAst(origAst, null, config);
-  return {ast, synchronousRequires};
+  return { ast, synchronousRequires };
 }

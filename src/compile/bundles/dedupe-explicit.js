@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
 function dedupeExplicit (seedBundles, modulesByAbsPath) {
 
@@ -29,4 +29,4 @@ function dedupeExplicit (seedBundles, modulesByAbsPath) {
   });
 }
 
-export default Pluggable.promise(dedupeExplicit);
+export default pluggable(dedupeExplicit);

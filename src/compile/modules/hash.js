@@ -1,8 +1,8 @@
 import crypto from "crypto";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
-const updateModuleHash = Pluggable.promise(function updateModuleHash (args) {
+const updateModuleHash = pluggable(function updateModuleHash (args) {
   const { update, module } = args;
 
   const dependencyHashes = module.dependencies.map(dep => dep.hash);
@@ -26,4 +26,4 @@ function hashModule (module) {
     .then(() => shasum.digest("hex"));
 }
 
-export default Pluggable.promise(hashModule, { updateModuleHash });
+export default pluggable(hashModule, { updateModuleHash });

@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
 /**
  * Calculate the bundle's hash by invoking `update` with data from the bundle.
@@ -9,7 +9,7 @@ import * as Pluggable from "../../pluggable";
  * @param  {Function} update  Updates the ongoing computation of bundle hash.
  * @param  {Object}   bundle  The bundle object.
  */
-const updateBundleHash = Pluggable.promise(function updateBundleHash (update, bundle) {
+const updateBundleHash = pluggable(function updateBundleHash (update, bundle) {
   update(JSON.stringify(bundle.moduleHashes), "utf-8");
   update(JSON.stringify(!!bundle.entry), "utf-8");
   update(JSON.stringify(!!bundle.includeRuntime), "utf-8");
@@ -37,4 +37,4 @@ function hashBundle (bundle) {
     .then(() => shasum.digest());
 }
 
-export default Pluggable.promise(hashBundle, { updateBundleHash });
+export default pluggable(hashBundle, { updateBundleHash });

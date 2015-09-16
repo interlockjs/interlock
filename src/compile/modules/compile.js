@@ -4,7 +4,7 @@ import _ from "lodash";
 import { transform } from "babel-core";
 import Promise from "bluebird";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";
@@ -12,7 +12,7 @@ import transformModuleAst from "./transform-module-ast";
 import updateRequires from "./update-requires";
 
 
-const compileModules = Pluggable.promise(function compileModules (seedModules) {
+const compileModules = pluggable(function compileModules (seedModules) {
   const modulesByAbsPath = this.cache.modulesByAbsPath;
 
   const getDependency = (requireStr, contextPath, contextNs, contextNsRoot) => {

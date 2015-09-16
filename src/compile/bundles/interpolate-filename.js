@@ -1,4 +1,4 @@
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
 function interpolateFilename (bundle) {
   let dest = bundle.dest
@@ -11,4 +11,4 @@ function interpolateFilename (bundle) {
   return Object.assign({}, bundle, { dest });
 }
 
-export default Pluggable.promise(interpolateFilename);
+export default pluggable(interpolateFilename);

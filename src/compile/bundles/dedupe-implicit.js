@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
 function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disable-line max-len,max-statements
   bundles = bundles.slice();
@@ -34,7 +34,7 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
   }
 }
 
-export default Pluggable.promise(function dedupeImplicit (explicitBundles) {
+export default pluggable(function dedupeImplicit (explicitBundles) {
   // Take the explicit bundles array and emit implicit bundles (where the dependency
   // sets of two explicit bundles intersect) followed by the explicit bundles themselves.
   const allBundles = [];

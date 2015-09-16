@@ -23,7 +23,7 @@ function getPluggableSequences (invokedCxt, fnName) {
   return [overrideSeq, transformSeq];
 }
 
-export function promise (fn, dependencies = {}) {
+export default function pluggable (fn, dependencies = {}) {
   function pluggableFn () {
     let concludeEvent;
     if (PROFILER_ACTIVE) { concludeEvent = createEvent(fn.name); }

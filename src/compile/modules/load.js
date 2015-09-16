@@ -6,13 +6,13 @@ import { parse } from "babel-core";
 
 import transform from "../../ast/transform";
 import { deepAssign } from "../../util/object";
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 
 
 const readFilePromise = Promise.promisify(fs.readFile, fs);
 
 
-const parseSourceToAst = Pluggable.promise(function parseSourceToAst (raw, sourceFile) {
+const parseSourceToAst = pluggable(function parseSourceToAst (raw, sourceFile) {
   if (!sourceFile) { return parse(raw); }
 
   try {
@@ -53,11 +53,11 @@ const parseSourceToAst = Pluggable.promise(function parseSourceToAst (raw, sourc
  *
  * @return {String}        The raw source of the file, in string format.
  */
-export const readSource = Pluggable.promise(function readSource (asset) {
+export const readSource = pluggable(function readSource (asset) {
   return readFilePromise(asset.path, "utf-8");
 });
 
-const loadModule = Pluggable.promise(function loadModule (asset) {
+const loadModule = pluggable(function loadModule (asset) {
   return this.readSource(asset)
     .then(rawSource => this.parseSourceToAst(rawSource, path.join(asset.ns, asset.nsPath))
       .then(ast => Object.assign({}, asset, { ast, rawSource }))

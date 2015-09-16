@@ -4,7 +4,7 @@ import path from "path";
 import Promise from "bluebird";
 import { builders as b } from "ast-types";
 
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 import { programTmpl, bodyTmpl, expressionStmtTmpl, expressionTmpl } from "../../ast/template";
 import { fromObject } from "../../util/ast";
 
@@ -35,7 +35,7 @@ const iifeTmpl = getTemplate("iife", programTmpl);
  *
  * @return {ASTnode}            Object expression AST node.
  */
-export const constructCommonModule = Pluggable.promise(
+export const constructCommonModule = pluggable(
   function constructCommonModule (moduleBody, deps) {
     const depsHashes = deps.map(dependency => b.literal(dependency.hash));
     return commonModuleTmpl({
@@ -55,7 +55,7 @@ export const constructCommonModule = Pluggable.promise(
  *
  * @return {Array}                 Array of AST nodes to be emitted as JavaScript.
  */
-export const constructModuleSet = Pluggable.promise(
+export const constructModuleSet = pluggable(
   function constructModuleSet (modules, globalName) {
     return Promise.all(modules.map(module =>
       this.constructCommonModule(module.ast.body, module.dependencies)
@@ -78,7 +78,7 @@ export const constructModuleSet = Pluggable.promise(
  *
  * @return {Array}              Array of AST nodes.
  */
-export const constructRuntime = Pluggable.promise(function constructRuntime (globalName) {
+export const constructRuntime = pluggable(function constructRuntime (globalName) {
   return runtimeTmpl({
     identifier: { "GLOBAL_NAME": b.literal(globalName) }
   });
@@ -92,7 +92,7 @@ export const constructRuntime = Pluggable.promise(function constructRuntime (glo
  *
  * @return {ASTnode}            Single AST node.
  */
-export const setLoadEntry = Pluggable.promise(function setLoadEntry (moduleHash, globalName) {
+export const setLoadEntry = pluggable(function setLoadEntry (moduleHash, globalName) {
   return loadModuleWhenReadyTmpl({
     identifier: {
       "GLOBAL_NAME": b.literal(globalName),
@@ -109,7 +109,7 @@ export const setLoadEntry = Pluggable.promise(function setLoadEntry (moduleHash,
  *
  * @return {ASTnode}            Single AST node.
  */
-export const constructRegisterUrls = Pluggable.promise(
+export const constructRegisterUrls = pluggable(
   function constructRegisterUrls (urls, globalName) {
     return registerUrlsTmpl({
       identifier: {
@@ -127,7 +127,7 @@ export const constructRegisterUrls = Pluggable.promise(
  *
  * @return {Array}         Body of bundle.
  */
-export const constructBundleBody = Pluggable.promise(function constructBundleBody (opts) {
+export const constructBundleBody = pluggable(function constructBundleBody (opts) {
   const globalName = opts.globalName || "__interlock__";
 
   const runtimeP = opts.includeRuntime && this.constructRuntime(globalName);
@@ -155,7 +155,7 @@ export const constructBundleBody = Pluggable.promise(function constructBundleBod
  *
  * @return {ASTnode}                      Single program AST node.
  */
-export const constructBundle = Pluggable.promise(function constructBundle (opts) {
+export const constructBundle = pluggable(function constructBundle (opts) {
   return this.constructBundleBody(opts)
     .then(body => iifeTmpl({ body: { "BODY": body.filter(x => x) } }));
 }, { constructBundleBody });

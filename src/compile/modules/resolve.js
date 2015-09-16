@@ -1,7 +1,7 @@
-import * as Pluggable from "../../pluggable";
+import pluggable from "../../pluggable";
 import resolve from "../../resolve";
 
-const createModule = Pluggable.promise(function createModule (overrides) {
+const createModule = pluggable(function createModule (overrides) {
   return Object.assign({
     path: null,
     ns: null,
@@ -15,7 +15,7 @@ const createModule = Pluggable.promise(function createModule (overrides) {
   }, overrides);
 });
 
-const preresolve = Pluggable.promise(function preresolve (requireStr) {
+const preresolve = pluggable(function preresolve (requireStr) {
   return requireStr;
 });
 
@@ -40,4 +40,4 @@ function resolveModule (requireStr, contextPath, ns, nsRoot, extensions) {
     });
 }
 
-export default Pluggable.promise(resolveModule, { preresolve, createModule });
+export default pluggable(resolveModule, { preresolve, createModule });

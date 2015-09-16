@@ -2,7 +2,7 @@ import escodegen from "escodegen";
 import _ from "lodash";
 import Promise from "bluebird";
 
-import * as Pluggable from "../pluggable";
+import pluggable from "../pluggable";
 import { CONTINUE } from "../pluggable";
 import { constructBundle } from "./construct";
 import compileModules from "./modules/compile";
@@ -13,7 +13,7 @@ import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
 
 
-export const bootstrapCompilation = Pluggable.promise(function bootstrapCompilation (opts) {
+export const bootstrapCompilation = pluggable(function bootstrapCompilation (opts) {
   return {
     cache: {
       modulesByAbsPath: Object.create(null)
@@ -22,7 +22,7 @@ export const bootstrapCompilation = Pluggable.promise(function bootstrapCompilat
   };
 });
 
-export const getSeedModules = Pluggable.promise(function getSeedModules () {
+export const getSeedModules = pluggable(function getSeedModules () {
   return Promise.all(
     [].concat(_.keys(this.opts.entry), _.keys(this.opts.split))
       .map(relPath => this.resolveModule(relPath)
@@ -31,7 +31,7 @@ export const getSeedModules = Pluggable.promise(function getSeedModules () {
     .then(_.object);
 }, { resolveModule });
 
-export const getModuleMaps = Pluggable.promise(function getModuleMaps (seedModules) {
+export const getModuleMaps = pluggable(function getModuleMaps (seedModules) {
   return this.compileModules(seedModules)
     .then(modules => _.reduce(modules, (moduleMaps, module) => {
       moduleMaps.byHash[module.hash] = module;
@@ -43,7 +43,7 @@ export const getModuleMaps = Pluggable.promise(function getModuleMaps (seedModul
     }));
 }, { compileModules });
 
-export const initBundle = Pluggable.promise(function initBundle (bundleDef, module, isEntryPt) {
+export const initBundle = pluggable(function initBundle (bundleDef, module, isEntryPt) {
   return {
     module,
     dest: bundleDef.dest,
@@ -52,7 +52,7 @@ export const initBundle = Pluggable.promise(function initBundle (bundleDef, modu
   };
 });
 
-export const getSeedBundles = Pluggable.promise(function getSeedBundles (seedModules, modulesByPath) {
+export const getSeedBundles = pluggable(function getSeedBundles (seedModules, modulesByPath) {
   return Promise.all([].concat(
     _.map(this.opts.entry, (bundleDef, relPath) =>
       this.initBundle(bundleDef, modulesByPath[seedModules[relPath].path], true)),
@@ -61,7 +61,7 @@ export const getSeedBundles = Pluggable.promise(function getSeedBundles (seedMod
   ));
 }, { initBundle });
 
-export const getBundles = Pluggable.promise(function getBundles (seedModules, moduleMaps) {
+export const getBundles = pluggable(function getBundles (seedModules, moduleMaps) {
   return this.getSeedBundles(seedModules, moduleMaps.byAbsPath)
     .then(seedBundles => this.dedupeExplicit(seedBundles, moduleMaps.byAbsPath))
     .then(this.dedupeImplicit)
@@ -74,14 +74,14 @@ export const getBundles = Pluggable.promise(function getBundles (seedModules, mo
     .then(bundles => Promise.all(bundles.map(this.interpolateFilename)))
 }, { getSeedBundles, dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 
-export const getUrls = Pluggable.promise(function getUrls (bundles) {
+export const getUrls = pluggable(function getUrls (bundles) {
   return bundles.reduce((urls, bundle) => {
     bundle.moduleHashes.forEach(hash => urls[hash] = bundle.dest);
     return urls;
   }, {});
 });
 
-export const emitRawBundles = Pluggable.promise(function emitRawBundles (bundlesArr, urls) {
+export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
   return Promise.all(bundlesArr.map(bundle =>
     this.constructBundle({
       modules: bundle.modules,
@@ -120,7 +120,7 @@ export const emitRawBundles = Pluggable.promise(function emitRawBundles (bundles
  *
  * @return {Promise}          Compilation object.
  */
-export const buildOutput = Pluggable.promise(function buildOutput (bundles) {
+export const buildOutput = pluggable(function buildOutput (bundles) {
   return this.getUrls(bundles)
     .then(urls => this.emitRawBundles(bundles, urls))
     .then(rawBundles => _.chain(rawBundles)
@@ -139,7 +139,7 @@ export const buildOutput = Pluggable.promise(function buildOutput (bundles) {
  *
  * @return {Promise}  compilation      Resolves to the compilation output.
  */
-const compile = Pluggable.promise(function compile () {
+const compile = pluggable(function compile () {
   return this.getSeedModules()
     .then(seedModules => Promise.all([
       seedModules,

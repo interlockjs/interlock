@@ -110,7 +110,7 @@ function getRefreshedAsset (compilation, changedFilePath) {
       ast: null,
       requireNodes: null,
       dependencies: null,
-      hash: null      
+      hash: null
     }));
 }
 

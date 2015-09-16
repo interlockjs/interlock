@@ -37,7 +37,8 @@ const compileModules = pluggable(function compileModules (seedModules) {
     // resolved and fully generated, and the module's hash will also have been calculated.
     return modulesByAbsPath[module.path] = this.loadModule(module)
       .then(loadedModule => {
-        const { ast, synchronousRequires } = transformModuleAst(loadedModule.ast, this.opts.babelConfig);
+        const { ast, synchronousRequires } =
+          transformModuleAst(loadedModule.ast, this.opts.babelConfig);
         Object.assign(module, loadedModule, { ast: ast.program });
 
         const dependenciesP = Promise.all(synchronousRequires.map(requireStr =>

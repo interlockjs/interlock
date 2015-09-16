@@ -1,13 +1,11 @@
 import fs from "fs";
 import path from "path";
 
-import most from "most";
 import Promise from "bluebird";
 import { builders as b } from "ast-types";
 
 import * as Pluggable from "../../pluggable";
 import { programTmpl, bodyTmpl, expressionStmtTmpl, expressionTmpl } from "../../ast/template";
-import { toArray } from "../../util/stream";
 import { fromObject } from "../../util/ast";
 
 
@@ -49,7 +47,7 @@ export const constructCommonModule = Pluggable.promise(
 
 /**
  * Given an array of CJS modules (in the form of object expression AST nodes),
- * construct the AST of a file that would register those modules for consumpsion
+ * construct the AST of a file that would register those modules for consumption
  * by the Interlock run-time.
  *
  * @param  {Array}  modules        Array of modules objects.
@@ -59,14 +57,10 @@ export const constructCommonModule = Pluggable.promise(
  */
 export const constructModuleSet = Pluggable.promise(
   function constructModuleSet (modules, globalName) {
-    const moduleHashNodesS = most.from(modules)
-      .map(module =>
-        this.constructCommonModule(module.ast.body, module.dependencies)
-          .then(moduleDef => ({ hash: module.hash, moduleDef })))
-      .flatMap(most.fromPromise)
-      .map(({ hash, moduleDef }) => b.property("init", b.literal(hash), moduleDef));
-
-    return toArray(moduleHashNodesS)
+    return Promise.all(modules.map(module =>
+      this.constructCommonModule(module.ast.body, module.dependencies)
+        .then(moduleAst => b.property("init", b.literal(module.hash), moduleAst))
+    ))
       .then(moduleHashNodes => moduleSetTmpl({
         identifier: {
           "GLOBAL_NAME": b.literal(globalName),

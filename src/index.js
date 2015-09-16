@@ -145,11 +145,7 @@ Interlock.prototype.watch = function (save = false) {
       const refreshedAsset = getRefreshedAsset(lastCompilation, changedFilePath);
       delete lastCompilation.cache.modulesByAbsPath[changedFilePath];
 
-      compileModules.call(lastCompilation, most.of(refreshedAsset))
-        .reduce((updatedModules, module) => {
-          updatedModules.push(module);
-          return updatedModules;
-        }, [])
+      compileModules.call(lastCompilation, [refreshedAsset])
         .then(patchModules => {
           // Emit patch modules (changed module plus any new dependencies).
           add({ patchModules, changedFilePath });

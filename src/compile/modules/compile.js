@@ -1,123 +1,88 @@
 import path from "path";
 
-import most from "most";
 import _ from "lodash";
 import { transform } from "babel-core";
 import Promise from "bluebird";
 
 import * as Pluggable from "../../pluggable";
-import { toArray, toHash } from "../../util/stream";
-
 import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";
-
 import transformModuleAst from "./transform-module-ast";
 import updateRequires from "./update-requires";
 
-const compileModules = Pluggable.stream(function compileModules (seedModules) {
-  const modulesByAbsPath = this.cache.modulesByAbsPath;
-  const streamsByAbsPath = {};
 
-  /**
-   * In order, asynchronously accomplishes the following:
-   *
-   *  1. Parses the module's source to AST.
-   *  2. Resolves all of the module's shallow dependencies.
-   *  3. Generates module stubs for all shallow dependencies.
-   *  4. Recursively generates all dependencies and their dependencies.
-   *  5. Attaches generated (deep-)dependencies to module and calculates hash.
-   *  6. Updates all require statements with hashes of resolved modules.
-   *
-   * @param  {Object} module  Un-generated module object.
-   *
-   * @returns {Stream}         Stream of all generated dependencies, followed by
-   *                           the generated input module itself.
-   */
-  const genModules = module => {
-    if (module.path in streamsByAbsPath) {
-      return streamsByAbsPath[module.path];
+const compileModules = Pluggable.promise(function compileModules (seedModules) {
+  const modulesByAbsPath = {};
+
+  const getDependency = (requireStr, contextPath, contextNs, contextNsRoot) => {
+    return this.resolveModule(requireStr, contextPath, contextNs, contextNsRoot)
+      .then(compileModule.bind(this)) // eslint-disable-line no-use-before-define
+      .then(childModule => [requireStr, childModule]);
+  };
+
+  const getDeepDependencies = dependencies => _.chain(dependencies)
+    .map(([, dep]) => dep.deepDependencies.concat(dep))
+    .flatten()
+    .value();
+
+  const compileModule = module => {
+    if (module.path in modulesByAbsPath) {
+      return modulesByAbsPath[module.path];
     }
 
     const contextPath = path.dirname(module.path);
-    const {ast, synchronousRequires} = transformModuleAst(module.ast, this.opts.babelConfig);
-    module = Object.assign({}, module, { ast: ast.program });
 
-    // A stream of tuples, where the first element is a require string from the
-    // source module, and the second element is the resolved (but un-generated)
-    // asset.
-    const resolvedDeps = most.from(synchronousRequires)
-      .map(requireStr => this.resolveModule(requireStr, contextPath, module.ns, module.nsRoot)
-        .then(asset => [requireStr, asset]))
-      .await();
+    // When the promise resolves, all shallow- and deep- dependencies will have been
+    // resolved and fully generated, and the module's hash will also have been calculated.
+    return modulesByAbsPath[module.path] = this.loadModule(module)
+      .then(loadedModule => {
+        const { ast, synchronousRequires } = transformModuleAst(loadedModule.ast, this.opts.babelConfig);
+        Object.assign(module, loadedModule, { ast: ast.program });
 
-    // A hash of require strings to the paths of the modules they resolved to.
-    const resolvedRequiresPromise = resolvedDeps.reduce((resolvedRequires, [requireStr, asset]) => {
-      resolvedRequires[requireStr] = asset.path;
-      return resolvedRequires;
-    }, {});
+        const dependenciesP = Promise.all(synchronousRequires.map(requireStr =>
+          getDependency(requireStr, contextPath, module.ns, module.nsPath)));
+        const deepDependenciesP = dependenciesP.then(getDeepDependencies);
 
-    // A stream of all (un-generated) shallow dependencies.
-    const directDeps = resolvedDeps
-      .map(([, asset]) => Promise.resolve(modulesByAbsPath[asset.path] || this.loadModule(asset)))
-      .await();
-
-    // A stream of all deep dependencies of the source module, fully generated.
-    const descendants = directDeps.flatMap(dep => genModules(dep));
-
-    // Represents the module in the state where all shallow and deep dependencies have been
-    // resolved and fully generated, and where the module's hash has also been calculated.
-    const hashedModulePromise = Promise.all([
-      toArray(directDeps),
-      toArray(descendants),
-      toHash(descendants, "path")
-    ])
-      .then(([dependencies, deepDependencies, deepDepsHash]) => {
-        // Only deep-dependencies have been fully generated (via above call to
-        // `genModules`).  Each module in `module.dependencies` should refer to
-        // the fully generated version, so populate dependencies array with
-        // associated entries in deepDependencies.
-        dependencies = dependencies.map(dep => deepDepsHash[dep.path]);
-
+        return Promise.all([dependenciesP, deepDependenciesP]);
+      })
+      .then(([dependencies, deepDependencies]) => {
         const moduleWithDeps = Object.assign({}, module, {
-          // De-dupe any (deep-)dependencies by their hash, and add to the module.
+          // De-dupe any (deep-)dependencies by their hash.
           deepDependencies: _.chain(deepDependencies).indexBy("hash").values().value(),
-          dependencies: _.chain(dependencies).indexBy("hash").values().value()
+          dependencies: _.chain(dependencies)
+            .map(([, dependency]) => dependency)
+            .indexBy("hash")
+            .values()
+            .value()
         });
 
         return this.hashModule(moduleWithDeps)
-          .then(hash => Object.assign({}, moduleWithDeps, { hash }));
-      });
+          .then(hash => Object.assign({}, moduleWithDeps, { hash }))
+          .then(hashedModule => {
+            // Generate a mapping between the original require strings and the
+            // hashes of the modules they resolved to.
+            const requireStrToModHash = _.object(dependencies);
 
-    // Represents the module in the state where the argument of each require statement
-    // has been replaced with the hash of the corresponding dependency.
-    const updatedModulePromise = Promise.all([
-      hashedModulePromise,
-      resolvedRequiresPromise
-    ])
-      .then(([hashedModule, resolvedRequires]) => {
-        return modulesByAbsPath[module.path] = Object.assign({}, hashedModule, {
-          // Update require statements to refer to newly calculated hashes.
-          ast: transform.fromAst(module.ast, null, {
-            code: false,
-            whitelist: ["react"],
-            plugins: [ updateRequires(modulesByAbsPath, resolvedRequires)]
-          }).ast.program
-        });
-      });
+            // Update require statements to refer to the hashes of dependencies.
+            const updatedRequiresAst = transform.fromAst(module.ast, null, {
+              code: false,
+              whitelist: ["react"],
+              plugins: [ updateRequires(requireStrToModHash)]
+            }).ast.program;
 
-    return streamsByAbsPath[module.path] =
-      most.concat(descendants, most.fromPromise(updatedModulePromise));
+            return Object.assign({}, hashedModule, { ast: updatedRequiresAst });
+          });
+      });
   };
 
-  return seedModules
-    .flatMap(genModules)
-    // Repeats are (necessarily) generated as part of module generation, where
-    // two modules share as a dependency the same other module.  These repeats
-    // should be filtered out of the resulting stream.
-    .skipRepeats();
-
+  return Promise.all(seedModules.map(compileModule))
+    .then(compiledSeedModules => _.chain(compiledSeedModules)
+      .map(seedModule => seedModule.deepDependencies.concat(seedModule))
+      .flatten()
+      .uniq()
+      .value()
+    );
 }, { resolveModule, loadModule, hashModule });
 
 export default compileModules;
-

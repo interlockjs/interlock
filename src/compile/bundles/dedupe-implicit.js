@@ -1,4 +1,3 @@
-import most from "most";
 import _ from "lodash";
 
 import * as Pluggable from "../../pluggable";
@@ -35,11 +34,12 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
   }
 }
 
-function dedupeImplicit (explicitBundles) {
+export default Pluggable.promise(function dedupeImplicit (explicitBundles) {
   // Take the explicit bundles array and emit implicit bundles (where the dependency
   // sets of two explicit bundles intersect) followed by the explicit bundles themselves.
-  return most.generate(
-    genBundlesWithImplicit, explicitBundles, this.opts.implicitBundleDest);
-}
-
-export default Pluggable.stream(dedupeImplicit);
+  const allBundles = [];
+  for (const bundle of genBundlesWithImplicit(explicitBundles, this.opts.implicitBundleDest)) {
+    allBundles.push(bundle);
+  }
+  return allBundles;
+});

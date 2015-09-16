@@ -23,37 +23,6 @@ function getPluggableSequences (invokedCxt, fnName) {
   return [overrideSeq, transformSeq];
 }
 
-
-export function stream (fn, dependencies = {}) {
-  function pluggableFn () {
-    const invokedCxt = this || {};  // eslint-disable-line consistent-this
-
-    const context = getContext(this, dependencies);
-    const args = Array.prototype.slice.call(arguments);
-    const [overrideSeq, transformSeq] = getPluggableSequences(invokedCxt, fn.name);
-
-    let chainedResult = CONTINUE;
-
-    // Apply overrides, followed by default function.
-    for (const fnCandidate of overrideSeq.concat(fn)) {
-      chainedResult = chainedResult === CONTINUE ?
-        fnCandidate.apply(context, args) :
-        chainedResult;
-    }
-    chainedResult = chainedResult === CONTINUE ? null : chainedResult;
-
-    // Apply transforms.
-    for (const transform of transformSeq) {
-      chainedResult = transform.call(context, chainedResult, args);
-    }
-
-    return chainedResult;
-  }
-
-  pluggableFn.__isPluggable__ = true;
-  return pluggableFn;
-}
-
 export function promise (fn, dependencies = {}) {
   function pluggableFn () {
     let concludeEvent;

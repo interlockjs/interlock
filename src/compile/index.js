@@ -1,4 +1,3 @@
-import most from "most";
 import escodegen from "escodegen";
 import _ from "lodash";
 import Promise from "bluebird";
@@ -7,12 +6,11 @@ import * as Pluggable from "../pluggable";
 import { CONTINUE } from "../pluggable";
 import { constructBundle } from "./construct";
 import compileModules from "./modules/compile";
-import bootstrapBundles from "./bundles/bootstrap";
+import resolveModule from "./modules/resolve";
 import hashBundle from "./bundles/hash";
 import interpolateFilename from "./bundles/interpolate-filename";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
-import { toArray } from "../util/stream";
 
 
 export const bootstrapCompilation = Pluggable.promise(function bootstrapCompilation (opts) {
@@ -24,39 +22,57 @@ export const bootstrapCompilation = Pluggable.promise(function bootstrapCompilat
   };
 });
 
+export const getSeedModules = Pluggable.promise(function getSeedModules () {
+  return Promise.all(
+    [].concat(_.keys(this.opts.entry), _.keys(this.opts.split))
+      .map(relPath => this.resolveModule(relPath)
+        .then(module => [relPath, module])
+    ))
+    .then(_.object);
+}, { resolveModule });
+
 export const getModuleMaps = Pluggable.promise(function getModuleMaps (seedModules) {
   return this.compileModules(seedModules)
-    .reduce((moduleMaps, module) => {
+    .then(modules => _.reduce(modules, (moduleMaps, module) => {
       moduleMaps.byHash[module.hash] = module;
       moduleMaps.byAbsPath[module.path] = module;
       return moduleMaps;
     }, {
       byHash: {},
       byAbsPath: {}
-    });
+    }));
 }, { compileModules });
 
-export const getBundles = Pluggable.stream(function getBundles (bootstrappedBundles, moduleMapsP) {
-  const explicitDedupedBundlesP = moduleMapsP
-    .then(moduleMaps => this.dedupeExplicit(bootstrappedBundles, moduleMaps.byAbsPath));
+export const initBundle = Pluggable.promise(function initBundle (bundleDef, module, isEntryPt) {
+  return {
+    module,
+    dest: bundleDef.dest,
+    isEntry: isEntryPt,
+    includeRuntime: isEntryPt && !bundleDef.excludeRuntime
+  };
+});
 
-  return most
-    .fromPromise(Promise.all([moduleMapsP, explicitDedupedBundlesP]))
-    .flatMap(resolved => {
-      const [{byHash}, explicitBundles] = resolved;
-      return this.dedupeImplicit(explicitBundles)
-        // Populate bundles with module objects.
-        .map(bundle => Object.assign({}, bundle, {
-          modules: bundle.moduleHashes.map(hash => byHash[hash])
-        }));
-    })
-    .map(bundle => this.hashBundle(bundle)
-      .then(hash => Object.assign({}, bundle, { hash })))
-    .await()
-    .map(this.interpolateFilename)
-    .await();
+export const getSeedBundles = Pluggable.promise(function getSeedBundles (seedModules, modulesByPath) {
+  return Promise.all([].concat(
+    _.map(this.opts.entry, (bundleDef, relPath) =>
+      this.initBundle(bundleDef, modulesByPath[seedModules[relPath].path], true)),
+    _.map(this.opts.split, (bundleDef, relPath) =>
+      this.initBundle(bundleDef, modulesByPath[seedModules[relPath].path], false))
+  ));
+}, { initBundle });
 
-}, { dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
+export const getBundles = Pluggable.promise(function getBundles (seedModules, moduleMaps) {
+  return this.getSeedBundles(seedModules, moduleMaps.byAbsPath)
+    .then(seedBundles => this.dedupeExplicit(seedBundles, moduleMaps.byAbsPath))
+    .then(this.dedupeImplicit)
+    .then(bundles => bundles.map(bundle => Object.assign({}, bundle, {
+      modules: bundle.moduleHashes.map(hash => moduleMaps.byHash[hash])
+    })))
+    .then(bundles => Promise.all(bundles.map(bundle => this.hashBundle(bundle)
+      .then(hash => Object.assign({}, bundle, { hash }))
+    )))
+    .then(bundles => Promise.all(bundles.map(this.interpolateFilename)))
+}, { getSeedBundles, dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 
 export const getUrls = Pluggable.promise(function getUrls (bundles) {
   return bundles.reduce((urls, bundle) => {
@@ -65,27 +81,29 @@ export const getUrls = Pluggable.promise(function getUrls (bundles) {
   }, {});
 });
 
-export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundlesArr, urls) {
-  return most.from(bundlesArr)
-    .map(bundle => this.constructBundle({
+export const emitRawBundles = Pluggable.promise(function emitRawBundles (bundlesArr, urls) {
+  return Promise.all(bundlesArr.map(bundle =>
+    this.constructBundle({
       modules: bundle.modules,
       includeRuntime: bundle.includeRuntime,
       urls: bundle.isEntry ? urls : null,
       entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
-    }).then(bundleAst => escodegen.generate(bundleAst, {
-      format: { indent: { style: "  " } },
-      sourceMap: !!this.opts.sourceMaps,
-      sourceMapWithCode: true,
-      comment: !!this.opts.includeComments
-    })).then(genBundle => [bundle, genBundle]))
-    .flatMap(most.fromPromise)
-    .flatMap(([bundle, {code, map}]) => {
-      const outputBundle = Object.assign({}, bundle, { raw: code });
-      const mapDest = bundle.dest + ".map";
-      return this.opts.sourceMaps === true ?
-        most.from([outputBundle, { raw: map, dest: mapDest }]) :
-        most.of(outputBundle);
-    });
+    })
+      .then(bundleAst => escodegen.generate(bundleAst, {
+        format: { indent: { style: "  " }},
+        sourceMap: !!this.opts.sourceMaps,
+        sourceMapWithCode: true,
+        comment: !!this.opts.includeComments
+      }))
+      .then(({ code, map }) => {
+        const outputBundle = Object.assign({}, bundle, { raw: code });
+        const mapDest = bundle.dest + ".map";
+        return this.opts.sourceMaps === true ?
+          [outputBundle, { raw: map, dest: mapDest }] :
+          [outputBundle];
+      })
+  ))
+    .then(_.flatten);
 }, { constructBundle });
 
 /**
@@ -103,35 +121,33 @@ export const emitRawBundles = Pluggable.stream(function emitRawBundles (bundlesA
  * @return {Promise}          Compilation object.
  */
 export const buildOutput = Pluggable.promise(function buildOutput (bundles) {
-  const bundlesP = toArray(bundles);
-  return bundlesP.then(bundlesArr => {
-    return this.getUrls(bundlesArr).then(urls => {
-      return this.emitRawBundles(bundlesArr, urls)
-        .reduce((output, bundle) => {
-          output.bundles[bundle.dest] = bundle;
-          return output;
-        }, {
-          cache: this.cache,
-          bundles: {},
-          opts: this.opts
-        });
-    });
-  });
+  return this.getUrls(bundles)
+    .then(urls => this.emitRawBundles(bundles, urls))
+    .then(rawBundles => _.chain(rawBundles)
+        .map(rawBundle => [rawBundle.dest, rawBundle])
+        .object()
+        .value())
+    .then(bundlesByDest => ({
+      bundles: bundlesByDest,
+      opts: this.opts,
+      cache: this.cache
+    }));
 }, { getUrls, emitRawBundles });
 
 /**
- * Performs and end-to-end compilation.  Its return value is a promise
- * that will resolve to the output of [buildOutput](#buildoutput).
+ * Performs an end-to-end compilation.
  *
  * @return {Promise}  compilation      Resolves to the compilation output.
  */
 const compile = Pluggable.promise(function compile () {
-  const bootstrappedBundles = this.bootstrapBundles(this.opts.entry, this.opts.split);
-  const seedModules = bootstrappedBundles.map(bundle => bundle.module);
-  const moduleMapsPromise = this.getModuleMaps(seedModules);
-  const bundles = this.getBundles(bootstrappedBundles, moduleMapsPromise);
-  return this.buildOutput(bundles);
-}, { bootstrapBundles, getModuleMaps, getBundles, buildOutput });
+  return this.getSeedModules()
+    .then(seedModules => Promise.all([
+      seedModules,
+      this.getModuleMaps(_.values(seedModules))
+    ]))
+    .then(([seedModules, moduleMaps]) => this.getBundles(seedModules, moduleMaps))
+    .then(this.buildOutput);
+}, { getSeedModules, getModuleMaps, getBundles, buildOutput });
 
 function addPluginsToContext (compilationContext) {
   compilationContext.__pluggables__ = { override: {}, transform: {} };

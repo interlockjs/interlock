@@ -31,18 +31,6 @@ Something about Pluggable.CONTINUE...
 
 `;
 
-const PLUGGABLE_TYPE_PARAGRAPHS = {
-  sync: `
-    This is a **synchronous pluggable**, which means that the function should return
-    a real value, rather than a promise or a stream.`,
-  promise: `
-    This is an **asynchronous promise plugin**.  This means that the function
-    should return a promise that resolves to the expected value.`,
-  stream: `
-    This is an **asynchronous stream plugin**.  This means that the function should
-    return a stream that emits expected values.`
-};
-
 
 function green (text) {
   return "\x1b[32m" + text + "\x1b[0m";
@@ -114,28 +102,26 @@ function getPluggablesForFile (fpath) {
 
   const controller = new estraverse.Controller();
 
-  function enter (node, parent) {
-    if (node.type === "MemberExpression" &&
-        node.object.name === "Pluggable" &&
-        parent.arguments) {
+  function enter (node) {
+    if (node.type === "CallExpression" &&
+        node.callee.name === "pluggable") {
 
       const pluggable = {
         path: relPath,
-        type: node.property.name,
         pluggableLine: node.loc.start.line,
-        edges: getEdges(parent.arguments[1])
+        edges: getEdges(node.arguments[1])
       };
 
-      if (parent.arguments[0].type === "FunctionExpression") {
+      if (node.arguments[0].type === "FunctionExpression") {
         Object.assign(pluggable, {
-          fnParams: parent.arguments[0].params,
-          name: parent.arguments[0].id.name,
-          fnStart: parent.loc.start.line,
-          fnEnd: parent.loc.end.line,
+          fnParams: node.arguments[0].params,
+          name: node.arguments[0].id.name,
+          fnStart: node.loc.start.line,
+          fnEnd: node.loc.end.line,
           doc: findDoc(node, controller.parents().reverse())
         });
       } else {
-        Object.assign(pluggable, namedFunctions[parent.arguments[0].name]);
+        Object.assign(pluggable, namedFunctions[node.arguments[0].name]);
       }
 
       pluggable.fnParams = pluggable.fnParams.map(param => param.name);
@@ -273,7 +259,7 @@ function renderToMarkdown (pluggable) {
   /*eslint-enable max-len */
 
   return `## ${pluggable.name}
-  ${doc}${PLUGGABLE_TYPE_PARAGRAPHS[pluggable.type]}
+  ${doc}
   ${tagsData}
   ${linksInfo}
 

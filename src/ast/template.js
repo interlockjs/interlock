@@ -1,5 +1,4 @@
 import { parse } from "babel-core";
-import _ from "lodash";
 
 import { deepAssign } from "../util/object";
 

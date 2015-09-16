@@ -13,7 +13,7 @@ import updateRequires from "./update-requires";
 
 
 const compileModules = Pluggable.promise(function compileModules (seedModules) {
-  const modulesByAbsPath = {};
+  const modulesByAbsPath = this.cache.modulesByAbsPath;
 
   const getDependency = (requireStr, contextPath, contextNs, contextNsRoot) => {
     return this.resolveModule(requireStr, contextPath, contextNs, contextNsRoot)

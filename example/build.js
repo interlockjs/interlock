@@ -25,7 +25,7 @@ var ilk = new Interlock({
 });
 
 
-ilk.watch(true).observe(function (buildEvent) {
+ilk.watch(function (buildEvent) {
   var patchModules = buildEvent.patchModules;
   var compilation = buildEvent.compilation;
 
@@ -36,6 +36,6 @@ ilk.watch(true).observe(function (buildEvent) {
   if (compilation) {
     console.log("a new compilation has completed");
   }
-});
+}, { save: true });
 
 // ilk.build();

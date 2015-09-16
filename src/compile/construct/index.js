@@ -130,12 +130,12 @@ export const constructRegisterUrls = pluggable(
 export const constructBundleBody = pluggable(function constructBundleBody (opts) {
   const globalName = opts.globalName || "__interlock__";
 
-  const runtimeP = opts.includeRuntime && this.constructRuntime(globalName);
-  const urlsP = opts.urls && this.constructRegisterUrls(opts.urls, globalName);
-  const moduleSetP = opts.modules && this.constructModuleSet(opts.modules, globalName);
-  const loadEntryP = opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, globalName);
-
-  return Promise.all([runtimeP, urlsP, moduleSetP, loadEntryP])
+  return Promise.all([
+    opts.includeRuntime && this.constructRuntime(globalName),
+    opts.urls && this.constructRegisterUrls(opts.urls, globalName),
+    opts.modules && this.constructModuleSet(opts.modules, globalName),
+    opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, globalName)
+  ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
       [].concat(runtime, urls, moduleSet, loadEntry));
 }, { constructModuleSet, constructRuntime, setLoadEntry, constructRegisterUrls });

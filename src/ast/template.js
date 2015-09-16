@@ -29,7 +29,10 @@ function template (strTemplate, modifier) {
       .map(placeholder => tuple => {
         const { node } = tuple;
         if (node.type === "Identifier" && node.name === placeholder) {
-          return _.cloneDeep(replacements.identifier[placeholder]);
+          // Replacements should be cloned properly before being passed to the template,
+          // if that is a concern.  We cannot deep-clone here, due to cycles in some of
+          // the AST structures that Babel produces.
+          return replacements.identifier[placeholder];
         }
         return node;
       });

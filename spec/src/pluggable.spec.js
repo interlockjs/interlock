@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 
-import * as Pluggable from "../../src/pluggable";
+import { default as pluggable, CONTINUE } from "../../src/pluggable";
 
 
 function buildContext (props = {}, override = {}, transform = {}) {
@@ -25,7 +25,7 @@ describe("src/pluggable", () => {
     it("shares context properties from the invoked context", done => {
       const context = buildContext({ some: "val" });
 
-      Pluggable.promise(function fun () {
+      pluggable(function fun () {
         expect(this).to.have.property("some", "val");
         expect(this).not.to.equal(context);
         done();
@@ -36,7 +36,7 @@ describe("src/pluggable", () => {
       const context = buildContext({});
       const someDependency = () => {};
 
-      Pluggable.promise(function fun () {
+      pluggable(function fun () {
         expect(this).to.have.property("someDependency");
         done();
       }, { someDependency }).call(context);
@@ -45,7 +45,7 @@ describe("src/pluggable", () => {
     it("does not pollute invoked context", done => {
       const context = buildContext({ some: "val" });
 
-      Pluggable.promise(function fun () {
+      pluggable(function fun () {
         this.some = "other-val";
         return this;
       }).call(context).then(innerContext => {
@@ -58,13 +58,13 @@ describe("src/pluggable", () => {
     describe("with no overrides", () => {
       it("executes the default function", done => {
         const context = buildContext({});
-        Pluggable.promise(done).call(context);
+        pluggable(done).call(context);
       });
 
       it("passes arguments to default function", done => {
         const context = buildContext({});
 
-        Pluggable.promise(function fun (a, b) {
+        pluggable(function fun (a, b) {
           expect(a).to.equal(1);
           expect(b).to.equal(2);
           done();
@@ -74,7 +74,7 @@ describe("src/pluggable", () => {
       it("resolves to the default function's return value", done => {
         const context = buildContext({});
 
-        Pluggable.promise(function fun () {
+        pluggable(function fun () {
           return "Billy Goat";
         }).call(context).then(result => {
           expect(result).to.equal("Billy Goat");
@@ -85,7 +85,7 @@ describe("src/pluggable", () => {
       it("resolves to the default function's deferred return value", done => {
         const context = buildContext({});
 
-        Pluggable.promise(function fun () {
+        pluggable(function fun () {
           return new Promise(resolve => setTimeout(resolve, 0, "Bridge Troll"));
         }).call(context).then(result => {
           expect(result).to.equal("Bridge Troll");
@@ -96,14 +96,14 @@ describe("src/pluggable", () => {
 
     describe("with overrides", () => {
       it("passes arguments to each override and default function", done => {
-        const overA = sinon.spy(() => Pluggable.CONTINUE);
-        const overB = sinon.spy(() => Pluggable.CONTINUE);
+        const overA = sinon.spy(() => CONTINUE);
+        const overB = sinon.spy(() => CONTINUE);
         const funSpy = sinon.spy(() => {});
         function fun () { return funSpy.apply(this, arguments); }
 
         const context = buildContext({}, { fun: [overA, overB]});
 
-        Pluggable.promise(fun).call(context, "a", "b", "c")
+        pluggable(fun).call(context, "a", "b", "c")
           .then(() => {
             expect(overA)
               .to.have.been.calledOnce.and
@@ -124,14 +124,14 @@ describe("src/pluggable", () => {
       });
 
       it("waits until previous override resolves before checking next", done => {
-        const overA = sinon.spy(() => Pluggable.CONTINUE);
-        const overB = sinon.spy(() => Promise.resolve(Pluggable.CONTINUE));
+        const overA = sinon.spy(() => CONTINUE);
+        const overB = sinon.spy(() => Promise.resolve(CONTINUE));
         const funSpy = sinon.spy(() => {});
         function fun () { return funSpy.apply(this, arguments); }
 
         const context = buildContext({}, { fun: [overA, overB]});
 
-        Pluggable.promise(fun).call(context, "a", "b", "c")
+        pluggable(fun).call(context, "a", "b", "c")
           .then(() => {
             expect(overA)
               .to.have.been.calledOnce.and
@@ -153,13 +153,13 @@ describe("src/pluggable", () => {
 
       it("does not evaluate subsequent overrides if non-CONTINUE is returned", done => {
         const overA = sinon.spy(() => "bob");
-        const overB = sinon.spy(() => Pluggable.CONTINUE);
+        const overB = sinon.spy(() => CONTINUE);
         const funSpy = sinon.spy(() => {});
         function fun () { return funSpy.apply(this, arguments); }
 
         const context = buildContext({}, { fun: [overA, overB]});
 
-        Pluggable.promise(fun).call(context, "a", "b", "c")
+        pluggable(fun).call(context, "a", "b", "c")
           .then(result => {
             expect(result).to.equal("bob");
 
@@ -175,13 +175,13 @@ describe("src/pluggable", () => {
 
       it("does not evaluate subsequent overrides if non-CONTINUE is resolved", done => {
         const overA = sinon.spy(() => Promise.resolve("bob"));
-        const overB = sinon.spy(() => Pluggable.CONTINUE);
+        const overB = sinon.spy(() => CONTINUE);
         const funSpy = sinon.spy(() => {});
         function fun () { return funSpy.apply(this, arguments); }
 
         const context = buildContext({}, { fun: [overA, overB]});
 
-        Pluggable.promise(fun).call(context, "a", "b", "c")
+        pluggable(fun).call(context, "a", "b", "c")
           .then(result => {
             expect(result).to.equal("bob");
 
@@ -201,13 +201,13 @@ describe("src/pluggable", () => {
       it("shares context properties from the parent's invoked context", done => {
         const childSpy = sinon.spy(function () { return this; });
         function _child () { return childSpy.apply(this, arguments); }
-        const child = Pluggable.promise(_child);
+        const child = pluggable(_child);
 
         function parent () { return this.child(); }
 
         const context = buildContext({ wall: "street" });
 
-        Pluggable.promise(parent, { child }).call(context)
+        pluggable(parent, { child }).call(context)
           .then(childContext => {
             expect(childSpy).to.have.been.calledOnce;
             expect(childContext).to.have.property("wall", "street");
@@ -216,14 +216,14 @@ describe("src/pluggable", () => {
       });
 
       it("does not share context methods for parent's provided dependencies", done => {
-        const child = Pluggable.promise(function child () {
+        const child = pluggable(function child () {
           return this;
         });
         function parent () { return this.child(); }
 
         const context = buildContext({});
 
-        Pluggable.promise(parent, { child }).call(context)
+        pluggable(parent, { child }).call(context)
           .then(childContext => {
             expect(childContext).not.to.have.property("child");
             done();
@@ -232,13 +232,13 @@ describe("src/pluggable", () => {
       });
 
       it("shares context methods for child's provided dependencies", done => {
-        const grandchild = Pluggable.promise(function grandchild () {});
-        const child = Pluggable.promise(function child () { return this; }, { grandchild });
+        const grandchild = pluggable(function grandchild () {});
+        const child = pluggable(function child () { return this; }, { grandchild });
         function parent () { return Promise.all([this, this.child()]); }
 
         const context = buildContext({});
 
-        Pluggable.promise(parent, { child }).call(context)
+        pluggable(parent, { child }).call(context)
           .then(contexts => {
             const [parentContext, childContext] = contexts;
             expect(childContext).to.have.property("grandchild");
@@ -250,12 +250,12 @@ describe("src/pluggable", () => {
       it("does not pollute parent or grandparent context", done => {
         const context = buildContext({ val: "outer" });
 
-        const grandchild = Pluggable.promise(function grandchild () {
+        const grandchild = pluggable(function grandchild () {
           this.val = "grandchild";
           return this;
         });
 
-        const child = Pluggable.promise(function child () {
+        const child = pluggable(function child () {
           this.val = "child";
           return Promise.all([this, this.grandchild()]);
         }, { grandchild });
@@ -270,7 +270,7 @@ describe("src/pluggable", () => {
         }
 
 
-        Pluggable.promise(parent, { child }).call(context)
+        pluggable(parent, { child }).call(context)
           .then(contexts => {
             const [parentCxt, childCxt, grandchildCxt] = contexts;
 
@@ -281,13 +281,5 @@ describe("src/pluggable", () => {
           });
       });
     });
-  });
-
-  describe("stream", () => {
-    it.skip("is implemented");
-  });
-
-  describe("sync", () => {
-    it.skip("is implemented");
   });
 });

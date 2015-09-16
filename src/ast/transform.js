@@ -44,10 +44,10 @@ function updateArr (arr, key, val) {
 function applyUpdates (node, type, childUpdates) {
   if (type === NODE) {
     return childUpdates
-      .reduce((newObj, childTuple) => updateObj(newObj, childTuple.key, childTuple.node), node);
+      .reduce((newObj, [key, childNode]) => updateObj(newObj, key, childNode), node);
   } else if (type === ARRAY) {
     return childUpdates
-      .reduce((newArr, childTuple) => updateArr(newArr, childTuple.key, childTuple.node), node);
+      .reduce((newArr, [key, childNode]) => updateArr(newArr, key, childNode), node);
   }
   return node;
 }

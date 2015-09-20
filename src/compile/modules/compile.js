@@ -42,7 +42,7 @@ const compileModules = pluggable(function compileModules (seedModules) {
         Object.assign(module, loadedModule, { ast: ast.program });
 
         const dependenciesP = Promise.all(synchronousRequires.map(requireStr =>
-          getDependency(requireStr, contextPath, module.ns, module.nsPath)));
+          getDependency(requireStr, contextPath, module.ns, module.nsRoot)));
         const deepDependenciesP = dependenciesP.then(getDeepDependencies);
 
         return Promise.all([dependenciesP, deepDependenciesP]);

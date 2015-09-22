@@ -82,14 +82,16 @@ export const getUrls = pluggable(function getUrls (bundles) {
 });
 
 export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
-  let format;
-  if (_.isString(this.opts.indent)) {
-    format = { indent: { style: this.opts.indent }};
-  } else if (this.opts.indent === true) {
-    format = { indent: { style: "  "} };
-  } else {
-    format = {};
-  }
+  const format = this.opts.pretty === false ?
+    {
+      compact: true,
+      newline: ""
+    } : {
+      indent: {
+        style: "  ",
+        adjustMultilineComment: true
+      }
+    };
 
   return Promise.all(bundlesArr.map(bundle =>
     this.constructBundle({

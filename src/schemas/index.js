@@ -39,5 +39,7 @@ export const interlockConstructorInput = Joi.object().keys({
     .default(cwd)
     .optional(),
   babelConfig: Joi.object()
+    .optional(),
+  pretty: Joi.boolean()
     .optional()
 }).or("entry", "split");

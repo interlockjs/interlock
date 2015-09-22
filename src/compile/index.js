@@ -82,6 +82,15 @@ export const getUrls = pluggable(function getUrls (bundles) {
 });
 
 export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
+  let format;
+  if (_.isString(this.opts.indent)) {
+    format = { indent: { style: this.opts.indent }};
+  } else if (this.opts.indent === true) {
+    format = { indent: { style: "  "} };
+  } else {
+    format = {};
+  }
+
   return Promise.all(bundlesArr.map(bundle =>
     this.constructBundle({
       modules: bundle.modules,
@@ -90,7 +99,7 @@ export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, url
       entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
     })
       .then(bundleAst => escodegen.generate(bundleAst, {
-        format: { indent: { style: "  " }},
+        format,
         sourceMap: !!this.opts.sourceMaps,
         sourceMapWithCode: true,
         comment: !!this.opts.includeComments

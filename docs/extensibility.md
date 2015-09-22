@@ -35,7 +35,7 @@ This compilation object will have three key/value pairs:
 | Return value |  | Promise | object. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L123-L135).
+This Pluggable's definition can be found [here](../src/compile/index.js#L132-L144).
 
 ## compile
 
@@ -47,7 +47,7 @@ Performs an end-to-end compilation.
 | Return value |  | Promise | Resolves to the compilation output. |
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L142-L150).
+This Pluggable's definition can be found [here](../src/compile/index.js#L151-L159).
 
 ## compileModules
 
@@ -167,7 +167,7 @@ This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-im
 ## emitRawBundles
 
 
-This Pluggable's definition can be found [here](../src/compile/index.js#L84-L107).
+This Pluggable's definition can be found [here](../src/compile/index.js#L84-L116).
 
 ## getBundles
 

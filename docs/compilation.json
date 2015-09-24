@@ -170,14 +170,14 @@
                 }
               },
               "children": [],
-              "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | Transformed require string. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L13-L15).\n\n  ",
+              "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | Transformed require string. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L13-L15).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative paths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved module is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading dot. |\n| Return value |  | Object | Module seed. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
+          "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative paths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved module is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading dot. |\n| Return value |  | Object | Module seed. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
         }
       ],
-      "markdown": "## getModuleSeeds\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/get-seeds.js#L6-L13).\n\n  "
+      "markdown": "## getModuleSeeds\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L6-L13).\n\n  "
     },
     {
       "name": "generateModuleMaps",
@@ -366,11 +366,11 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | Transformed require string. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L13-L15).\n\n  ",
+                  "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | Transformed require string. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L13-L15).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative paths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved module is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading dot. |\n| Return value |  | Object | Module seed. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
+              "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative paths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved module is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading dot. |\n| Return value |  | Object | Module seed. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
             },
             {
               "name": "loadModule",
@@ -455,7 +455,7 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an raw-module object as its only input.  The properties\navailable on that object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n\nThe function should output an object with the same properties, plus one additional\nproperty: `rawSource`.  This property should be the string-value of the module\nsource.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object. |\n| Return value |  | Object | Module object + `rawSource`. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L30-L33).\n\n  ",
+                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an raw-module object as its only input.  The properties\navailable on that object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n\nThe function should output an object with the same properties, plus one additional\nproperty: `rawSource`.  This property should be the string-value of the module\nsource.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object. |\n| Return value |  | Object | Module object + `rawSource`. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L30-L33).\n\n  ",
                   "size": 1
                 },
                 {
@@ -498,11 +498,11 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## setModuleType\n  \nGiven the early-stage module (module seed + rawSource property), determine and set\nits type.  This value defaults to \"javascript\" and is used to determine whether\ndefault behaviors for parsing and processing modules should be used on the module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Early-stage module. |\n| Return value |  | Object | Module with new `type` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L44-L46).\n\n  ",
+                  "markdown": "## setModuleType\n  \nGiven the early-stage module (module seed + rawSource property), determine and set\nits type.  This value defaults to \"javascript\" and is used to determine whether\ndefault behaviors for parsing and processing modules should be used on the module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Early-stage module. |\n| Return value |  | Object | Module with new `type` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L44-L46).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## loadModule\n  \nGiven a module seed, read the module from disk and determine its type.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module seed. |\n| Return value |  | Object | Module seed plus `rawSource` and `type` properties. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L55-L58).\n\n  "
+              "markdown": "## loadModule\n  \nGiven a module seed, read the module from disk and determine its type.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module seed. |\n| Return value |  | Object | Module seed plus `rawSource` and `type` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L55-L58).\n\n  "
             },
             {
               "name": "hashModule",
@@ -587,11 +587,11 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## updateModuleHash\n  \nUse data from the provided module to generate a hash, utilizing the provided\nupdate function.  Only string values should be passed to the update function.\nThe resulting hash should be deterministic for the same inputs in the same order.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs a hash property. |\n| Parameter | **update** | Function | Function to be invoked with data that uniquely identifies the module (or, more precisely, the run-time behavior of the module). |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L15-L23).\n\n  ",
+                  "markdown": "## updateModuleHash\n  \nUse data from the provided module to generate a hash, utilizing the provided\nupdate function.  Only string values should be passed to the update function.\nThe resulting hash should be deterministic for the same inputs in the same order.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs a hash property. |\n| Parameter | **update** | Function | Function to be invoked with data that uniquely identifies the module (or, more precisely, the run-time behavior of the module). |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L15-L23).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | Module that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L33-L42).\n\n  "
+              "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | Module that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L42).\n\n  "
             },
             {
               "name": "parseModule",
@@ -633,7 +633,7 @@
                 }
               },
               "children": [],
-              "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L18-L39).\n\n  ",
+              "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L39).\n\n  ",
               "size": 1
             },
             {
@@ -676,7 +676,7 @@
                 }
               },
               "children": [],
-              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).\n\n  ",
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L57).\n\n  ",
               "size": 1
             },
             {
@@ -719,14 +719,14 @@
                 }
               },
               "children": [],
-              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L16-L37).\n\n  ",
+              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L16-L37).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## compileModules\n  \nGiven one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been populated with properties such as ast, `dependencies`, etc. Module objects _should_ have path, rawSource, and namespace values. |\n| Return value |  | Promise | Resolves to array of all compiled modules. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L28-L122).\n\n  "
+          "markdown": "## compileModules\n  \nGiven one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been populated with properties such as ast, `dependencies`, etc. Module objects _should_ have path, rawSource, and namespace values. |\n| Return value |  | Promise | Resolves to array of all compiled modules. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L28-L122).\n\n  "
         }
       ],
-      "markdown": "## generateModuleMaps\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/generate-maps.js#L7-L17).\n\n  "
+      "markdown": "## generateModuleMaps\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/generate-maps.js#L7-L17).\n\n  "
     },
     {
       "name": "generateBundles",
@@ -788,11 +788,11 @@
                 "parsedDoc": null
               },
               "children": [],
-              "markdown": "## initBundle\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/get-seeds.js#L5-L17).\n\n  ",
+              "markdown": "## initBundle\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L5-L17).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## getBundleSeeds\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/get-seeds.js#L19-L26).\n\n  "
+          "markdown": "## getBundleSeeds\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L19-L26).\n\n  "
         },
         {
           "name": "dedupeExplicit",
@@ -844,7 +844,7 @@
             }
           },
           "children": [],
-          "markdown": "## dedupeExplicit\n  \nFirst, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundleSeeds** | Array | Early-stage bundle objects without module or moduleHashes properties. |\n| Parameter | **modulesByAbsPath** | Object | Map of absolute paths to compiled modules. |\n| Return value |  | Array | Bundle objects with explicit intersections removed and new module and moduleHashes properties. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-explicit.js#L53).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L27-L51).\n\n  ",
+          "markdown": "## dedupeExplicit\n  \nFirst, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundleSeeds** | Array | Early-stage bundle objects without module or moduleHashes properties. |\n| Parameter | **modulesByAbsPath** | Object | Map of absolute paths to compiled modules. |\n| Return value |  | Array | Bundle objects with explicit intersections removed and new module and moduleHashes properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-explicit.js#L53).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L27-L51).\n\n  ",
           "size": 1
         },
         {
@@ -887,7 +887,7 @@
             }
           },
           "children": [],
-          "markdown": "## dedupeImplicit\n  \nGiven an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **explicitBundles** | Array | Bundles with module and moduleHashes properties. |\n| Return value |  | Array | Explicit bundles plus new implicit bundles. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/dedupe-implicit.js#L51-L59).\n\n  ",
+          "markdown": "## dedupeImplicit\n  \nGiven an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **explicitBundles** | Array | Bundles with module and moduleHashes properties. |\n| Return value |  | Array | Explicit bundles plus new implicit bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L51-L59).\n\n  ",
           "size": 1
         },
         {
@@ -973,11 +973,11 @@
                 }
               },
               "children": [],
-              "markdown": "## updateBundleHash\n  \nCalculate the bundle's hash by invoking `update` with data from the bundle.\n`update` should be called with string data only.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **update** | Function | Updates the ongoing computation of bundle hash. |\n| Parameter | **bundle** | Object | The bundle object. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L12-L16).\n\n  ",
+              "markdown": "## updateBundleHash\n  \nCalculate the bundle's hash by invoking `update` with data from the bundle.\n`update` should be called with string data only.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **update** | Function | Updates the ongoing computation of bundle hash. |\n| Parameter | **bundle** | Object | The bundle object. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L12-L16).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## hashBundle\n  \nGiven an otherwise prepared bundle, generate a hash for that bundle and resolve\nto that same bundle with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Unhashed bundle. |\n| Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L40).\n      The function that it wraps can be found [here](../src/compile/bundles/hash.js#L27-L38).\n\n  "
+          "markdown": "## hashBundle\n  \nGiven an otherwise prepared bundle, generate a hash for that bundle and resolve\nto that same bundle with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Unhashed bundle. |\n| Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L40).\n      The function that it wraps can be found [here](../src/compile/bundles/hash.js#L27-L38).\n\n  "
         },
         {
           "name": "interpolateFilename",
@@ -1019,11 +1019,11 @@
             }
           },
           "children": [],
-          "markdown": "## interpolateFilename\n  \nGiven a bundle, determine its ultimate output filepath by replacing\nsupported placeholders with their dynamic equivalents.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Late-stage bundle object. |\n| Return value |  | Object | Bundle with interpolated `dest` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/bundles/interpolate-filename.js#L11-L20).\n\n  ",
+          "markdown": "## interpolateFilename\n  \nGiven a bundle, determine its ultimate output filepath by replacing\nsupported placeholders with their dynamic equivalents.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Late-stage bundle object. |\n| Return value |  | Object | Bundle with interpolated `dest` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L11-L20).\n\n  ",
           "size": 1
         }
       ],
-      "markdown": "## generateBundles\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/generate.js#L8-L21).\n\n  "
+      "markdown": "## generateBundles\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L8-L21).\n\n  "
     },
     {
       "name": "buildOutput",
@@ -1108,7 +1108,7 @@
             }
           },
           "children": [],
-          "markdown": "## getUrls\n  \nGiven an array of bundles, generate a lookup dictionary of module hashes\nto the destination path of the bundles that contains them.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundles** | Array | Compiled bundles. |\n| Return value |  | Object | moduleHash-to-URL lookup dictionary. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L20-L25).\n\n  ",
+          "markdown": "## getUrls\n  \nGiven an array of bundles, generate a lookup dictionary of module hashes\nto the destination path of the bundles that contains them.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundles** | Array | Compiled bundles. |\n| Return value |  | Object | moduleHash-to-URL lookup dictionary. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L20-L25).\n\n  ",
           "size": 1
         },
         {
@@ -1441,11 +1441,11 @@
                                 }
                               },
                               "children": [],
-                              "markdown": "## constructCommonModule\n  \nGiven an array of AST nodes from a module's body along with that module's\ndependencies, construct an AST object expression that represents its run-time\nequivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleBody** | Array | Array of AST nodes. |\n| Parameter | **deps** | Array | Array of modules upon which module is dependent. |\n| Return value |  | ASTnode | Object expression AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L37-L45).\n\n  ",
+                              "markdown": "## constructCommonModule\n  \nGiven an array of AST nodes from a module's body along with that module's\ndependencies, construct an AST object expression that represents its run-time\nequivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleBody** | Array | Array of AST nodes. |\n| Parameter | **deps** | Array | Array of modules upon which module is dependent. |\n| Return value |  | ASTnode | Object expression AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L37-L45).\n\n  ",
                               "size": 1
                             }
                           ],
-                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L56-L70).\n\n  "
+                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L56-L70).\n\n  "
                         },
                         {
                           "name": "constructRuntime",
@@ -1487,7 +1487,7 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## constructRuntime\n  \nConstruct the guts of the Interlock run-time for inclusion in file output.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | Array | Array of AST nodes. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L79-L83).\n\n  ",
+                          "markdown": "## constructRuntime\n  \nConstruct the guts of the Interlock run-time for inclusion in file output.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | Array | Array of AST nodes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L79-L83).\n\n  ",
                           "size": 1
                         },
                         {
@@ -1540,7 +1540,7 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## setLoadEntry\n  \nConstruct a statement to instruct the runtime to run the specified module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleHash** | String | Hash of the module to be required. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L93-L100).\n\n  ",
+                          "markdown": "## setLoadEntry\n  \nConstruct a statement to instruct the runtime to run the specified module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleHash** | String | Hash of the module to be required. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L93-L100).\n\n  ",
                           "size": 1
                         },
                         {
@@ -1593,17 +1593,17 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## constructRegisterUrls\n  \nTransforms a map of module-hashes-to-URLs to the AST equivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L110-L119).\n\n  ",
+                          "markdown": "## constructRegisterUrls\n  \nTransforms a map of module-hashes-to-URLs to the AST equivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L110-L119).\n\n  ",
                           "size": 1
                         }
                       ],
-                      "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | Body of bundle. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L128-L139).\n\n  "
+                      "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | Body of bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L128-L139).\n\n  "
                     }
                   ],
-                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/construct/index.js#L171-L174).\n\n  "
+                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L171-L174).\n\n  "
                 }
               ],
-              "markdown": "## constructBundle\n  \nGiven a compiled bundle and moduleHash-to-URL lookup object, output\nthe same bundle with generated AST.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Fully compiled bundle, ready to be outputed. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Object | Bundle with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L36-L44).\n\n  "
+              "markdown": "## constructBundle\n  \nGiven a compiled bundle and moduleHash-to-URL lookup object, output\nthe same bundle with generated AST.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Fully compiled bundle, ready to be outputed. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Object | Bundle with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L36-L44).\n\n  "
             },
             {
               "name": "generateRawBundles",
@@ -1621,15 +1621,15 @@
                 "parsedDoc": null
               },
               "children": [],
-              "markdown": "## generateRawBundles\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/bundles/generate-raw.js#L17-L34).\n\n  ",
+              "markdown": "## generateRawBundles\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L17-L34).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## emitRawBundles\n  \nGiven an array of compiled bundles and a moduleHash-to-URL lookup dictionary,\ngenerate a new array of bundles with new `ast` and `raw` properties.\n\nSome compiled bundles (as internally represented) will result in more than\none output file.  The canonical example of this is a JS file and its source-map.\nPlugins may also implement mechanisms to output multiple files per bundle.\n\nThis one-to-many relationship is defined by the generateRawBundles method, which\nmay output an array of raw bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundlesArr** | Array | Compiled bundles. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Array | Bundles with new `raw` properties. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L62-L70).\n\n  "
+          "markdown": "## emitRawBundles\n  \nGiven an array of compiled bundles and a moduleHash-to-URL lookup dictionary,\ngenerate a new array of bundles with new `ast` and `raw` properties.\n\nSome compiled bundles (as internally represented) will result in more than\none output file.  The canonical example of this is a JS file and its source-map.\nPlugins may also implement mechanisms to output multiple files per bundle.\n\nThis one-to-many relationship is defined by the generateRawBundles method, which\nmay output an array of raw bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundlesArr** | Array | Compiled bundles. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Array | Bundles with new `raw` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L62-L70).\n\n  "
         }
       ],
-      "markdown": "## buildOutput\n  \nReduces an array of compiled bundles into a compilation object.  This compilation\nobject will have three key/value pairs:\n\n- **cache:**    populated from the compilation process\n- **bundles:**  a mapping of destination paths to `raw` code\n- **opts:**     the original options passed to the compilation\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundles** | Array | Compiled bundles, generated by generateBundles. |\n| Return value |  | Promise | Compilation object. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L84-L96).\n\n  "
+      "markdown": "## buildOutput\n  \nReduces an array of compiled bundles into a compilation object.  This compilation\nobject will have three key/value pairs:\n\n- **cache:**    populated from the compilation process\n- **bundles:**  a mapping of destination paths to `raw` code\n- **opts:**     the original options passed to the compilation\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundles** | Array | Compiled bundles, generated by generateBundles. |\n| Return value |  | Promise | Compilation object. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L84-L96).\n\n  "
     }
   ],
-  "markdown": "## compile\n  \nPerforms an end-to-end compilation.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Return value |  | Promise | Resolves to the compilation output. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/index.js#L103-L111).\n\n  "
+  "markdown": "## compile\n  \nPerforms an end-to-end compilation.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Return value |  | Promise | Resolves to the compilation output. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L103-L111).\n\n  "
 }

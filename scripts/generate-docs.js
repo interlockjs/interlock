@@ -237,10 +237,11 @@ function renderToMarkdown (pluggable) {
                 "| --- | ---- | ---- | ----------- |\n";
 
     tagsData += pluggable.parsedDoc.tags.map(tag => {
+      const description = tag.description.replace(/\s+/g, " ");
       if (tag.tag === "param") {
-        return `| Parameter | **${tag.name}** | ${tag.type} | ${tag.description} |`;
+        return `| Parameter | **${tag.name}** | ${tag.type} | ${description} |`;
       } else if (tag.tag === "return" || tag.tag === "returns") {
-        return `| Return value |  | ${tag.type} | ${tag.description} |`;
+        return `| Return value |  | ${tag.type} | ${description} |`;
       }
       return "";
     }).join("\n");

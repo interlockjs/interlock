@@ -59,10 +59,7 @@ gathered and compiled.
 
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
-| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been
-populated with properties such as ast, `dependencies`,
-etc.  Module objects _should_ have path, rawSource,
-and namespace values. |
+| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been populated with properties such as ast, `dependencies`, etc. Module objects _should_ have path, rawSource, and namespace values. |
 | Return value |  | Promise | to array of all compiled modules. |
 
 
@@ -78,12 +75,9 @@ as JavaScript.
 | --- | ---- | ---- | ----------- |
 | Parameter | **opts** | Object | Options. |
 | Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |
-| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs
-will be emitted. |
-| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be
-transformed into output module AST and emitted. |
-| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered
-to invoke the specified module on load. |
+| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |
+| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |
+| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |
 | Return value |  | ASTnode | program AST node. |
 
 
@@ -112,8 +106,7 @@ equivalent.
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
 | Parameter | **moduleBody** | Array | Array of ECMAscript AST nodes. |
-| Parameter | **deps** | Array | Array of modules upon which origin module is
-dependent. |
+| Parameter | **deps** | Array | Array of modules upon which origin module is dependent. |
 | Return value |  | ASTnode | expression AST node. |
 
 
@@ -318,13 +311,10 @@ to a file on disk, returning a module seed.
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
 | Parameter | **requireStr** | String | Require string or comparable value. |
-| Parameter | **contextPath** | String | Absolute path from which to resolve any relative
-paths. |
-| Parameter | **ns** | String | Namespace to set on module seed if the resolved
-module is of the same namespace as its context. |
+| Parameter | **contextPath** | String | Absolute path from which to resolve any relative paths. |
+| Parameter | **ns** | String | Namespace to set on module seed if the resolved module is of the same namespace as its context. |
 | Parameter | **nsRoot** | String | Absolute path of default namespace. |
-| Parameter | **extensions** | Array | Array of file extension strings, including the leading
-dot. |
+| Parameter | **extensions** | Array | Array of file extension strings, including the leading dot. |
 | Return value |  | Object | seed. |
 
 
@@ -371,8 +361,7 @@ intermediate representation should occur at this step.
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
 | Parameter | **module** | Object | Module object, with `ast` property. |
-| Return value |  | Object | object with transformed `ast` property
-and new `synchronousRequires` property. |
+| Return value |  | Object | object with transformed `ast` property and new `synchronousRequires` property. |
 
 
 This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).
@@ -402,13 +391,8 @@ The resulting hash should be deterministic for the same inputs in the same order
 | --- | ---- | ---- | ----------- |
 | Parameter | **args** | Object | Wrapper object for update and module. |
 | Parameter | **args.module** | Object | Module that needs a hash property. |
-| Parameter | **args.update** | Function | Function to be invoked with data that uniquely
-identifies the module (or, more precisely, the
-run-time behavior of the module). |
-| Return value |  | Object | same as the input `args`.  This is so that
-chained transformers of this function have easy
-access to both the module and the update
-function. |
+| Parameter | **args.update** | Function | Function to be invoked with data that uniquely identifies the module (or, more precisely, the run-time behavior of the module). |
+| Return value |  | Object | same as the input `args`. This is so that chained transformers of this function have easy access to both the module and the update function. |
 
 
 This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L21-L32).
@@ -422,9 +406,7 @@ all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
 | Parameter | **module** | Object | Module with AST containing original require expressions. |
-| Return value |  | Object | with AST containing require expressions whose
-arguments have been replaced with corresponding dependency
-module hashes. |
+| Return value |  | Object | with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |
 
 
 This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L16-L37).

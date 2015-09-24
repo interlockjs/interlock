@@ -6,25 +6,13 @@ import pluggable from "../pluggable";
 import bootstrapCompilation from "./bootstrap";
 import { constructBundle } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
-import compileModules from "./modules/compile";
+import generateModuleMaps from "./modules/generate-maps";
 import getBundleSeeds from "./bundles/get-seeds";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
 import hashBundle from "./bundles/hash";
 import interpolateFilename from "./bundles/interpolate-filename";
 
-
-export const getModuleMaps = pluggable(function getModuleMaps (moduleSeeds) {
-  return this.compileModules(moduleSeeds)
-    .then(modules => _.reduce(modules, (moduleMaps, module) => {
-      moduleMaps.byHash[module.hash] = module;
-      moduleMaps.byAbsPath[module.path] = module;
-      return moduleMaps;
-    }, {
-      byHash: {},
-      byAbsPath: {}
-    }));
-}, { compileModules });
 
 export const getBundles = pluggable(function getBundles (moduleSeeds, moduleMaps) {
   function getModulesFromHashes (bundle) {
@@ -121,11 +109,11 @@ const compile = pluggable(function compile () {
   return this.getModuleSeeds()
     .then(moduleSeeds => Promise.all([
       moduleSeeds,
-      this.getModuleMaps(_.values(moduleSeeds))
+      this.generateModuleMaps(_.values(moduleSeeds))
     ]))
     .then(([moduleSeeds, moduleMaps]) => this.getBundles(moduleSeeds, moduleMaps))
     .then(this.buildOutput);
-}, { getModuleSeeds, getModuleMaps, getBundles, buildOutput });
+}, { getModuleSeeds, generateModuleMaps, getBundles, buildOutput });
 
 
 export default function (opts) {

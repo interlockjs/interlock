@@ -245,28 +245,93 @@ This Pluggable's definition can be found [here](http://github.com/interlockjs/in
 
 ## generateBundles
 
+Given a set of module seeds - originally generated from the bundle definitions
+passed into the Interlock constructor - and the set of fully generated modules,
+create bundle objects that are deduped, are populated with module objects,
+are hashed, and have their filenames interpolated.
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L8-L21).
+Bundles outputted from this function should be ready to be transformed into
+strings using AST->source transformation, and then written to disk.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |
+| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |
+| Return value |  | Array | Fully compiled bundles. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L24-L37).
 
 ## generateModuleMaps
 
+Given a set of module seeds (originally generated from bundle definitions
+passed into the Interlock constructor), traverse their dependency graph
+to identify all modules that are depended on.
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/generate-maps.js#L7-L17).
+Once modules are fully compiled, index them by their hash and their absolute
+path, and return those indexes.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleSeeds** | Array | Early-stage module objects. |
+| Return value |  | Object | Fully compiled modules, indexed by hash and absolute path. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/generate-maps.js#L20-L30).
 
 ## generateRawBundles
 
+Given a compiled bundle object, return an array of one or more bundles with
+new `raw` property.  This raw property should be generated from the bundle's
+AST or equivalent intermediate representation.
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L17-L34).
+This is a one-to-many transformation because it is quite possible for multiple
+output files to result from a single bundle object.  The canonical example (and
+default behavior of this function, when sourcemaps are enabled) is for one
+bundle to result in a `.js` file and a `.map` file.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **bundle** | Object | Bundle object without `raw` property. |
+| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L35-L52).
 
 ## getBundleSeeds
 
+Given the set of early-stage modules (originally generated from the bundle definitions)
+and the set of fully compiled modules (indexed by their absolute path), turn an array
+of early-stage bundles.  These bundles do not yet know about which modules they contain,
+but do hold a reference to the root module of their branch of the dependency graph.
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L19-L26).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleSeeds** | Object | Early-stage modules, indexed by path relative to the compilation context. |
+| Parameter | **modulesByPath** | Object | Fully compiled modules, indexed by absolute path. |
+| Return value |  | Array | Early-stage bundles with `module` property. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L31-L38).
 
 ## getModuleSeeds
 
+Inspect the compilation options for bundle definitions (provided as
+key/value pairs to options.entry and options.split), resolve references,
+and return an object of the early-stage modules indexed by their path
+relative to the compilation context.
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L6-L13).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Return value |  | Object | Early-stage modules indexed by relative path. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L14-L21).
 
 ## getUrls
 

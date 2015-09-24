@@ -3,6 +3,21 @@ import _ from "lodash";
 import { CONTINUE } from "../pluggable";
 
 
+/**
+ * Invoke each plugin with two params, an override function and a transform
+ * function.  When _these_ functions are invoked by individual plugins,
+ * the plugin's override or transform function will be associated with the
+ * name of the pluggable it is meant to override/transform.
+ *
+ * During compilation, the transform- and override- functions will be invoked
+ * to manipulate the output of compilation steps.
+ * 
+ * @param  {Object}  compilationContext  `this` context for pluggable compilation
+ *                                       functions
+ *
+ * @return {Object}                      compilationContext with plugins defined
+ *                                       and ready to be used during compilation.
+ */
 function addPluginsToContext (compilationContext) {
   compilationContext.__pluggables__ = { override: {}, transform: {} };
   const overrides = compilationContext.__pluggables__.override;
@@ -23,6 +38,13 @@ function addPluginsToContext (compilationContext) {
   return compilationContext;
 }
 
+/**
+ * Create an object to be used as the base `this` context for all pluggable
+ * functions in a given compilation.  In addition to providing access to
+ * cache and options, 
+ * @param  {[type]} opts [description]
+ * @return {[type]}      [description]
+ */
 export default function bootstrapCompilation (opts) {
   return addPluginsToContext({
     cache: {

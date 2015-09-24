@@ -241,7 +241,9 @@ function renderToMarkdown (pluggable) {
       if (tag.tag === "param") {
         return `| Parameter | **${tag.name}** | ${tag.type} | ${description} |`;
       } else if (tag.tag === "return" || tag.tag === "returns") {
-        return `| Return value |  | ${tag.type} | ${description} |`;
+        // The JSdoc parser incorrectly interprets the first word in the description
+        // as the name of the return value.
+        return `| Return value |  | ${tag.type} | ${tag.name} ${description} |`;
       }
       return "";
     }).join("\n");

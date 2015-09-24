@@ -9,7 +9,7 @@ import { CONTINUE } from "../pluggable";
  *
  * During compilation, the transform- and override- functions will be invoked
  * to manipulate the output of compilation steps.
- * 
+ *
  * @param  {Object}  compilationContext  `this` context for pluggable compilation
  *                                       functions
  *
@@ -36,10 +36,11 @@ function addPluginsToContext (compilationContext) {
 
 /**
  * Create an object to be used as the base `this` context for all pluggable
- * functions in a given compilation.  In addition to providing access to
- * cache and options, 
- * @param  {[type]} opts [description]
- * @return {[type]}      [description]
+ * functions in a given compilation.
+ *
+ * @param  {Object}  opts  Options, most likely passed to the Interlock constructor.
+ *
+ * @return {Object}        Object to be used as `this` context for pluggablw functions.
  */
 export default function bootstrapCompilation (opts) {
   return addPluginsToContext({

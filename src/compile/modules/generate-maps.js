@@ -8,7 +8,7 @@ import compileModules from "./compile";
  * Given a set of module seeds (originally generated from bundle definitions
  * passed into the Interlock constructor), traverse their dependency graph
  * to identify all modules that are depended on.
- * 
+ *
  * Once modules are fully compiled, index them by their hash and their absolute
  * path, and return those indexes.
  *

@@ -208,7 +208,7 @@
         "name": "generateModuleMaps",
         "fnStart": 20,
         "fnEnd": 30,
-        "doc": "*\n * Given a set of module seeds (originally generated from bundle definitions\n * passed into the Interlock constructor), traverse their dependency graph\n * to identify all modules that are depended on.\n * \n * Once modules are fully compiled, index them by their hash and their absolute\n * path, and return those indexes.\n *\n * @param  {Array}   moduleSeeds   Early-stage module objects.\n *\n * @return {Object}                Fully compiled modules, indexed by hash and\n *                                 absolute path.\n ",
+        "doc": "*\n * Given a set of module seeds (originally generated from bundle definitions\n * passed into the Interlock constructor), traverse their dependency graph\n * to identify all modules that are depended on.\n *\n * Once modules are fully compiled, index them by their hash and their absolute\n * path, and return those indexes.\n *\n * @param  {Array}   moduleSeeds   Early-stage module objects.\n *\n * @return {Object}                Fully compiled modules, indexed by hash and\n *                                 absolute path.\n ",
         "parsedDoc": {
           "tags": [
             {

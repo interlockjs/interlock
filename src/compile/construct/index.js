@@ -168,7 +168,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
  *
  * @return {ASTnode}                      Single program AST node.
  */
-export const constructBundle = pluggable(function constructBundle (opts) {
+export const constructBundleAst = pluggable(function constructBundleAst (opts) {
   return this.constructBundleBody(opts)
     .then(body => iifeTmpl({ body: { "BODY": body.filter(x => x) } }));
 }, { constructBundleBody });

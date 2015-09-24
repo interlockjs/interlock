@@ -3,7 +3,7 @@ import Promise from "bluebird";
 
 import pluggable from "../pluggable";
 import bootstrapCompilation from "./bootstrap";
-import { constructBundle } from "./construct";
+import { constructBundleAst } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
 import generateModuleMaps from "./modules/generate-maps";
 import generateBundles from "./bundles/generate";
@@ -17,18 +17,24 @@ export const getUrls = pluggable(function getUrls (bundles) {
   }, {});
 });
 
+export const constructBundle = pluggable(function constructBundle (bundle, urls) {
+  return this.constructBundleAst({
+    modules: bundle.modules,
+    includeRuntime: bundle.includeRuntime,
+    urls: bundle.isEntry ? urls : null,
+    entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
+  })
+    .then(ast => Object.assign({}, bundle, { ast }));
+}, { constructBundleAst });
+
 
 export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
   return Promise.all(bundlesArr.map(bundle =>
-    this.constructBundle({
-      modules: bundle.modules,
-      includeRuntime: bundle.includeRuntime,
-      urls: bundle.isEntry ? urls : null,
-      entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
-    })
-      .then(ast => Object.assign({}, bundle, { ast }))
+    this.constructBundle(bundle, urls)
       .then(this.generateRawBundles)
   ))
+    // generateRawBundles returns arrays of bundles.  This allows, for example, a
+    // source map to also be emitted along with its bundle JS.
     .then(_.flatten);
 }, { constructBundle, generateRawBundles });
 

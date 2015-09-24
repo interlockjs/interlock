@@ -1,7 +1,6 @@
 import path from "path";
 
 import _ from "lodash";
-import { transform } from "babel-core";
 import Promise from "bluebird";
 
 import pluggable from "../../pluggable";
@@ -27,53 +26,37 @@ const compileModules = pluggable(function compileModules (seedModules) {
     .flatten()
     .value();
 
+  const generateDependencies = module => {
+    const contextPath = path.dirname(module.path);
+    const directDependencies = Promise.all(module.synchronousRequires.map(requireStr =>
+      getDependency(requireStr, contextPath, module.ns, module.nsRoot)));
+
+    return Promise.all([directDependencies, directDependencies.then(getDeepDependencies)])
+      .then(([depTuples, deepDependencies]) => Object.assign({}, module, {
+        // De-dupe any (deep-)dependencies by their hash.
+        deepDependencies: _.chain(deepDependencies).indexBy("hash").values().value(),
+        dependencies: _.chain(depTuples)
+          .map(([, dependency]) => dependency)
+          .indexBy("hash")
+          .values()
+          .value(),
+        // Generate a mapping between the original require strings and the modules
+        // they resolved to.
+        dependenciesByInternalRef: _.object(depTuples)
+      }));
+  };
+
   const compileModule = module => {
     if (module.path in modulesByAbsPath) {
       return modulesByAbsPath[module.path];
     }
 
-    const contextPath = path.dirname(module.path);
-
-    // When the promise resolves, all shallow- and deep- dependencies will have been
-    // resolved and fully generated, and the module's hash will also have been calculated.
     return modulesByAbsPath[module.path] = this.loadModule(module)
       .then(this.parseModule)
       .then(this.transformModule)
-      .then(_module => {
-        const dependenciesP = Promise.all(_module.synchronousRequires.map(requireStr =>
-          getDependency(requireStr, contextPath, _module.ns, _module.nsRoot)));
-        const deepDependenciesP = dependenciesP.then(getDeepDependencies);
-
-        return Promise.all([dependenciesP, deepDependenciesP, _module]);
-      })
-      .then(([dependencies, deepDependencies, _module]) => {
-        const moduleWithDeps = Object.assign({}, _module, {
-          // De-dupe any (deep-)dependencies by their hash.
-          deepDependencies: _.chain(deepDependencies).indexBy("hash").values().value(),
-          dependencies: _.chain(dependencies)
-            .map(([, dependency]) => dependency)
-            .indexBy("hash")
-            .values()
-            .value()
-        });
-
-        return this.hashModule(moduleWithDeps)
-          .then(hash => Object.assign({}, moduleWithDeps, { hash }))
-          .then(hashedModule => {
-            // Generate a mapping between the original require strings and the
-            // hashes of the modules they resolved to.
-            const requireStrToModHash = _.object(dependencies);
-
-            // Update require statements to refer to the hashes of dependencies.
-            const updatedRequiresAst = transform.fromAst(_module.ast, null, {
-              code: false,
-              whitelist: ["react"],
-              plugins: [ updateRequires(requireStrToModHash)]
-            }).ast.program;
-
-            return Object.assign({}, hashedModule, { ast: updatedRequiresAst });
-          });
-      });
+      .then(generateDependencies)
+      .then(this.hashModule)
+      .then(this.updateRequires);
   };
 
   return Promise.all(seedModules.map(compileModule))
@@ -83,6 +66,6 @@ const compileModules = pluggable(function compileModules (seedModules) {
       .uniq()
       .value()
     );
-}, { resolveModule, loadModule, hashModule, parseModule, transformModule });
+}, { resolveModule, loadModule, hashModule, parseModule, transformModule, updateRequires });
 
 export default compileModules;

@@ -5,23 +5,14 @@ import Promise from "bluebird";
 import pluggable from "../pluggable";
 import bootstrapCompilation from "./bootstrap";
 import { constructBundle } from "./construct";
+import getModuleSeeds from "./modules/get-seeds";
 import compileModules from "./modules/compile";
-import resolveModule from "./modules/resolve";
 import getBundleSeeds from "./bundles/get-seeds";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
 import hashBundle from "./bundles/hash";
 import interpolateFilename from "./bundles/interpolate-filename";
 
-
-export const getModuleSeeds = pluggable(function getModuleSeeds () {
-  return Promise.all(
-    [].concat(_.keys(this.opts.entry), _.keys(this.opts.split))
-      .map(relPath => this.resolveModule(relPath)
-        .then(module => [relPath, module])
-    ))
-    .then(_.object);
-}, { resolveModule });
 
 export const getModuleMaps = pluggable(function getModuleMaps (moduleSeeds) {
   return this.compileModules(moduleSeeds)

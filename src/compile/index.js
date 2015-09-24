@@ -22,7 +22,7 @@ export const bootstrapCompilation = pluggable(function bootstrapCompilation (opt
   };
 });
 
-export const getSeedModules = pluggable(function getSeedModules () {
+export const getModuleSeeds = pluggable(function getModuleSeeds () {
   return Promise.all(
     [].concat(_.keys(this.opts.entry), _.keys(this.opts.split))
       .map(relPath => this.resolveModule(relPath)
@@ -31,8 +31,8 @@ export const getSeedModules = pluggable(function getSeedModules () {
     .then(_.object);
 }, { resolveModule });
 
-export const getModuleMaps = pluggable(function getModuleMaps (seedModules) {
-  return this.compileModules(seedModules)
+export const getModuleMaps = pluggable(function getModuleMaps (moduleSeeds) {
+  return this.compileModules(moduleSeeds)
     .then(modules => _.reduce(modules, (moduleMaps, module) => {
       moduleMaps.byHash[module.hash] = module;
       moduleMaps.byAbsPath[module.path] = module;
@@ -52,17 +52,17 @@ export const initBundle = pluggable(function initBundle (bundleDef, module, isEn
   };
 });
 
-export const getSeedBundles = pluggable(function getSeedBundles (seedModules, modulesByPath) {
+export const getBundleSeeds = pluggable(function getBundleSeeds (moduleSeeds, modulesByPath) {
   return Promise.all([].concat(
     _.map(this.opts.entry, (bundleDef, relPath) =>
-      this.initBundle(bundleDef, modulesByPath[seedModules[relPath].path], true)),
+      this.initBundle(bundleDef, modulesByPath[moduleSeeds[relPath].path], true)),
     _.map(this.opts.split, (bundleDef, relPath) =>
-      this.initBundle(bundleDef, modulesByPath[seedModules[relPath].path], false))
+      this.initBundle(bundleDef, modulesByPath[moduleSeeds[relPath].path], false))
   ));
 }, { initBundle });
 
-export const getBundles = pluggable(function getBundles (seedModules, moduleMaps) {
-  return this.getSeedBundles(seedModules, moduleMaps.byAbsPath)
+export const getBundles = pluggable(function getBundles (moduleSeeds, moduleMaps) {
+  return this.getBundleSeeds(moduleSeeds, moduleMaps.byAbsPath)
     .then(seedBundles => this.dedupeExplicit(seedBundles, moduleMaps.byAbsPath))
     .then(this.dedupeImplicit)
     .then(bundles => bundles.map(bundle => Object.assign({}, bundle, {
@@ -72,7 +72,7 @@ export const getBundles = pluggable(function getBundles (seedModules, moduleMaps
       .then(hash => Object.assign({}, bundle, { hash }))
     )))
     .then(bundles => Promise.all(bundles.map(this.interpolateFilename)));
-}, { getSeedBundles, dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
+}, { getBundleSeeds, dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 
 export const getUrls = pluggable(function getUrls (bundles) {
   return bundles.reduce((urls, bundle) => {
@@ -151,14 +151,14 @@ export const buildOutput = pluggable(function buildOutput (bundles) {
  * @return {Promise}  compilation      Resolves to the compilation output.
  */
 const compile = pluggable(function compile () {
-  return this.getSeedModules()
-    .then(seedModules => Promise.all([
-      seedModules,
-      this.getModuleMaps(_.values(seedModules))
+  return this.getModuleSeeds()
+    .then(moduleSeeds => Promise.all([
+      moduleSeeds,
+      this.getModuleMaps(_.values(moduleSeeds))
     ]))
-    .then(([seedModules, moduleMaps]) => this.getBundles(seedModules, moduleMaps))
+    .then(([moduleSeeds, moduleMaps]) => this.getBundles(moduleSeeds, moduleMaps))
     .then(this.buildOutput);
-}, { getSeedModules, getModuleMaps, getBundles, buildOutput });
+}, { getModuleSeeds, getModuleMaps, getBundles, buildOutput });
 
 function addPluginsToContext (compilationContext) {
   compilationContext.__pluggables__ = { override: {}, transform: {} };

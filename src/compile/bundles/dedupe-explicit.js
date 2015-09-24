@@ -2,9 +2,9 @@ import _ from "lodash";
 
 import pluggable from "../../pluggable";
 
-function dedupeExplicit (seedBundles, modulesByAbsPath) {
 
-  const bundles = seedBundles.map(bundle => {
+function dedupeExplicit (bundleSeeds, modulesByAbsPath) {
+  const bundles = bundleSeeds.map(bundle => {
   // Generate flat, naive dependency arrays.
     const module = modulesByAbsPath[bundle.module.path];
     return _.extend({}, bundle, {

@@ -1,6 +1,14 @@
 import pluggable from "../../pluggable";
 
-function interpolateFilename (bundle) {
+/**
+ * Given a bundle, determine its ultimate output filepath by replacing
+ * supported placeholders with their dynamic equivalents.
+ *
+ * @param  {Object}  bundle  Late-stage bundle object.
+ *
+ * @return {Object}          Bundle with interpolated `dest` property.
+ */
+export default pluggable(function interpolateFilename (bundle) {
   let dest = bundle.dest
     .replace("[setHash]", bundle.setHash)
     .replace("[bundleHash]", bundle.bundleHash);
@@ -9,6 +17,4 @@ function interpolateFilename (bundle) {
   }
 
   return Object.assign({}, bundle, { dest });
-}
-
-export default pluggable(interpolateFilename);
+});

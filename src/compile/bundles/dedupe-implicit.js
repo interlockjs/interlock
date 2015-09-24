@@ -34,6 +34,19 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
   }
 }
 
+/**
+ * Given an array of explicitly defined bundles, generate a new array of bundles
+ * including new implicit bundles.  These implicit bundles will be generated from
+ * the intersections of two (or more) bundles' module hashes.
+ *
+ * This ensures that no module is included in more than one bundle.  It further
+ * ensures that any module that is depended upon by more than one bundle will be
+ * split off into its own new bundle.
+ *
+ * @param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.
+ * 
+ * @return {Array}                   Explicit bundles plus new implicit bundles.
+ */
 export default pluggable(function dedupeImplicit (explicitBundles) {
   // Take the explicit bundles array and emit implicit bundles (where the dependency
   // sets of two explicit bundles intersect) followed by the explicit bundles themselves.

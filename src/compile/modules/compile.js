@@ -8,6 +8,7 @@ import pluggable from "../../pluggable";
 import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";
+import parseModule from "./parse";
 import transformModuleAst from "./transform-module-ast";
 import updateRequires from "./update-requires";
 
@@ -36,6 +37,7 @@ const compileModules = pluggable(function compileModules (seedModules) {
     // When the promise resolves, all shallow- and deep- dependencies will have been
     // resolved and fully generated, and the module's hash will also have been calculated.
     return modulesByAbsPath[module.path] = this.loadModule(module)
+      .then(this.parseModule)
       .then(loadedModule => {
         const { ast, synchronousRequires } =
           transformModuleAst(loadedModule.ast, this.opts.babelConfig);
@@ -84,6 +86,6 @@ const compileModules = pluggable(function compileModules (seedModules) {
       .uniq()
       .value()
     );
-}, { resolveModule, loadModule, hashModule });
+}, { resolveModule, loadModule, hashModule, parseModule });
 
 export default compileModules;

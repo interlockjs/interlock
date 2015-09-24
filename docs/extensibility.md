@@ -51,8 +51,22 @@ This Pluggable's definition can be found [here](../src/compile/index.js#L153-L16
 
 ## compileModules
 
+Given one or more module seeds, traverse their dependency graph, collecting any and
+all dependency modules, and then parse, transform, and hash those modules.  Return
+a promise that resolves to the full set of modules, once they have been correctly
+gathered and compiled.
 
-This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L69).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been
+populated with properties such as ast, `dependencies`,
+etc.  Module objects _should_ have path, rawSource,
+and namespace values. |
+| Return value |  | Promise | to array of all compiled modules. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L28-L122).
 
 ## constructBundle
 
@@ -148,11 +162,6 @@ Construct the guts of the Interlock run-time for inclusion in file output.
 
 This Pluggable's definition can be found [here](../src/compile/construct/index.js#L81-L85).
 
-## createModule
-
-
-This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).
-
 ## dedupeExplicit
 
 
@@ -211,8 +220,17 @@ The function that it wraps can be found [here](../src/compile/bundles/hash.js#L2
 
 ## hashModule
 
+Given a mostly-compiled module, generate a hash for that module and resolve
+to that module with a new `hash` property.
 
-This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L17-L26).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Module that needs to be hashed hash. |
+| Return value |  | Object | that now has a hash property. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L42-L51).
 
 ## initBundle
 
@@ -227,18 +245,44 @@ The function that it wraps can be found [here](../src/compile/bundles/interpolat
 
 ## loadModule
 
+Given a module seed, read the module from disk and determine its type.
 
-This Pluggable's definition can be found [here](../src/compile/modules/load.js#L39-L42).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Module seed. |
+| Return value |  | Object | seed plus `rawSource` and `type` properties. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L55-L58).
 
 ## parseModule
 
+Parse the source of the provided early-stage module.  Resolves to the same
+module with a new `ast` property (or equivalent for non-JavaScript modules).
 
-This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L10-L31).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Unparsed module with rawSource property. |
+| Return value |  | Object | module with new `ast` property. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L18-L39).
 
 ## preresolve
 
+Transform the require string before it is resolved to a file on disk.
+No transformations occur by default - the output is the same as the input.
 
-This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **requireStr** | String | Require string or comparable value. |
+| Return value |  | String | require string. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L13-L15).
 
 ## readSource
 
@@ -267,9 +311,25 @@ This Pluggable's definition can be found [here](../src/compile/modules/load.js#L
 
 ## resolveModule
 
+Given a require string and some context, resolve that require string
+to a file on disk, returning a module seed.
 
-This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).
-The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **requireStr** | String | Require string or comparable value. |
+| Parameter | **contextPath** | String | Absolute path from which to resolve any relative
+paths. |
+| Parameter | **ns** | String | Namespace to set on module seed if the resolved
+module is of the same namespace as its context. |
+| Parameter | **nsRoot** | String | Absolute path of default namespace. |
+| Parameter | **extensions** | Array | Array of file extension strings, including the leading
+dot. |
+| Return value |  | Object | seed. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L53).
+The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).
 
 ## setLoadEntry
 
@@ -287,14 +347,24 @@ This Pluggable's definition can be found [here](../src/compile/construct/index.j
 
 ## setModuleType
 
+Given the early-stage module (module seed + rawSource property), determine and set
+its type.  This value defaults to "javascript" and is used to determine whether
+default behaviors for parsing and processing modules should be used on the module.
 
-This Pluggable's definition can be found [here](../src/compile/modules/load.js#L35-L37).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Early-stage module. |
+| Return value |  | Object | with new `type` property. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L44-L46).
 
 ## transformModule
 
 Transforms the module's AST, returning a module object with transformed
 `ast` property as well as a new `synchronousRequires` property.  If the
-module is not of type "javascript", transformations to module-specific
+module is not of type "javascript", transformations to type-specific
 intermediate representation should occur at this step.
 
 
@@ -323,11 +393,39 @@ This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L
 
 ## updateModuleHash
 
+Use data from the provided module to generate a hash, utilizing the provided
+update function.  Only string values should be passed to the update function.
+The resulting hash should be deterministic for the same inputs in the same order.
 
-This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L15).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **args** | Object | Wrapper object for update and module. |
+| Parameter | **args.module** | Object | Module that needs a hash property. |
+| Parameter | **args.update** | Function | Function to be invoked with data that uniquely
+identifies the module (or, more precisely, the
+run-time behavior of the module). |
+| Return value |  | Object | same as the input `args`.  This is so that
+chained transformers of this function have easy
+access to both the module and the update
+function. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L21-L32).
 
 ## updateRequires
 
+Give a module whose dependencies have been identified and compiled, replace
+all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
 
-This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L6-L27).
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Module with AST containing original require expressions. |
+| Return value |  | Object | with AST containing require expressions whose
+arguments have been replaced with corresponding dependency
+module hashes. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L16-L37).
 

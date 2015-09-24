@@ -7,6 +7,14 @@ import { deepAssign } from "../../util/object";
 import pluggable from "../../pluggable";
 
 
+/**
+ * Parse the source of the provided early-stage module.  Resolves to the same
+ * module with a new `ast` property (or equivalent for non-JavaScript modules).
+ *
+ * @param  {Object}  module  Unparsed module with rawSource property.
+ *
+ * @return {Object}          Parsed module with new `ast` property.
+ */
 export default pluggable(function parseModule (module) {
   if (module.type !== "javascript") {
     throw new Error("Cannot process non-JavaScript.  Please configure appropriate plugin.");

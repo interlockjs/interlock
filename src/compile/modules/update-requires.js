@@ -3,6 +3,16 @@ import { Plugin, transform } from "babel-core";
 import pluggable from "../../pluggable";
 
 
+/**
+ * Give a module whose dependencies have been identified and compiled, replace
+ * all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
+ *
+ * @param  {Object}  module  Module with AST containing original require expressions.
+ *
+ * @return {Object}          Module with AST containing require expressions whose
+ *                           arguments have been replaced with corresponding dependency
+ *                           module hashes.
+ */
 export default pluggable(function updateRequires (module) {
   const updatePlugin = new Plugin("getRequires", {
     visitor: {

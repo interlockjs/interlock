@@ -7,7 +7,7 @@ import transformAmd from "./transform-amd";
 /**
  * Transforms the module's AST, returning a module object with transformed
  * `ast` property as well as a new `synchronousRequires` property.  If the
- * module is not of type "javascript", transformations to module-specific
+ * module is not of type "javascript", transformations to type-specific
  * intermediate representation should occur at this step.
  *
  * @param  {Object} module  Module object, with `ast` property.

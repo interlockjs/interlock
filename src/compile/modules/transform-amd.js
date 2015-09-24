@@ -1,25 +1,53 @@
 import _ from "lodash";
 import { Plugin, types as t } from "babel-core";
 
-/*
-  "./path/to/thing" --> `require("./path/to/thing")`
+
+/**
+ * Return the AST equivalent of `require(requireStr)`, where requireStr is
+ * the provided value.
+ *
+ *   Example:
+ *     "./path/to/thing" --> `require("./path/to/thing")`
+ *
+ * @param  {String} requireStr  Require string.
+ *
+ * @return {AST}                Call expression node.
  */
 function requireCallExpression (requireStr) {
   return t.callExpression(t.identifier("require"), [t.literal(requireStr)]);
 }
 
-/*
-  `some.expression()` --> `some.expression();`
+/**
+ * Return the provided expression node wrapped in an expression statement node.
+ *
+ *   Example:
+ *     `some.expression()` --> `some.expression();`
+ *
+ * @param  {AST}    expr  Expression node to wrap.
+ *
+ * @return {AST}          Expression statement node.
  */
 function expressionStmt (expr) {
   return t.expressionStatement(expr);
 }
 
 /*
-  module.exports = (function () {
-    // ... require statements
-    // ... module body
-  })();
+
+ */
+/**
+ * Return an assignment expression, setting module.exports to an IIFE containing
+ * the provided require statements and module body.
+ *
+ *   Example:
+ *     module.exports = (function () {
+ *       // ... require statements
+ *       // ... module body
+ *     })();
+ *
+ * @param  {Array}  requireStatements  Array of call expression statements.
+ * @param  {Array}  moduleBody         Array of AST nodes.
+ *
+ * @return {AST}                       Assignment expression AST node.
  */
 function commonJsTemplate (requireStatements, moduleBody) {
   return t.assignmentExpression(
@@ -34,9 +62,23 @@ function commonJsTemplate (requireStatements, moduleBody) {
   );
 }
 
-function toRequire (requireTuple) {
-  const [requireVar, requireStr] = requireTuple;
-
+/**
+ * Given a desired variable name and require string, generate a new
+ * call expression statement.  If no variable name is provided, return
+ * a simple call expression statement.
+ *
+ *   Examples:
+ *     `var myVar = require("the-provided-requireStr");`
+ *     `require("the-provided-requireStr-that-is-not-assigned");`
+ *
+ * @param  {String}  requireVar    Variable name.
+ * @param  {String}  requireStr    Require string.
+ *
+ * @return {AST}                   Variable declaration or call expression
+ *                                 statement, depending on presence of
+ *                                 requireVar.
+ */
+function toRequire (requireVar, requireStr) {
   if (requireVar) {
     return t.variableDeclaration("var", [t.variableDeclarator(
       t.identifier(requireVar),
@@ -47,10 +89,22 @@ function toRequire (requireTuple) {
   return expressionStmt(requireCallExpression(requireStr));
 }
 
+/**
+ * Given the AST node representing a define function call's dependency array
+ * and the AST node representing that same call's callback function, generate
+ * the common JS equivalent as AST.
+ *
+ * @param  {AST}    defineArray     AST node of define dependency array.
+ * @param  {AST}    defineFunction  AST node of define callback.
+ *
+ * @return {AST}                    AST node of common JS equivalent to
+ *                                  AMD-style module.
+ */
 function toCommonJs (defineArray, defineFunction) {
   const requireStrings = defineArray.elements.map(el => el.value);
   const requireVars = defineFunction.params.map(param => param.name);
-  const requireStatements = _.zip(requireVars, requireStrings).map(toRequire);
+  const requireStatements = _.zip(requireVars, requireStrings)
+    .map(([requireVar, requireStr]) => toRequire(requireVar, requireStr));
   return commonJsTemplate(requireStatements, defineFunction.body.body);
 }
 

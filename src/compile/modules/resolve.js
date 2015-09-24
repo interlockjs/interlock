@@ -1,24 +1,34 @@
 import pluggable from "../../pluggable";
 import resolve from "../../resolve";
 
-const createModule = pluggable(function createModule (overrides) {
-  return Object.assign({
-    path: null,
-    ns: null,
-    nsPath: null,
-    nsRoot: null,
-    rawSource: null,
-    ast: null,
-    requireNodes: null,
-    dependencies: null,
-    hash: null
-  }, overrides);
-});
 
+/**
+ * Transform the require string before it is resolved to a file on disk.
+ * No transformations occur by default - the output is the same as the input.
+ *
+ * @param  {String}  requireStr  Require string or comparable value.
+ *
+ * @return {String}              Transformed require string.
+ */
 const preresolve = pluggable(function preresolve (requireStr) {
   return requireStr;
 });
 
+/**
+ * Given a require string and some context, resolve that require string
+ * to a file on disk, returning a module seed.
+ *
+ * @param  {String}  requireStr  Require string or comparable value.
+ * @param  {String}  contextPath Absolute path from which to resolve any relative
+ *                               paths.
+ * @param  {String}  ns          Namespace to set on module seed if the resolved
+ *                               module is of the same namespace as its context.
+ * @param  {String}  nsRoot      Absolute path of default namespace.
+ * @param  {Array}   extensions  Array of file extension strings, including the leading
+ *                               dot.
+ *
+ * @return {Object}              Module seed.
+ */
 function resolveModule (requireStr, contextPath, ns, nsRoot, extensions) {
   contextPath = contextPath || this.opts.srcRoot;
 
@@ -36,8 +46,8 @@ function resolveModule (requireStr, contextPath, ns, nsRoot, extensions) {
         throw new Error(`Cannot resolve ${requireStr} from ${contextPath}.`);
       }
 
-      return this.createModule(resolved);
+      return resolved;
     });
 }
 
-export default pluggable(resolveModule, { preresolve, createModule });
+export default pluggable(resolveModule, { preresolve });

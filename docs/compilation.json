@@ -52,10 +52,9 @@
           "name": "resolveModule",
           "node": {
             "path": "src/compile/modules/resolve.js",
-            "pluggableLine": 43,
+            "pluggableLine": 53,
             "edges": [
-              "preresolve",
-              "createModule"
+              "preresolve"
             ],
             "fnParams": [
               "requireStr",
@@ -65,52 +64,117 @@
               "extensions"
             ],
             "name": "resolveModule",
-            "fnStart": 22,
-            "fnEnd": 41,
-            "doc": null,
-            "parsedDoc": null
+            "fnStart": 32,
+            "fnEnd": 51,
+            "doc": "*\n * Given a require string and some context, resolve that require string\n * to a file on disk, returning a module seed.\n *\n * @param  {String}  requireStr  Require string or comparable value.\n * @param  {String}  contextPath Absolute path from which to resolve any relative\n *                               paths.\n * @param  {String}  ns          Namespace to set on module seed if the resolved\n *                               module is of the same namespace as its context.\n * @param  {String}  nsRoot      Absolute path of default namespace.\n * @param  {Array}   extensions  Array of file extension strings, including the leading\n *                               dot.\n *\n * @return {Object}              Module seed.\n ",
+            "parsedDoc": {
+              "tags": [
+                {
+                  "tag": "param",
+                  "type": "String",
+                  "name": "requireStr",
+                  "optional": false,
+                  "description": "Require string or comparable value.",
+                  "line": 4,
+                  "source": "@param  {String}  requireStr  Require string or comparable value."
+                },
+                {
+                  "tag": "param",
+                  "type": "String",
+                  "name": "contextPath",
+                  "optional": false,
+                  "description": "Absolute path from which to resolve any relative\npaths.",
+                  "line": 5,
+                  "source": "@param  {String}  contextPath Absolute path from which to resolve any relative\npaths."
+                },
+                {
+                  "tag": "param",
+                  "type": "String",
+                  "name": "ns",
+                  "optional": false,
+                  "description": "Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context.",
+                  "line": 7,
+                  "source": "@param  {String}  ns          Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context."
+                },
+                {
+                  "tag": "param",
+                  "type": "String",
+                  "name": "nsRoot",
+                  "optional": false,
+                  "description": "Absolute path of default namespace.",
+                  "line": 9,
+                  "source": "@param  {String}  nsRoot      Absolute path of default namespace."
+                },
+                {
+                  "tag": "param",
+                  "type": "Array",
+                  "name": "extensions",
+                  "optional": false,
+                  "description": "Array of file extension strings, including the leading\ndot.",
+                  "line": 10,
+                  "source": "@param  {Array}   extensions  Array of file extension strings, including the leading\ndot."
+                },
+                {
+                  "tag": "return",
+                  "type": "Object",
+                  "name": "Module",
+                  "optional": false,
+                  "description": "seed.",
+                  "line": 13,
+                  "source": "@return {Object}              Module seed."
+                }
+              ],
+              "line": 0,
+              "description": "Given a require string and some context, resolve that require string\nto a file on disk, returning a module seed.",
+              "source": "Given a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n@param  {String}  requireStr  Require string or comparable value.\n@param  {String}  contextPath Absolute path from which to resolve any relative\n                              paths.\n@param  {String}  ns          Namespace to set on module seed if the resolved\n                              module is of the same namespace as its context.\n@param  {String}  nsRoot      Absolute path of default namespace.\n@param  {Array}   extensions  Array of file extension strings, including the leading\n                              dot.\n\n@return {Object}              Module seed."
+            }
           },
           "children": [
             {
               "name": "preresolve",
               "node": {
                 "path": "src/compile/modules/resolve.js",
-                "pluggableLine": 18,
+                "pluggableLine": 13,
                 "edges": [],
                 "fnParams": [
                   "requireStr"
                 ],
                 "name": "preresolve",
-                "fnStart": 18,
-                "fnEnd": 20,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 13,
+                "fnEnd": 15,
+                "doc": "*\n * Transform the require string before it is resolved to a file on disk.\n * No transformations occur by default - the output is the same as the input.\n *\n * @param  {String}  requireStr  Require string or comparable value.\n *\n * @return {String}              Transformed require string.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "requireStr",
+                      "optional": false,
+                      "description": "Require string or comparable value.",
+                      "line": 4,
+                      "source": "@param  {String}  requireStr  Require string or comparable value."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "String",
+                      "name": "Transformed",
+                      "optional": false,
+                      "description": "require string.",
+                      "line": 6,
+                      "source": "@return {String}              Transformed require string."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Transform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.",
+                  "source": "Transform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n@param  {String}  requireStr  Require string or comparable value.\n\n@return {String}              Transformed require string."
+                }
               },
               "children": [],
-              "markdown": "## preresolve\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).\n\n  ",
-              "size": 1
-            },
-            {
-              "name": "createModule",
-              "node": {
-                "path": "src/compile/modules/resolve.js",
-                "pluggableLine": 4,
-                "edges": [],
-                "fnParams": [
-                  "overrides"
-                ],
-                "name": "createModule",
-                "fnStart": 4,
-                "fnEnd": 16,
-                "doc": null,
-                "parsedDoc": null
-              },
-              "children": [],
-              "markdown": "## createModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).\n\n  ",
+              "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | require string. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L13-L15).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## resolveModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).\n\n  "
+          "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative\npaths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading\ndot. |\n| Return value |  | Object | seed. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
         }
       ],
       "markdown": "## getSeedModules\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L25-L32).\n\n  "
@@ -137,7 +201,7 @@
           "name": "compileModules",
           "node": {
             "path": "src/compile/modules/compile.js",
-            "pluggableLine": 15,
+            "pluggableLine": 28,
             "edges": [
               "resolveModule",
               "loadModule",
@@ -147,23 +211,46 @@
               "updateRequires"
             ],
             "fnParams": [
-              "seedModules"
+              "moduleSeeds"
             ],
             "name": "compileModules",
-            "fnStart": 15,
-            "fnEnd": 69,
-            "doc": null,
-            "parsedDoc": null
+            "fnStart": 28,
+            "fnEnd": 122,
+            "doc": "*\n * Given one or more module seeds, traverse their dependency graph, collecting any and\n * all dependency modules, and then parse, transform, and hash those modules.  Return\n * a promise that resolves to the full set of modules, once they have been correctly\n * gathered and compiled.\n *\n * @param  {Array}    moduleSeeds  Module seeds, i.e. modules that have not yet been\n *                                 populated with properties such as ast, `dependencies`,\n *                                 etc.  Module objects _should_ have path, rawSource,\n *                                 and namespace values.\n *\n * @return {Promise}               Resolves to array of all compiled modules.\n ",
+            "parsedDoc": {
+              "tags": [
+                {
+                  "tag": "param",
+                  "type": "Array",
+                  "name": "moduleSeeds",
+                  "optional": false,
+                  "description": "Module seeds, i.e. modules that have not yet been\npopulated with properties such as ast, `dependencies`,\netc.  Module objects _should_ have path, rawSource,\nand namespace values.",
+                  "line": 6,
+                  "source": "@param  {Array}    moduleSeeds  Module seeds, i.e. modules that have not yet been\npopulated with properties such as ast, `dependencies`,\netc.  Module objects _should_ have path, rawSource,\nand namespace values."
+                },
+                {
+                  "tag": "return",
+                  "type": "Promise",
+                  "name": "Resolves",
+                  "optional": false,
+                  "description": "to array of all compiled modules.",
+                  "line": 11,
+                  "source": "@return {Promise}               Resolves to array of all compiled modules."
+                }
+              ],
+              "line": 0,
+              "description": "Given one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.",
+              "source": "Given one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n@param  {Array}    moduleSeeds  Module seeds, i.e. modules that have not yet been\n                                populated with properties such as ast, `dependencies`,\n                                etc.  Module objects _should_ have path, rawSource,\n                                and namespace values.\n\n@return {Promise}               Resolves to array of all compiled modules."
+            }
           },
           "children": [
             {
               "name": "resolveModule",
               "node": {
                 "path": "src/compile/modules/resolve.js",
-                "pluggableLine": 43,
+                "pluggableLine": 53,
                 "edges": [
-                  "preresolve",
-                  "createModule"
+                  "preresolve"
                 ],
                 "fnParams": [
                   "requireStr",
@@ -173,58 +260,123 @@
                   "extensions"
                 ],
                 "name": "resolveModule",
-                "fnStart": 22,
-                "fnEnd": 41,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 32,
+                "fnEnd": 51,
+                "doc": "*\n * Given a require string and some context, resolve that require string\n * to a file on disk, returning a module seed.\n *\n * @param  {String}  requireStr  Require string or comparable value.\n * @param  {String}  contextPath Absolute path from which to resolve any relative\n *                               paths.\n * @param  {String}  ns          Namespace to set on module seed if the resolved\n *                               module is of the same namespace as its context.\n * @param  {String}  nsRoot      Absolute path of default namespace.\n * @param  {Array}   extensions  Array of file extension strings, including the leading\n *                               dot.\n *\n * @return {Object}              Module seed.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "requireStr",
+                      "optional": false,
+                      "description": "Require string or comparable value.",
+                      "line": 4,
+                      "source": "@param  {String}  requireStr  Require string or comparable value."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "contextPath",
+                      "optional": false,
+                      "description": "Absolute path from which to resolve any relative\npaths.",
+                      "line": 5,
+                      "source": "@param  {String}  contextPath Absolute path from which to resolve any relative\npaths."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "ns",
+                      "optional": false,
+                      "description": "Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context.",
+                      "line": 7,
+                      "source": "@param  {String}  ns          Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "String",
+                      "name": "nsRoot",
+                      "optional": false,
+                      "description": "Absolute path of default namespace.",
+                      "line": 9,
+                      "source": "@param  {String}  nsRoot      Absolute path of default namespace."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Array",
+                      "name": "extensions",
+                      "optional": false,
+                      "description": "Array of file extension strings, including the leading\ndot.",
+                      "line": 10,
+                      "source": "@param  {Array}   extensions  Array of file extension strings, including the leading\ndot."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "seed.",
+                      "line": 13,
+                      "source": "@return {Object}              Module seed."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given a require string and some context, resolve that require string\nto a file on disk, returning a module seed.",
+                  "source": "Given a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n@param  {String}  requireStr  Require string or comparable value.\n@param  {String}  contextPath Absolute path from which to resolve any relative\n                              paths.\n@param  {String}  ns          Namespace to set on module seed if the resolved\n                              module is of the same namespace as its context.\n@param  {String}  nsRoot      Absolute path of default namespace.\n@param  {Array}   extensions  Array of file extension strings, including the leading\n                              dot.\n\n@return {Object}              Module seed."
+                }
               },
               "children": [
                 {
                   "name": "preresolve",
                   "node": {
                     "path": "src/compile/modules/resolve.js",
-                    "pluggableLine": 18,
+                    "pluggableLine": 13,
                     "edges": [],
                     "fnParams": [
                       "requireStr"
                     ],
                     "name": "preresolve",
-                    "fnStart": 18,
-                    "fnEnd": 20,
-                    "doc": null,
-                    "parsedDoc": null
+                    "fnStart": 13,
+                    "fnEnd": 15,
+                    "doc": "*\n * Transform the require string before it is resolved to a file on disk.\n * No transformations occur by default - the output is the same as the input.\n *\n * @param  {String}  requireStr  Require string or comparable value.\n *\n * @return {String}              Transformed require string.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "String",
+                          "name": "requireStr",
+                          "optional": false,
+                          "description": "Require string or comparable value.",
+                          "line": 4,
+                          "source": "@param  {String}  requireStr  Require string or comparable value."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "String",
+                          "name": "Transformed",
+                          "optional": false,
+                          "description": "require string.",
+                          "line": 6,
+                          "source": "@return {String}              Transformed require string."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "Transform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.",
+                      "source": "Transform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n@param  {String}  requireStr  Require string or comparable value.\n\n@return {String}              Transformed require string."
+                    }
                   },
                   "children": [],
-                  "markdown": "## preresolve\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L18-L20).\n\n  ",
-                  "size": 1
-                },
-                {
-                  "name": "createModule",
-                  "node": {
-                    "path": "src/compile/modules/resolve.js",
-                    "pluggableLine": 4,
-                    "edges": [],
-                    "fnParams": [
-                      "overrides"
-                    ],
-                    "name": "createModule",
-                    "fnStart": 4,
-                    "fnEnd": 16,
-                    "doc": null,
-                    "parsedDoc": null
-                  },
-                  "children": [],
-                  "markdown": "## createModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L4-L16).\n\n  ",
+                  "markdown": "## preresolve\n  \nTransform the require string before it is resolved to a file on disk.\nNo transformations occur by default - the output is the same as the input.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Return value |  | String | require string. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L13-L15).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## resolveModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L43).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L22-L41).\n\n  "
+              "markdown": "## resolveModule\n  \nGiven a require string and some context, resolve that require string\nto a file on disk, returning a module seed.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **requireStr** | String | Require string or comparable value. |\n| Parameter | **contextPath** | String | Absolute path from which to resolve any relative\npaths. |\n| Parameter | **ns** | String | Namespace to set on module seed if the resolved\nmodule is of the same namespace as its context. |\n| Parameter | **nsRoot** | String | Absolute path of default namespace. |\n| Parameter | **extensions** | Array | Array of file extension strings, including the leading\ndot. |\n| Return value |  | Object | seed. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/resolve.js#L53).\n      The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).\n\n  "
             },
             {
               "name": "loadModule",
               "node": {
                 "path": "src/compile/modules/load.js",
-                "pluggableLine": 39,
+                "pluggableLine": 55,
                 "edges": [
                   "readSource",
                   "setModuleType"
@@ -233,10 +385,34 @@
                   "module"
                 ],
                 "name": "loadModule",
-                "fnStart": 39,
-                "fnEnd": 42,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 55,
+                "fnEnd": 58,
+                "doc": "*\n * Given a module seed, read the module from disk and determine its type.\n *\n * @param  {Object}  module   Module seed.\n *\n * @return {Object}           Module seed plus `rawSource` and `type` properties.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Module seed.",
+                      "line": 3,
+                      "source": "@param  {Object}  module   Module seed."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "seed plus `rawSource` and `type` properties.",
+                      "line": 5,
+                      "source": "@return {Object}           Module seed plus `rawSource` and `type` properties."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given a module seed, read the module from disk and determine its type.",
+                  "source": "Given a module seed, read the module from disk and determine its type.\n\n@param  {Object}  module   Module seed.\n\n@return {Object}           Module seed plus `rawSource` and `type` properties."
+                }
               },
               "children": [
                 {
@@ -286,29 +462,53 @@
                   "name": "setModuleType",
                   "node": {
                     "path": "src/compile/modules/load.js",
-                    "pluggableLine": 35,
+                    "pluggableLine": 44,
                     "edges": [],
                     "fnParams": [
                       "module"
                     ],
                     "name": "setModuleType",
-                    "fnStart": 35,
-                    "fnEnd": 37,
-                    "doc": null,
-                    "parsedDoc": null
+                    "fnStart": 44,
+                    "fnEnd": 46,
+                    "doc": "*\n * Given the early-stage module (module seed + rawSource property), determine and set\n * its type.  This value defaults to \"javascript\" and is used to determine whether\n * default behaviors for parsing and processing modules should be used on the module.\n *\n * @param  {Object} module  Early-stage module.\n *\n * @return {Object}         Module with new `type` property.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "module",
+                          "optional": false,
+                          "description": "Early-stage module.",
+                          "line": 5,
+                          "source": "@param  {Object} module  Early-stage module."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "Object",
+                          "name": "Module",
+                          "optional": false,
+                          "description": "with new `type` property.",
+                          "line": 7,
+                          "source": "@return {Object}         Module with new `type` property."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "Given the early-stage module (module seed + rawSource property), determine and set\nits type.  This value defaults to \"javascript\" and is used to determine whether\ndefault behaviors for parsing and processing modules should be used on the module.",
+                      "source": "Given the early-stage module (module seed + rawSource property), determine and set\nits type.  This value defaults to \"javascript\" and is used to determine whether\ndefault behaviors for parsing and processing modules should be used on the module.\n\n@param  {Object} module  Early-stage module.\n\n@return {Object}         Module with new `type` property."
+                    }
                   },
                   "children": [],
-                  "markdown": "## setModuleType\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L35-L37).\n\n  ",
+                  "markdown": "## setModuleType\n  \nGiven the early-stage module (module seed + rawSource property), determine and set\nits type.  This value defaults to \"javascript\" and is used to determine whether\ndefault behaviors for parsing and processing modules should be used on the module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Early-stage module. |\n| Return value |  | Object | with new `type` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L44-L46).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## loadModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L39-L42).\n\n  "
+              "markdown": "## loadModule\n  \nGiven a module seed, read the module from disk and determine its type.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module seed. |\n| Return value |  | Object | seed plus `rawSource` and `type` properties. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L55-L58).\n\n  "
             },
             {
               "name": "hashModule",
               "node": {
                 "path": "src/compile/modules/hash.js",
-                "pluggableLine": 17,
+                "pluggableLine": 42,
                 "edges": [
                   "updateModuleHash"
                 ],
@@ -316,51 +516,141 @@
                   "module"
                 ],
                 "name": "hashModule",
-                "fnStart": 17,
-                "fnEnd": 26,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 42,
+                "fnEnd": 51,
+                "doc": "*\n * Given a mostly-compiled module, generate a hash for that module and resolve\n * to that module with a new `hash` property.\n *\n * @param  {Object}  module  Module that needs to be hashed hash.\n *\n * @return {Object}          Module that now has a hash property.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Module that needs to be hashed hash.",
+                      "line": 4,
+                      "source": "@param  {Object}  module  Module that needs to be hashed hash."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "that now has a hash property.",
+                      "line": 6,
+                      "source": "@return {Object}          Module that now has a hash property."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.",
+                  "source": "Given a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n@param  {Object}  module  Module that needs to be hashed hash.\n\n@return {Object}          Module that now has a hash property."
+                }
               },
               "children": [
                 {
                   "name": "updateModuleHash",
                   "node": {
                     "path": "src/compile/modules/hash.js",
-                    "pluggableLine": 5,
+                    "pluggableLine": 21,
                     "edges": [],
                     "fnParams": [
-                      null
+                      "args"
                     ],
                     "name": "updateModuleHash",
-                    "fnStart": 5,
-                    "fnEnd": 15,
-                    "doc": null,
-                    "parsedDoc": null
+                    "fnStart": 21,
+                    "fnEnd": 32,
+                    "doc": "*\n * Use data from the provided module to generate a hash, utilizing the provided\n * update function.  Only string values should be passed to the update function.\n * The resulting hash should be deterministic for the same inputs in the same order.\n *\n * @param  {Object}    args         Wrapper object for update and module.\n * @param  {Object}    args.module  Module that needs a hash property.\n * @param  {Function}  args.update  Function to be invoked with data that uniquely\n *                                  identifies the module (or, more precisely, the\n *                                  run-time behavior of the module).\n *\n * @return {Object}                 The same as the input `args`.  This is so that\n *                                  chained transformers of this function have easy\n *                                  access to both the module and the update\n *                                  function.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "args",
+                          "optional": false,
+                          "description": "Wrapper object for update and module.",
+                          "line": 5,
+                          "source": "@param  {Object}    args         Wrapper object for update and module."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "args.module",
+                          "optional": false,
+                          "description": "Module that needs a hash property.",
+                          "line": 6,
+                          "source": "@param  {Object}    args.module  Module that needs a hash property."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Function",
+                          "name": "args.update",
+                          "optional": false,
+                          "description": "Function to be invoked with data that uniquely\nidentifies the module (or, more precisely, the\nrun-time behavior of the module).",
+                          "line": 7,
+                          "source": "@param  {Function}  args.update  Function to be invoked with data that uniquely\nidentifies the module (or, more precisely, the\nrun-time behavior of the module)."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "Object",
+                          "name": "The",
+                          "optional": false,
+                          "description": "same as the input `args`.  This is so that\nchained transformers of this function have easy\naccess to both the module and the update\nfunction.",
+                          "line": 11,
+                          "source": "@return {Object}                 The same as the input `args`.  This is so that\nchained transformers of this function have easy\naccess to both the module and the update\nfunction."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "Use data from the provided module to generate a hash, utilizing the provided\nupdate function.  Only string values should be passed to the update function.\nThe resulting hash should be deterministic for the same inputs in the same order.",
+                      "source": "Use data from the provided module to generate a hash, utilizing the provided\nupdate function.  Only string values should be passed to the update function.\nThe resulting hash should be deterministic for the same inputs in the same order.\n\n@param  {Object}    args         Wrapper object for update and module.\n@param  {Object}    args.module  Module that needs a hash property.\n@param  {Function}  args.update  Function to be invoked with data that uniquely\n                                 identifies the module (or, more precisely, the\n                                 run-time behavior of the module).\n\n@return {Object}                 The same as the input `args`.  This is so that\n                                 chained transformers of this function have easy\n                                 access to both the module and the update\n                                 function."
+                    }
                   },
                   "children": [],
-                  "markdown": "## updateModuleHash\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L15).\n\n  ",
+                  "markdown": "## updateModuleHash\n  \nUse data from the provided module to generate a hash, utilizing the provided\nupdate function.  Only string values should be passed to the update function.\nThe resulting hash should be deterministic for the same inputs in the same order.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **args** | Object | Wrapper object for update and module. |\n| Parameter | **args.module** | Object | Module that needs a hash property. |\n| Parameter | **args.update** | Function | Function to be invoked with data that uniquely\nidentifies the module (or, more precisely, the\nrun-time behavior of the module). |\n| Return value |  | Object | same as the input `args`.  This is so that\nchained transformers of this function have easy\naccess to both the module and the update\nfunction. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L21-L32).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## hashModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L17-L26).\n\n  "
+              "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L42-L51).\n\n  "
             },
             {
               "name": "parseModule",
               "node": {
                 "path": "src/compile/modules/parse.js",
-                "pluggableLine": 10,
+                "pluggableLine": 18,
                 "edges": [],
                 "fnParams": [
                   "module"
                 ],
                 "name": "parseModule",
-                "fnStart": 10,
-                "fnEnd": 31,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 18,
+                "fnEnd": 39,
+                "doc": "*\n * Parse the source of the provided early-stage module.  Resolves to the same\n * module with a new `ast` property (or equivalent for non-JavaScript modules).\n *\n * @param  {Object}  module  Unparsed module with rawSource property.\n *\n * @return {Object}          Parsed module with new `ast` property.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Unparsed module with rawSource property.",
+                      "line": 4,
+                      "source": "@param  {Object}  module  Unparsed module with rawSource property."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Parsed",
+                      "optional": false,
+                      "description": "module with new `ast` property.",
+                      "line": 6,
+                      "source": "@return {Object}          Parsed module with new `ast` property."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Parse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).",
+                  "source": "Parse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n@param  {Object}  module  Unparsed module with rawSource property.\n\n@return {Object}          Parsed module with new `ast` property."
+                }
               },
               "children": [],
-              "markdown": "## parseModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L10-L31).\n\n  ",
+              "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | module with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L18-L39).\n\n  ",
               "size": 1
             },
             {
@@ -375,7 +665,7 @@
                 "name": "transformModule",
                 "fnStart": 18,
                 "fnEnd": 57,
-                "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to module-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
+                "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to type-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
                 "parsedDoc": {
                   "tags": [
                     {
@@ -398,35 +688,59 @@
                     }
                   ],
                   "line": 0,
-                  "description": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.",
-                  "source": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.\n\n@param  {Object} module  Module object, with `ast` property.\n\n@return {Object}         Module object with transformed `ast` property\n                         and new `synchronousRequires` property."
+                  "description": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.",
+                  "source": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n@param  {Object} module  Module object, with `ast` property.\n\n@return {Object}         Module object with transformed `ast` property\n                         and new `synchronousRequires` property."
                 }
               },
               "children": [],
-              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | object with transformed `ast` property\nand new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).\n\n  ",
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | object with transformed `ast` property\nand new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).\n\n  ",
               "size": 1
             },
             {
               "name": "updateRequires",
               "node": {
                 "path": "src/compile/modules/update-requires.js",
-                "pluggableLine": 6,
+                "pluggableLine": 16,
                 "edges": [],
                 "fnParams": [
                   "module"
                 ],
                 "name": "updateRequires",
-                "fnStart": 6,
-                "fnEnd": 27,
-                "doc": null,
-                "parsedDoc": null
+                "fnStart": 16,
+                "fnEnd": 37,
+                "doc": "*\n * Give a module whose dependencies have been identified and compiled, replace\n * all original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n *\n * @param  {Object}  module  Module with AST containing original require expressions.\n *\n * @return {Object}          Module with AST containing require expressions whose\n *                           arguments have been replaced with corresponding dependency\n *                           module hashes.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Module with AST containing original require expressions.",
+                      "line": 4,
+                      "source": "@param  {Object}  module  Module with AST containing original require expressions."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes.",
+                      "line": 6,
+                      "source": "@return {Object}          Module with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Give a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.",
+                  "source": "Give a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n@param  {Object}  module  Module with AST containing original require expressions.\n\n@return {Object}          Module with AST containing require expressions whose\n                          arguments have been replaced with corresponding dependency\n                          module hashes."
+                }
               },
               "children": [],
-              "markdown": "## updateRequires\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L6-L27).\n\n  ",
+              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L16-L37).\n\n  ",
               "size": 1
             }
           ],
-          "markdown": "## compileModules\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L69).\n\n  "
+          "markdown": "## compileModules\n  \nGiven one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been\npopulated with properties such as ast, `dependencies`,\netc.  Module objects _should_ have path, rawSource,\nand namespace values. |\n| Return value |  | Promise | to array of all compiled modules. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L28-L122).\n\n  "
         }
       ],
       "markdown": "## getModuleMaps\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L34-L44).\n\n  "

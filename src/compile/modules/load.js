@@ -32,10 +32,26 @@ export const readSource = pluggable(function readSource (module) {
     .then(rawSource => Object.assign({}, module, { rawSource }));
 });
 
+/**
+ * Given the early-stage module (module seed + rawSource property), determine and set
+ * its type.  This value defaults to "javascript" and is used to determine whether
+ * default behaviors for parsing and processing modules should be used on the module.
+ *
+ * @param  {Object} module  Early-stage module.
+ *
+ * @return {Object}         Module with new `type` property.
+ */
 export const setModuleType = pluggable(function setModuleType (module) {
   return Object.assign({}, module, { type: "javascript" });
 });
 
+/**
+ * Given a module seed, read the module from disk and determine its type.
+ *
+ * @param  {Object}  module   Module seed.
+ *
+ * @return {Object}           Module seed plus `rawSource` and `type` properties.
+ */
 const loadModule = pluggable(function loadModule (module) {
   return this.readSource(module)
     .then(this.setModuleType);

@@ -1,9 +1,22 @@
 import _ from "lodash";
 import { Plugin, transform } from "babel-core";
 
+import pluggable from "../../pluggable";
 import transformAmd from "./transform-amd";
 
-export default function transformModuleAst (origAst, babelUserConfig = {}) {
+/**
+ * Transforms the module's AST, returning a module object with transformed
+ * `ast` property as well as a new `synchronousRequires` property.  If the
+ * module is not of type "javascript", transformations to module-specific
+ * intermediate representation should occur at this step.
+ *
+ * @param  {Object} module  Module object, with `ast` property.
+ *
+ * @return {Object}         Module object with transformed `ast` property
+ *                          and new `synchronousRequires` property.
+ */
+export default pluggable(function transformModule (module) {
+  const babelUserConfig = this.opts.babelConfig || {};
   let synchronousRequires = [];
 
   const getRequires = new Plugin("get-requires", {
@@ -34,8 +47,11 @@ export default function transformModuleAst (origAst, babelUserConfig = {}) {
     }]
   });
 
+  const { ast } = transform.fromAst(module.ast, null, config);
   synchronousRequires = _.uniq(synchronousRequires);
 
-  const { ast } = transform.fromAst(origAst, null, config);
-  return { ast, synchronousRequires };
-}
+  return Object.assign({}, module, {
+    synchronousRequires,
+    ast: ast.program
+  });
+});

@@ -9,7 +9,7 @@ import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";
 import parseModule from "./parse";
-import transformModuleAst from "./transform-module-ast";
+import transformModule from "./transform";
 import updateRequires from "./update-requires";
 
 
@@ -38,19 +38,16 @@ const compileModules = pluggable(function compileModules (seedModules) {
     // resolved and fully generated, and the module's hash will also have been calculated.
     return modulesByAbsPath[module.path] = this.loadModule(module)
       .then(this.parseModule)
-      .then(loadedModule => {
-        const { ast, synchronousRequires } =
-          transformModuleAst(loadedModule.ast, this.opts.babelConfig);
-        Object.assign(module, loadedModule, { ast: ast.program });
-
-        const dependenciesP = Promise.all(synchronousRequires.map(requireStr =>
-          getDependency(requireStr, contextPath, module.ns, module.nsRoot)));
+      .then(this.transformModule)
+      .then(_module => {
+        const dependenciesP = Promise.all(_module.synchronousRequires.map(requireStr =>
+          getDependency(requireStr, contextPath, _module.ns, _module.nsRoot)));
         const deepDependenciesP = dependenciesP.then(getDeepDependencies);
 
-        return Promise.all([dependenciesP, deepDependenciesP]);
+        return Promise.all([dependenciesP, deepDependenciesP, _module]);
       })
-      .then(([dependencies, deepDependencies]) => {
-        const moduleWithDeps = Object.assign({}, module, {
+      .then(([dependencies, deepDependencies, _module]) => {
+        const moduleWithDeps = Object.assign({}, _module, {
           // De-dupe any (deep-)dependencies by their hash.
           deepDependencies: _.chain(deepDependencies).indexBy("hash").values().value(),
           dependencies: _.chain(dependencies)
@@ -68,7 +65,7 @@ const compileModules = pluggable(function compileModules (seedModules) {
             const requireStrToModHash = _.object(dependencies);
 
             // Update require statements to refer to the hashes of dependencies.
-            const updatedRequiresAst = transform.fromAst(module.ast, null, {
+            const updatedRequiresAst = transform.fromAst(_module.ast, null, {
               code: false,
               whitelist: ["react"],
               plugins: [ updateRequires(requireStrToModHash)]
@@ -86,6 +83,6 @@ const compileModules = pluggable(function compileModules (seedModules) {
       .uniq()
       .value()
     );
-}, { resolveModule, loadModule, hashModule, parseModule });
+}, { resolveModule, loadModule, hashModule, parseModule, transformModule });
 
 export default compileModules;

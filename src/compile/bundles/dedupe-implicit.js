@@ -45,7 +45,7 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
  * split off into its own new bundle.
  *
  * @param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.
- * 
+ *
  * @return {Array}                   Explicit bundles plus new implicit bundles.
  */
 export default pluggable(function dedupeImplicit (explicitBundles) {

@@ -15,14 +15,14 @@ const updateBundleHash = pluggable(function updateBundleHash (update, bundle) {
   update(JSON.stringify(!!bundle.includeRuntime), "utf-8");
 });
 
-
 /**
- * Calculate the bundle's hash.  Defers to [updateBundleHash](#updatebundlehash) for
- * the actual calculations.
+ * Given an otherwise prepared bundle, generate a hash for that bundle and resolve
+ * to that same bundle with a new `hash` property.
  *
- * @param  {Object} bundle  Bundle.
+ * @param   {Object} bundle  Unhashed bundle.
  *
- * @returns {String}        40-character SHA1 that uniquely identifies the bundle.
+ * @returns {Object}         Bundle plus new `hash` property, a 40-character SHA1
+ *                           that uniquely identifies the bundle.
  */
 function hashBundle (bundle) {
   // Node v0.10.x cannot re-use crypto instances after digest is called.
@@ -34,7 +34,7 @@ function hashBundle (bundle) {
   const update = shasum.update.bind(shasum);
 
   return this.updateBundleHash(update, bundle)
-    .then(() => shasum.digest());
+    .then(() => Object.assign({}, bundle, { hash: shasum.digest() }));
 }
 
 export default pluggable(hashBundle, { updateBundleHash });

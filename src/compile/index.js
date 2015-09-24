@@ -68,9 +68,7 @@ export const getBundles = pluggable(function getBundles (moduleSeeds, moduleMaps
     .then(bundles => bundles.map(bundle => Object.assign({}, bundle, {
       modules: bundle.moduleHashes.map(hash => moduleMaps.byHash[hash])
     })))
-    .then(bundles => Promise.all(bundles.map(bundle => this.hashBundle(bundle)
-      .then(hash => Object.assign({}, bundle, { hash }))
-    )))
+    .then(bundles => Promise.all(bundles.map(this.hashBundle)))
     .then(bundles => Promise.all(bundles.map(this.interpolateFilename)));
 }, { getBundleSeeds, dedupeExplicit, dedupeImplicit, hashBundle, interpolateFilename });
 

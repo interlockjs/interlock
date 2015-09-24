@@ -3,7 +3,7 @@ import _ from "lodash";
 import Promise from "bluebird";
 
 import pluggable from "../pluggable";
-import { CONTINUE } from "../pluggable";
+import bootstrapCompilation from "./bootstrap";
 import { constructBundle } from "./construct";
 import compileModules from "./modules/compile";
 import resolveModule from "./modules/resolve";
@@ -13,15 +13,6 @@ import dedupeImplicit from "./bundles/dedupe-implicit";
 import hashBundle from "./bundles/hash";
 import interpolateFilename from "./bundles/interpolate-filename";
 
-
-export const bootstrapCompilation = pluggable(function bootstrapCompilation (opts) {
-  return {
-    cache: {
-      modulesByAbsPath: Object.create(null)
-    },
-    opts: Object.freeze(opts)
-  };
-});
 
 export const getModuleSeeds = pluggable(function getModuleSeeds () {
   return Promise.all(
@@ -150,28 +141,8 @@ const compile = pluggable(function compile () {
     .then(this.buildOutput);
 }, { getModuleSeeds, getModuleMaps, getBundles, buildOutput });
 
-function addPluginsToContext (compilationContext) {
-  compilationContext.__pluggables__ = { override: {}, transform: {} };
-  const overrides = compilationContext.__pluggables__.override;
-  const transforms = compilationContext.__pluggables__.transform;
-
-  (compilationContext.opts.plugins || []).forEach(plugin => {
-    function override (pluggableFnName, overrideFn) {
-      overrides[pluggableFnName] = (overrides[pluggableFnName] || []).concat(overrideFn);
-    }
-    function transform (pluggableFnName, transformFn) {
-      transforms[pluggableFnName] = (transforms[pluggableFnName] || []).concat(transformFn);
-    }
-
-    _.extend(override, { CONTINUE });
-    plugin(override, transform);
-  });
-}
 
 export default function (opts) {
-  return bootstrapCompilation(opts)
-    .then(compilationContext => {
-      addPluginsToContext(compilationContext);
-      return compile.call(compilationContext);
-    });
+  const compilationContext = bootstrapCompilation(opts);
+  return compile.call(compilationContext);
 }

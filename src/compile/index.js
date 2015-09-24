@@ -7,7 +7,7 @@ import bootstrapCompilation from "./bootstrap";
 import { constructBundle } from "./construct";
 import compileModules from "./modules/compile";
 import resolveModule from "./modules/resolve";
-import initBundle from "./bundles/init";
+import getBundleSeeds from "./bundles/get-seeds";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
 import hashBundle from "./bundles/hash";
@@ -34,15 +34,6 @@ export const getModuleMaps = pluggable(function getModuleMaps (moduleSeeds) {
       byAbsPath: {}
     }));
 }, { compileModules });
-
-export const getBundleSeeds = pluggable(function getBundleSeeds (moduleSeeds, modulesByPath) {
-  return Promise.all([].concat(
-    _.map(this.opts.entry, (bundleDef, relPath) =>
-      this.initBundle(bundleDef, modulesByPath[moduleSeeds[relPath].path], true)),
-    _.map(this.opts.split, (bundleDef, relPath) =>
-      this.initBundle(bundleDef, modulesByPath[moduleSeeds[relPath].path], false))
-  ));
-}, { initBundle });
 
 export const getBundles = pluggable(function getBundles (moduleSeeds, moduleMaps) {
   return this.getBundleSeeds(moduleSeeds, moduleMaps.byAbsPath)

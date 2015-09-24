@@ -7,10 +7,11 @@ import { CONTINUE } from "../pluggable";
 import { constructBundle } from "./construct";
 import compileModules from "./modules/compile";
 import resolveModule from "./modules/resolve";
-import hashBundle from "./bundles/hash";
-import interpolateFilename from "./bundles/interpolate-filename";
+import initBundle from "./bundles/init";
 import dedupeExplicit from "./bundles/dedupe-explicit";
 import dedupeImplicit from "./bundles/dedupe-implicit";
+import hashBundle from "./bundles/hash";
+import interpolateFilename from "./bundles/interpolate-filename";
 
 
 export const bootstrapCompilation = pluggable(function bootstrapCompilation (opts) {
@@ -42,15 +43,6 @@ export const getModuleMaps = pluggable(function getModuleMaps (moduleSeeds) {
       byAbsPath: {}
     }));
 }, { compileModules });
-
-export const initBundle = pluggable(function initBundle (bundleDef, module, isEntryPt) {
-  return {
-    module,
-    dest: bundleDef.dest,
-    isEntry: isEntryPt,
-    includeRuntime: isEntryPt && !bundleDef.excludeRuntime
-  };
-});
 
 export const getBundleSeeds = pluggable(function getBundleSeeds (moduleSeeds, modulesByPath) {
   return Promise.all([].concat(

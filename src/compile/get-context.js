@@ -42,7 +42,7 @@ function addPluginsToContext (compilationContext) {
  *
  * @return {Object}        Object to be used as `this` context for pluggablw functions.
  */
-export default function bootstrapCompilation (opts) {
+export default function getCompilationContext (opts) {
   return addPluginsToContext({
     cache: {
       modulesByAbsPath: Object.create(null)

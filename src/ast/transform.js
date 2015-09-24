@@ -3,8 +3,6 @@ import _ from "lodash";
 
 import { NODE, ARRAY, OTHER } from "./types";
 
-const UNCHANGED = Symbol.for("interlock.traversal-control.UNCHANGED");
-
 
 function enumerate (arr) {
   return arr.map((el, idx) => [idx, el]);
@@ -63,10 +61,10 @@ export default function transformAst (node, transformer, key = null, parents = [
     .map(([childKey, childNode]) => {
       const newChildNode = transformAst(childNode, transformer, childKey, [node, ...parents]);
       return newChildNode === childNode ?
-        UNCHANGED :
+        null :
         [childKey, newChildNode];
     })
-    .filter(x => x !== UNCHANGED);
+    .filter(x => x);
 
   return applyUpdates(node, type, childUpdates);
 }

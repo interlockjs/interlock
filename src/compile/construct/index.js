@@ -25,13 +25,12 @@ const registerUrlsTmpl = getTemplate("register-urls", bodyTmpl);
 const iifeTmpl = getTemplate("iife", programTmpl);
 
 /**
- * Given an array of AST nodes and their dependencies (possibly originating from
- * a common JS module), construct an object expression that represents its run-time
+ * Given an array of AST nodes from a module's body along with that module's
+ * dependencies, construct an AST object expression that represents its run-time
  * equivalent.
  *
- * @param  {Array}  moduleBody  Array of ECMAscript AST nodes.
- * @param  {Array}  deps        Array of modules upon which origin module is
- *                              dependent.
+ * @param  {Array}  moduleBody  Array of AST nodes.
+ * @param  {Array}  deps        Array of modules upon which module is dependent.
  *
  * @return {ASTnode}            Object expression AST node.
  */
@@ -46,11 +45,10 @@ export const constructCommonModule = pluggable(
 );
 
 /**
- * Given an array of CJS modules (in the form of object expression AST nodes),
- * construct the AST of a file that would register those modules for consumption
- * by the Interlock run-time.
+ * Given an array of compiled modules, construct the AST for JavaScript that would
+ * register those modules for consumption by the Interlock run-time.
  *
- * @param  {Array}  modules        Array of modules objects.
+ * @param  {Array}  modules        Array of compiled modules.
  * @param  {String} globalName     Global variable name of the Interlock run-time.
  *
  * @return {Array}                 Array of AST nodes to be emitted as JavaScript.
@@ -141,8 +139,23 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
 }, { constructModuleSet, constructRuntime, setLoadEntry, constructRegisterUrls });
 
 /**
- * The primary constructor.  Given a set of options, construct Program AST to be emitted
- * as JavaScript.
+ * Construct the AST for an output bundle.  A number of optional options-args are
+ * allowed, to give flexibility to the compiler for what sort of bundle should be
+ * constructed.
+ *
+ * For example, in the case of a bundle with an entry module, you'll want everything
+ * to be included.  The run-time is needed, because there is no guarantee another
+ * bundle has already loaded the run-time.  The module-hash-to-bundle-URLs object
+ * should be included, as again there is no guarantee another bundle has already
+ * set those values.  The modules of the bundle itself need to be included, etc.
+ *
+ * However, you might instead generate a specialized bundle that only contains the
+ * run-time and URLs.  This bundle might be inlined into the page, or guaranteed
+ * to be loaded first, so that redundant copies of the run-time be included in
+ * every other bundle generated.
+ *
+ * The output for this function should be a root AST node, ready to be transformed
+ * back into JavaScript code.
  *
  * @param  {Object}  opts                 Options.
  * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.

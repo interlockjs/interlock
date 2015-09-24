@@ -21,7 +21,8 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
 
         bundles.push({
           moduleHashes: intersection,
-          dest: implicitBundleDest
+          dest: implicitBundleDest,
+          type: bundles[a].type
         });
       }
     }

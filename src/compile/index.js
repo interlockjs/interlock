@@ -1,4 +1,3 @@
-import escodegen from "escodegen";
 import _ from "lodash";
 import Promise from "bluebird";
 
@@ -8,6 +7,7 @@ import { constructBundle } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
 import generateModuleMaps from "./modules/generate-maps";
 import generateBundles from "./bundles/generate";
+import generateRawBundles from "./bundles/generate-raw";
 
 
 export const getUrls = pluggable(function getUrls (bundles) {
@@ -17,18 +17,8 @@ export const getUrls = pluggable(function getUrls (bundles) {
   }, {});
 });
 
-export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
-  const format = this.opts.pretty === false ?
-    {
-      compact: true,
-      newline: ""
-    } : {
-      indent: {
-        style: "  ",
-        adjustMultilineComment: true
-      }
-    };
 
+export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, urls) {
   return Promise.all(bundlesArr.map(bundle =>
     this.constructBundle({
       modules: bundle.modules,
@@ -36,22 +26,11 @@ export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, url
       urls: bundle.isEntry ? urls : null,
       entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
     })
-      .then(bundleAst => escodegen.generate(bundleAst, {
-        format,
-        sourceMap: !!this.opts.sourceMaps,
-        sourceMapWithCode: true,
-        comment: !!this.opts.includeComments
-      }))
-      .then(({ code, map }) => {
-        const outputBundle = Object.assign({}, bundle, { raw: code });
-        const mapDest = bundle.dest + ".map";
-        return this.opts.sourceMaps === true ?
-          [outputBundle, { raw: map, dest: mapDest }] :
-          [outputBundle];
-      })
+      .then(ast => Object.assign({}, bundle, { ast }))
+      .then(this.generateRawBundles)
   ))
     .then(_.flatten);
-}, { constructBundle });
+}, { constructBundle, generateRawBundles });
 
 /**
  * Given a stream of bundles, reduces those bundles down into a promise that

@@ -3,8 +3,13 @@ import _ from "lodash";
 import pluggable from "../../pluggable";
 
 export const initBundle = pluggable(function initBundle (bundleDef, module, isEntryPt) {
+  if (module.type !== "javascript") {
+    throw new Error("Cannot create JS bundle for non-JavaScript module. " +
+      "Please configure appropriate plugin.");
+  }
   return {
     module,
+    type: "javascript",
     dest: bundleDef.dest,
     isEntry: isEntryPt,
     includeRuntime: isEntryPt && !bundleDef.excludeRuntime

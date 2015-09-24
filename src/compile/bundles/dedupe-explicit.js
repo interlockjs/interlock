@@ -20,7 +20,7 @@ function dedupeExplicit (bundleSeeds, modulesByAbsPath) {
 
     bundles.forEach(bundleB => {
       if (bundleA.module.path !== bundleB.module.path &&
-          _.contains(bundleA.moduleHashes, modulesByAbsPath[bundleB.module.path].hash)) {
+          _.contains(bundleA.moduleHashes, bundleB.module.hash)) {
         bundleA.moduleHashes = _.difference(bundleA.moduleHashes, bundleB.moduleHashes);
       }
     });

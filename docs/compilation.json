@@ -141,14 +141,17 @@
             "edges": [
               "resolveModule",
               "loadModule",
-              "hashModule"
+              "hashModule",
+              "parseModule",
+              "transformModule",
+              "updateRequires"
             ],
             "fnParams": [
               "seedModules"
             ],
             "name": "compileModules",
             "fnStart": 15,
-            "fnEnd": 87,
+            "fnEnd": 69,
             "doc": null,
             "parsedDoc": null
           },
@@ -221,17 +224,17 @@
               "name": "loadModule",
               "node": {
                 "path": "src/compile/modules/load.js",
-                "pluggableLine": 60,
+                "pluggableLine": 39,
                 "edges": [
                   "readSource",
-                  "parseSourceToAst"
+                  "setModuleType"
                 ],
                 "fnParams": [
-                  "asset"
+                  "module"
                 ],
                 "name": "loadModule",
-                "fnStart": 60,
-                "fnEnd": 65,
+                "fnStart": 39,
+                "fnEnd": 42,
                 "doc": null,
                 "parsedDoc": null
               },
@@ -240,73 +243,72 @@
                   "name": "readSource",
                   "node": {
                     "path": "src/compile/modules/load.js",
-                    "pluggableLine": 56,
+                    "pluggableLine": 30,
                     "edges": [],
                     "fnParams": [
-                      "asset"
+                      "module"
                     ],
                     "name": "readSource",
-                    "fnStart": 56,
-                    "fnEnd": 58,
-                    "doc": "*\n * This function is invoked whenever the compiler attempts to read a source-file\n * from the disk.  It takes an asset object as its only input.  The properties\n * available on that asset object are as follows:\n *\n *  - `path` - the absolute path of the file\n *  - `ns` - the namespace of the module (either the default ns, or borrowed from its\n *    containing package)\n *  - `nsRoot` - the absolute path to the root of the namespace\n *  - `nsPath` - the file's path relative to the root of the namespace\n *  - `rawSource` - `null`, this value is provided by the `readSource` function\n *  - `ast` - `null`, this value will be populated later in the compilation\n *  - `requireNodes` - `null`, this value will be populated later in the compilation\n *  - `dependencies` - `null`, this value will be populated later in the compilation\n *  - `hash` - `null`, this value will be populated later in the compilation\n *\n * @param  {Object} asset  Asset object.\n *\n * @return {String}        The raw source of the file, in string format.\n ",
+                    "fnStart": 30,
+                    "fnEnd": 33,
+                    "doc": "*\n * This function is invoked whenever the compiler attempts to read a source-file\n * from the disk.  It takes an raw-module object as its only input.  The properties\n * available on that object are as follows:\n *\n *  - `path` - the absolute path of the file\n *  - `ns` - the namespace of the module (either the default ns, or borrowed from its\n *    containing package)\n *  - `nsRoot` - the absolute path to the root of the namespace\n *  - `nsPath` - the file's path relative to the root of the namespace\n *\n * The function should output an object with the same properties, plus one additional\n * property: `rawSource`.  This property should be the string-value of the module\n * source.\n *\n * @param  {Object} module  Module object.\n *\n * @return {Object}         Module object + `rawSource`.\n ",
                     "parsedDoc": {
                       "tags": [
                         {
                           "tag": "param",
                           "type": "Object",
-                          "name": "asset",
+                          "name": "module",
                           "optional": false,
-                          "description": "Asset object.",
-                          "line": 16,
-                          "source": "@param  {Object} asset  Asset object."
+                          "description": "Module object.",
+                          "line": 15,
+                          "source": "@param  {Object} module  Module object."
                         },
                         {
                           "tag": "return",
-                          "type": "String",
-                          "name": "The",
+                          "type": "Object",
+                          "name": "Module",
                           "optional": false,
-                          "description": "raw source of the file, in string format.",
-                          "line": 18,
-                          "source": "@return {String}        The raw source of the file, in string format."
+                          "description": "object + `rawSource`.",
+                          "line": 17,
+                          "source": "@return {Object}         Module object + `rawSource`."
                         }
                       ],
                       "line": 0,
-                      "description": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation",
-                      "source": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n - `path` - the absolute path of the file\n - `ns` - the namespace of the module (either the default ns, or borrowed from its\n   containing package)\n - `nsRoot` - the absolute path to the root of the namespace\n - `nsPath` - the file's path relative to the root of the namespace\n - `rawSource` - `null`, this value is provided by the `readSource` function\n - `ast` - `null`, this value will be populated later in the compilation\n - `requireNodes` - `null`, this value will be populated later in the compilation\n - `dependencies` - `null`, this value will be populated later in the compilation\n - `hash` - `null`, this value will be populated later in the compilation\n\n@param  {Object} asset  Asset object.\n\n@return {String}        The raw source of the file, in string format."
+                      "description": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an raw-module object as its only input.  The properties\navailable on that object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n\nThe function should output an object with the same properties, plus one additional\nproperty: `rawSource`.  This property should be the string-value of the module\nsource.",
+                      "source": "This function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an raw-module object as its only input.  The properties\navailable on that object are as follows:\n\n - `path` - the absolute path of the file\n - `ns` - the namespace of the module (either the default ns, or borrowed from its\n   containing package)\n - `nsRoot` - the absolute path to the root of the namespace\n - `nsPath` - the file's path relative to the root of the namespace\n\nThe function should output an object with the same properties, plus one additional\nproperty: `rawSource`.  This property should be the string-value of the module\nsource.\n\n@param  {Object} module  Module object.\n\n@return {Object}         Module object + `rawSource`."
                     }
                   },
                   "children": [],
-                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an asset object as its only input.  The properties\navailable on that asset object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n- `rawSource` - `null`, this value is provided by the `readSource` function\n- `ast` - `null`, this value will be populated later in the compilation\n- `requireNodes` - `null`, this value will be populated later in the compilation\n- `dependencies` - `null`, this value will be populated later in the compilation\n- `hash` - `null`, this value will be populated later in the compilation\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **asset** | Object | Asset object. |\n| Return value |  | String | raw source of the file, in string format. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L56-L58).\n\n  ",
+                  "markdown": "## readSource\n  \nThis function is invoked whenever the compiler attempts to read a source-file\nfrom the disk.  It takes an raw-module object as its only input.  The properties\navailable on that object are as follows:\n\n- `path` - the absolute path of the file\n- `ns` - the namespace of the module (either the default ns, or borrowed from its\ncontaining package)\n- `nsRoot` - the absolute path to the root of the namespace\n- `nsPath` - the file's path relative to the root of the namespace\n\nThe function should output an object with the same properties, plus one additional\nproperty: `rawSource`.  This property should be the string-value of the module\nsource.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object. |\n| Return value |  | Object | object + `rawSource`. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L30-L33).\n\n  ",
                   "size": 1
                 },
                 {
-                  "name": "parseSourceToAst",
+                  "name": "setModuleType",
                   "node": {
                     "path": "src/compile/modules/load.js",
-                    "pluggableLine": 15,
+                    "pluggableLine": 35,
                     "edges": [],
                     "fnParams": [
-                      "raw",
-                      "sourceFile"
+                      "module"
                     ],
-                    "name": "parseSourceToAst",
-                    "fnStart": 15,
-                    "fnEnd": 34,
+                    "name": "setModuleType",
+                    "fnStart": 35,
+                    "fnEnd": 37,
                     "doc": null,
                     "parsedDoc": null
                   },
                   "children": [],
-                  "markdown": "## parseSourceToAst\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L15-L34).\n\n  ",
+                  "markdown": "## setModuleType\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L35-L37).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## loadModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L60-L65).\n\n  "
+              "markdown": "## loadModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/load.js#L39-L42).\n\n  "
             },
             {
               "name": "hashModule",
               "node": {
                 "path": "src/compile/modules/hash.js",
-                "pluggableLine": 29,
+                "pluggableLine": 17,
                 "edges": [
                   "updateModuleHash"
                 ],
@@ -314,8 +316,8 @@
                   "module"
                 ],
                 "name": "hashModule",
-                "fnStart": 19,
-                "fnEnd": 27,
+                "fnStart": 17,
+                "fnEnd": 26,
                 "doc": null,
                 "parsedDoc": null
               },
@@ -327,23 +329,104 @@
                     "pluggableLine": 5,
                     "edges": [],
                     "fnParams": [
-                      "args"
+                      null
                     ],
                     "name": "updateModuleHash",
                     "fnStart": 5,
-                    "fnEnd": 17,
+                    "fnEnd": 15,
                     "doc": null,
                     "parsedDoc": null
                   },
                   "children": [],
-                  "markdown": "## updateModuleHash\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L17).\n\n  ",
+                  "markdown": "## updateModuleHash\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L15).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## hashModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L29).\n      The function that it wraps can be found [here](../src/compile/modules/hash.js#L19-L27).\n\n  "
+              "markdown": "## hashModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L17-L26).\n\n  "
+            },
+            {
+              "name": "parseModule",
+              "node": {
+                "path": "src/compile/modules/parse.js",
+                "pluggableLine": 10,
+                "edges": [],
+                "fnParams": [
+                  "module"
+                ],
+                "name": "parseModule",
+                "fnStart": 10,
+                "fnEnd": 31,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [],
+              "markdown": "## parseModule\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L10-L31).\n\n  ",
+              "size": 1
+            },
+            {
+              "name": "transformModule",
+              "node": {
+                "path": "src/compile/modules/transform.js",
+                "pluggableLine": 18,
+                "edges": [],
+                "fnParams": [
+                  "module"
+                ],
+                "name": "transformModule",
+                "fnStart": 18,
+                "fnEnd": 57,
+                "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to module-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Module object, with `ast` property.",
+                      "line": 6,
+                      "source": "@param  {Object} module  Module object, with `ast` property."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "object with transformed `ast` property\nand new `synchronousRequires` property.",
+                      "line": 8,
+                      "source": "@return {Object}         Module object with transformed `ast` property\nand new `synchronousRequires` property."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.",
+                  "source": "Transforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.\n\n@param  {Object} module  Module object, with `ast` property.\n\n@return {Object}         Module object with transformed `ast` property\n                         and new `synchronousRequires` property."
+                }
+              },
+              "children": [],
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to module-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | object with transformed `ast` property\nand new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).\n\n  ",
+              "size": 1
+            },
+            {
+              "name": "updateRequires",
+              "node": {
+                "path": "src/compile/modules/update-requires.js",
+                "pluggableLine": 6,
+                "edges": [],
+                "fnParams": [
+                  "module"
+                ],
+                "name": "updateRequires",
+                "fnStart": 6,
+                "fnEnd": 27,
+                "doc": null,
+                "parsedDoc": null
+              },
+              "children": [],
+              "markdown": "## updateRequires\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L6-L27).\n\n  ",
+              "size": 1
             }
           ],
-          "markdown": "## compileModules\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L87).\n\n  "
+          "markdown": "## compileModules\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L69).\n\n  "
         }
       ],
       "markdown": "## getModuleMaps\n  \n  \n  This Pluggable's definition can be found [here](../src/compile/index.js#L34-L44).\n\n  "

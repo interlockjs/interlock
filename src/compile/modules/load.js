@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 
 import Promise from "bluebird";
 
@@ -33,7 +32,7 @@ export const readSource = pluggable(function readSource (module) {
     .then(rawSource => Object.assign({}, module, { rawSource }));
 });
 
-export const setModuleType = pluggable(function getModuleType (module) {
+export const setModuleType = pluggable(function setModuleType (module) {
   return Object.assign({}, module, { type: "javascript" });
 });
 

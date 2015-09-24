@@ -52,7 +52,7 @@ This Pluggable's definition can be found [here](../src/compile/index.js#L153-L16
 ## compileModules
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L87).
+This Pluggable's definition can be found [here](../src/compile/modules/compile.js#L15-L69).
 
 ## constructBundle
 
@@ -212,8 +212,7 @@ The function that it wraps can be found [here](../src/compile/bundles/hash.js#L2
 ## hashModule
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L29).
-The function that it wraps can be found [here](../src/compile/modules/hash.js#L19-L27).
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L17-L26).
 
 ## initBundle
 
@@ -229,12 +228,12 @@ The function that it wraps can be found [here](../src/compile/bundles/interpolat
 ## loadModule
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/load.js#L60-L65).
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L39-L42).
 
-## parseSourceToAst
+## parseModule
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/load.js#L15-L34).
+This Pluggable's definition can be found [here](../src/compile/modules/parse.js#L10-L31).
 
 ## preresolve
 
@@ -244,28 +243,27 @@ This Pluggable's definition can be found [here](../src/compile/modules/resolve.j
 ## readSource
 
 This function is invoked whenever the compiler attempts to read a source-file
-from the disk.  It takes an asset object as its only input.  The properties
-available on that asset object are as follows:
+from the disk.  It takes an raw-module object as its only input.  The properties
+available on that object are as follows:
 
 - `path` - the absolute path of the file
 - `ns` - the namespace of the module (either the default ns, or borrowed from its
 containing package)
 - `nsRoot` - the absolute path to the root of the namespace
 - `nsPath` - the file's path relative to the root of the namespace
-- `rawSource` - `null`, this value is provided by the `readSource` function
-- `ast` - `null`, this value will be populated later in the compilation
-- `requireNodes` - `null`, this value will be populated later in the compilation
-- `dependencies` - `null`, this value will be populated later in the compilation
-- `hash` - `null`, this value will be populated later in the compilation
+
+The function should output an object with the same properties, plus one additional
+property: `rawSource`.  This property should be the string-value of the module
+source.
 
 
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
-| Parameter | **asset** | Object | Asset object. |
-| Return value |  | String | raw source of the file, in string format. |
+| Parameter | **module** | Object | Module object. |
+| Return value |  | Object | object + `rawSource`. |
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/load.js#L56-L58).
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L30-L33).
 
 ## resolveModule
 
@@ -287,6 +285,28 @@ Construct a statement to instruct the runtime to run the specified module.
 
 This Pluggable's definition can be found [here](../src/compile/construct/index.js#L95-L102).
 
+## setModuleType
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/load.js#L35-L37).
+
+## transformModule
+
+Transforms the module's AST, returning a module object with transformed
+`ast` property as well as a new `synchronousRequires` property.  If the
+module is not of type "javascript", transformations to module-specific
+intermediate representation should occur at this step.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Module object, with `ast` property. |
+| Return value |  | Object | object with transformed `ast` property
+and new `synchronousRequires` property. |
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/transform.js#L18-L57).
+
 ## updateBundleHash
 
 Calculate the bundle's hash by invoking `update` with data from the bundle.
@@ -304,5 +324,10 @@ This Pluggable's definition can be found [here](../src/compile/bundles/hash.js#L
 ## updateModuleHash
 
 
-This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L17).
+This Pluggable's definition can be found [here](../src/compile/modules/hash.js#L5-L15).
+
+## updateRequires
+
+
+This Pluggable's definition can be found [here](../src/compile/modules/update-requires.js#L6-L27).
 

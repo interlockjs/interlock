@@ -96,9 +96,13 @@ export const buildOutput = pluggable(function buildOutput (bundles) {
 }, { getUrls, emitRawBundles });
 
 /**
- * Performs an end-to-end compilation.
+ * Loads, transforms, and bundles an application using the provided options.
+ * Modules are collected and transformed, bundles are formed from those modules,
+ * and those bundles are finally converted into a format that can be written
+ * to disk or served over HTTP.
  *
- * @return {Promise}  Resolves to the compilation output.
+ * @return {Promise}    Resolves to an object with three properties: `bundles`,
+ *                      `opts`, and `cache`.
  */
 const compile = pluggable(function compile () {
   return this.getModuleSeeds()

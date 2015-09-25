@@ -32,15 +32,18 @@ This Pluggable's definition can be found [here](http://github.com/interlockjs/in
 
 ## compile
 
-Performs an end-to-end compilation.
+Loads, transforms, and bundles an application using the provided options.
+Modules are collected and transformed, bundles are formed from those modules,
+and those bundles are finally converted into a format that can be written
+to disk or served over HTTP.
 
 
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
-| Return value |  | Promise | Resolves to the compilation output. |
+| Return value |  | Promise | Resolves to an object with three properties: `bundles`, `opts`, and `cache`. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L103-L111).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L107-L115).
 
 ## compileModules
 

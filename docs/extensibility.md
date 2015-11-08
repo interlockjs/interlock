@@ -264,7 +264,7 @@ strings using AST->source transformation, and then written to disk.
 | Return value |  | Array | Fully compiled bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L24-L37).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L57).
 
 ## generateModuleMaps
 
@@ -425,6 +425,21 @@ module with a new `ast` property (or equivalent for non-JavaScript modules).
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L39).
 
+## populateBundleModules
+
+Define the canonical modules array for a bundle.  This should occur after
+bundle module hashes are deduped.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **bundle** | Object | The bundle object, with no modules property. |
+| Parameter | **moduleMaps** | Object | Has two properties - byAbsPath and byHash - where each of these map to the compiled module via the respective value. |
+| Return value |  | Object | The bundle object, with modules property. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L19-L23).
+
 ## preresolve
 
 Transform the require string before it is resolved to a file on disk.
@@ -526,7 +541,7 @@ intermediate representation should occur at this step.
 | Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L57).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L60).
 
 ## updateBundleHash
 

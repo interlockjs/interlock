@@ -686,7 +686,7 @@
                 ],
                 "name": "transformModule",
                 "fnStart": 18,
-                "fnEnd": 57,
+                "fnEnd": 60,
                 "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to type-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -715,7 +715,7 @@
                 }
               },
               "children": [],
-              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L57).\n\n  ",
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L60).\n\n  ",
               "size": 1
             },
             {
@@ -771,21 +771,22 @@
       "name": "generateBundles",
       "node": {
         "path": "src/compile/bundles/generate.js",
-        "pluggableLine": 24,
+        "pluggableLine": 41,
         "edges": [
           "getBundleSeeds",
           "dedupeExplicit",
           "dedupeImplicit",
           "hashBundle",
-          "interpolateFilename"
+          "interpolateFilename",
+          "populateBundleModules"
         ],
         "fnParams": [
           "moduleSeeds",
           "moduleMaps"
         ],
         "name": "generateBundles",
-        "fnStart": 24,
-        "fnEnd": 37,
+        "fnStart": 41,
+        "fnEnd": 57,
         "doc": "*\n * Given a set of module seeds - originally generated from the bundle definitions\n * passed into the Interlock constructor - and the set of fully generated modules,\n * create bundle objects that are deduped, are populated with module objects,\n * are hashed, and have their filenames interpolated.\n *\n * Bundles outputted from this function should be ready to be transformed into\n * strings using AST->source transformation, and then written to disk.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n *\n * @return {Array}                 Fully compiled bundles.\n ",
         "parsedDoc": {
           "tags": [
@@ -1126,9 +1127,62 @@
           "children": [],
           "markdown": "## interpolateFilename\n  \nGiven a bundle, determine its ultimate output filepath by replacing\nsupported placeholders with their dynamic equivalents.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Late-stage bundle object. |\n| Return value |  | Object | Bundle with interpolated `dest` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L11-L20).\n\n  ",
           "size": 1
+        },
+        {
+          "name": "populateBundleModules",
+          "node": {
+            "path": "src/compile/bundles/generate.js",
+            "pluggableLine": 19,
+            "edges": [],
+            "fnParams": [
+              "bundle",
+              "moduleMaps"
+            ],
+            "name": "populateBundleModules",
+            "fnStart": 19,
+            "fnEnd": 23,
+            "doc": "*\n * Define the canonical modules array for a bundle.  This should occur after\n * bundle module hashes are deduped.\n *\n * @param  {Object}  bundle      The bundle object, with no modules property.\n * @param  {Object}  moduleMaps  Has two properties - byAbsPath and byHash -\n *                               where each of these map to the compiled module\n *                               via the respective value.\n *\n * @return {Object}              The bundle object, with modules property.\n ",
+            "parsedDoc": {
+              "tags": [
+                {
+                  "tag": "param",
+                  "type": "Object",
+                  "name": "bundle",
+                  "optional": false,
+                  "description": "The bundle object, with no modules property.",
+                  "line": 4,
+                  "source": "@param  {Object}  bundle      The bundle object, with no modules property."
+                },
+                {
+                  "tag": "param",
+                  "type": "Object",
+                  "name": "moduleMaps",
+                  "optional": false,
+                  "description": "Has two properties - byAbsPath and byHash -\nwhere each of these map to the compiled module\nvia the respective value.",
+                  "line": 5,
+                  "source": "@param  {Object}  moduleMaps  Has two properties - byAbsPath and byHash -\nwhere each of these map to the compiled module\nvia the respective value."
+                },
+                {
+                  "tag": "return",
+                  "type": "Object",
+                  "name": "The",
+                  "optional": false,
+                  "description": "bundle object, with modules property.",
+                  "line": 9,
+                  "source": "@return {Object}              The bundle object, with modules property."
+                }
+              ],
+              "line": 0,
+              "description": "Define the canonical modules array for a bundle.  This should occur after\nbundle module hashes are deduped.",
+              "source": "Define the canonical modules array for a bundle.  This should occur after\nbundle module hashes are deduped.\n\n@param  {Object}  bundle      The bundle object, with no modules property.\n@param  {Object}  moduleMaps  Has two properties - byAbsPath and byHash -\n                              where each of these map to the compiled module\n                              via the respective value.\n\n@return {Object}              The bundle object, with modules property."
+            }
+          },
+          "children": [],
+          "markdown": "## populateBundleModules\n  \nDefine the canonical modules array for a bundle.  This should occur after\nbundle module hashes are deduped.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | The bundle object, with no modules property. |\n| Parameter | **moduleMaps** | Object | Has two properties - byAbsPath and byHash - where each of these map to the compiled module via the respective value. |\n| Return value |  | Object | The bundle object, with modules property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L19-L23).\n\n  ",
+          "size": 1
         }
       ],
-      "markdown": "## generateBundles\n  \nGiven a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ncreate bundle objects that are deduped, are populated with module objects,\nare hashed, and have their filenames interpolated.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |\n| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |\n| Return value |  | Array | Fully compiled bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L24-L37).\n\n  "
+      "markdown": "## generateBundles\n  \nGiven a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ncreate bundle objects that are deduped, are populated with module objects,\nare hashed, and have their filenames interpolated.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |\n| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |\n| Return value |  | Array | Fully compiled bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L57).\n\n  "
     },
     {
       "name": "buildOutput",

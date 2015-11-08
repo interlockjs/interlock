@@ -7,7 +7,6 @@ try {
 }
 
 if (useTranspiled) {
-  require("babel/polyfill");
   module.exports = require("./lib");
 } else {
   require("babel/register");

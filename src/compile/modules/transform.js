@@ -16,6 +16,9 @@ import transformAmd from "./transform-amd";
  *                          and new `synchronousRequires` property.
  */
 export default pluggable(function transformModule (module) {
+  if (module.type !== "javascript") {
+    throw new Error("Cannot transform non-JS module.  Please activate appropriate plugin.");
+  }
   const babelUserConfig = this.opts.babelConfig || {};
   let synchronousRequires = [];
 

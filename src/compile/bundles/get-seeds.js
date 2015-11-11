@@ -5,7 +5,7 @@ import initBundle from "./init";
 
 /**
  * Given the set of early-stage modules (originally generated from the bundle definitions)
- * and the set of fully compiled modules (indexed by their absolute path), turn an array
+ * and the set of fully compiled modules (indexed by their absolute path), return an array
  * of early-stage bundles.  These bundles do not yet know about which modules they contain,
  * but do hold a reference to the root module of their branch of the dependency graph.
  *

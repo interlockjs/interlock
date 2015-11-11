@@ -222,7 +222,7 @@ split off into its own new bundle.
 | Return value |  | Array | Explicit bundles plus new implicit bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L51-L59).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L49-L51).
 
 ## emitRawBundles
 
@@ -250,8 +250,8 @@ This Pluggable's definition can be found [here](http://github.com/interlockjs/in
 
 Given a set of module seeds - originally generated from the bundle definitions
 passed into the Interlock constructor - and the set of fully generated modules,
-create bundle objects that are deduped, are populated with module objects,
-are hashed, and have their filenames interpolated.
+generate the full set of bundles that should be emitted, populate them with
+module objects, hash them, and interpolate any output filenames.
 
 Bundles outputted from this function should be ready to be transformed into
 strings using AST->source transformation, and then written to disk.
@@ -264,7 +264,7 @@ strings using AST->source transformation, and then written to disk.
 | Return value |  | Array | Fully compiled bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L57).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L60-L66).
 
 ## generateModuleMaps
 
@@ -319,7 +319,7 @@ but do hold a reference to the root module of their branch of the dependency gra
 | Return value |  | Array | Early-stage bundles with `module` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L31-L38).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L18-L29).
 
 ## getModuleSeeds
 
@@ -382,7 +382,7 @@ This Pluggable's definition can be found [here](http://github.com/interlockjs/in
 ## initBundle
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L5-L17).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/init.js#L3-L29).
 
 ## interpolateFilename
 
@@ -424,6 +424,11 @@ module with a new `ast` property (or equivalent for non-JavaScript modules).
 
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L39).
+
+## partitionBundles
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L38-L42).
 
 ## populateBundleModules
 

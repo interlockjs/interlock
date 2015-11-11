@@ -771,11 +771,9 @@
       "name": "generateBundles",
       "node": {
         "path": "src/compile/bundles/generate.js",
-        "pluggableLine": 41,
+        "pluggableLine": 60,
         "edges": [
-          "getBundleSeeds",
-          "dedupeExplicit",
-          "dedupeImplicit",
+          "partitionBundles",
           "hashBundle",
           "interpolateFilename",
           "populateBundleModules"
@@ -785,9 +783,9 @@
           "moduleMaps"
         ],
         "name": "generateBundles",
-        "fnStart": 41,
-        "fnEnd": 57,
-        "doc": "*\n * Given a set of module seeds - originally generated from the bundle definitions\n * passed into the Interlock constructor - and the set of fully generated modules,\n * create bundle objects that are deduped, are populated with module objects,\n * are hashed, and have their filenames interpolated.\n *\n * Bundles outputted from this function should be ready to be transformed into\n * strings using AST->source transformation, and then written to disk.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n *\n * @return {Array}                 Fully compiled bundles.\n ",
+        "fnStart": 60,
+        "fnEnd": 66,
+        "doc": "*\n * Given a set of module seeds - originally generated from the bundle definitions\n * passed into the Interlock constructor - and the set of fully generated modules,\n * generate the full set of bundles that should be emitted, populate them with\n * module objects, hash them, and interpolate any output filenames.\n *\n * Bundles outputted from this function should be ready to be transformed into\n * strings using AST->source transformation, and then written to disk.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n *\n * @return {Array}                 Fully compiled bundles.\n ",
         "parsedDoc": {
           "tags": [
             {
@@ -819,182 +817,224 @@
             }
           ],
           "line": 0,
-          "description": "Given a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ncreate bundle objects that are deduped, are populated with module objects,\nare hashed, and have their filenames interpolated.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.",
-          "source": "Given a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ncreate bundle objects that are deduped, are populated with module objects,\nare hashed, and have their filenames interpolated.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n@param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n                                path relative to the compilation context.\n@param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n                                absolute path and hash.\n\n@return {Array}                 Fully compiled bundles."
+          "description": "Given a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ngenerate the full set of bundles that should be emitted, populate them with\nmodule objects, hash them, and interpolate any output filenames.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.",
+          "source": "Given a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ngenerate the full set of bundles that should be emitted, populate them with\nmodule objects, hash them, and interpolate any output filenames.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n@param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n                                path relative to the compilation context.\n@param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n                                absolute path and hash.\n\n@return {Array}                 Fully compiled bundles."
         }
       },
       "children": [
         {
-          "name": "getBundleSeeds",
+          "name": "partitionBundles",
           "node": {
-            "path": "src/compile/bundles/get-seeds.js",
-            "pluggableLine": 31,
+            "path": "src/compile/bundles/generate.js",
+            "pluggableLine": 38,
             "edges": [
-              "initBundle"
+              "getBundleSeeds",
+              "dedupeExplicit",
+              "dedupeImplicit"
             ],
             "fnParams": [
               "moduleSeeds",
-              "modulesByPath"
+              "moduleMaps"
             ],
-            "name": "getBundleSeeds",
-            "fnStart": 31,
-            "fnEnd": 38,
-            "doc": "*\n * Given the set of early-stage modules (originally generated from the bundle definitions)\n * and the set of fully compiled modules (indexed by their absolute path), turn an array\n * of early-stage bundles.  These bundles do not yet know about which modules they contain,\n * but do hold a reference to the root module of their branch of the dependency graph.\n *\n * @param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\n *                                    the compilation context.\n * @param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path.\n *\n * @return {Array}                    Early-stage bundles with `module` property.\n ",
-            "parsedDoc": {
-              "tags": [
-                {
-                  "tag": "param",
-                  "type": "Object",
-                  "name": "moduleSeeds",
-                  "optional": false,
-                  "description": "Early-stage modules, indexed by path relative to\nthe compilation context.",
-                  "line": 6,
-                  "source": "@param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\nthe compilation context."
-                },
-                {
-                  "tag": "param",
-                  "type": "Object",
-                  "name": "modulesByPath",
-                  "optional": false,
-                  "description": "Fully compiled modules, indexed by absolute path.",
-                  "line": 8,
-                  "source": "@param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path."
-                },
-                {
-                  "tag": "return",
-                  "type": "Array",
-                  "name": "Early-stage",
-                  "optional": false,
-                  "description": "bundles with `module` property.",
-                  "line": 10,
-                  "source": "@return {Array}                    Early-stage bundles with `module` property."
-                }
-              ],
-              "line": 0,
-              "description": "Given the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.",
-              "source": "Given the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.\n\n@param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\n                                   the compilation context.\n@param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path.\n\n@return {Array}                    Early-stage bundles with `module` property."
-            }
+            "name": "partitionBundles",
+            "fnStart": 38,
+            "fnEnd": 42,
+            "doc": "*\n * Given a set of module seeds and the set of fully generated modules, generate\n * a finalized array of bundles.  These bundles will be early-stage and should\n * not be populated with the actual modules.  Instead, each bundle will be defined\n * by the module hashes (unique IDs) of the modules that comprise the bundle.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n\n * @return {Array}                 Early-stage bundles.\n "
           },
           "children": [
             {
-              "name": "initBundle",
+              "name": "getBundleSeeds",
               "node": {
                 "path": "src/compile/bundles/get-seeds.js",
-                "pluggableLine": 5,
+                "pluggableLine": 18,
+                "edges": [
+                  "initBundle"
+                ],
+                "fnParams": [
+                  "moduleSeeds",
+                  "modulesByPath"
+                ],
+                "name": "getBundleSeeds",
+                "fnStart": 18,
+                "fnEnd": 29,
+                "doc": "*\n * Given the set of early-stage modules (originally generated from the bundle definitions)\n * and the set of fully compiled modules (indexed by their absolute path), turn an array\n * of early-stage bundles.  These bundles do not yet know about which modules they contain,\n * but do hold a reference to the root module of their branch of the dependency graph.\n *\n * @param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\n *                                    the compilation context.\n * @param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path.\n *\n * @return {Array}                    Early-stage bundles with `module` property.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "moduleSeeds",
+                      "optional": false,
+                      "description": "Early-stage modules, indexed by path relative to\nthe compilation context.",
+                      "line": 6,
+                      "source": "@param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\nthe compilation context."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "modulesByPath",
+                      "optional": false,
+                      "description": "Fully compiled modules, indexed by absolute path.",
+                      "line": 8,
+                      "source": "@param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Array",
+                      "name": "Early-stage",
+                      "optional": false,
+                      "description": "bundles with `module` property.",
+                      "line": 10,
+                      "source": "@return {Array}                    Early-stage bundles with `module` property."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.",
+                  "source": "Given the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.\n\n@param  {Object}   moduleSeeds     Early-stage modules, indexed by path relative to\n                                   the compilation context.\n@param  {Object}   modulesByPath   Fully compiled modules, indexed by absolute path.\n\n@return {Array}                    Early-stage bundles with `module` property."
+                }
+              },
+              "children": [
+                {
+                  "name": "initBundle",
+                  "node": {
+                    "path": "src/compile/bundles/init.js",
+                    "pluggableLine": 3,
+                    "edges": [],
+                    "fnParams": [
+                      null
+                    ],
+                    "name": "initBundle",
+                    "fnStart": 3,
+                    "fnEnd": 29,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## initBundle\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/init.js#L3-L29).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## getBundleSeeds\n  \nGiven the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage modules, indexed by path relative to the compilation context. |\n| Parameter | **modulesByPath** | Object | Fully compiled modules, indexed by absolute path. |\n| Return value |  | Array | Early-stage bundles with `module` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L18-L29).\n\n  "
+            },
+            {
+              "name": "dedupeExplicit",
+              "node": {
+                "path": "src/compile/bundles/dedupe-explicit.js",
+                "pluggableLine": 53,
                 "edges": [],
                 "fnParams": [
-                  "bundleDef",
-                  "module",
-                  "isEntryPt"
+                  "bundleSeeds",
+                  "modulesByAbsPath"
                 ],
-                "name": "initBundle",
-                "fnStart": 5,
-                "fnEnd": 17,
-                "doc": null,
-                "parsedDoc": null
+                "name": "dedupeExplicit",
+                "fnStart": 27,
+                "fnEnd": 51,
+                "doc": "*\n * First, update the bundle's `module` property to refer to the compiled\n * version of the module.  Then generate a moduleHashes property for each\n * of the bundles, containing all hashes for all modules in the bundle's\n * dependency branch.\n *\n * Then, identify bundles that include the entry module from another bundle.\n * When found, remove all of the second module's bundles from the first.\n *\n * This will ensure that for any explicitly-defined bundle, other bundles\n * will not include its module or module-dependencies.  This avoids copies\n * of a module from appearing in multiple bundles.\n *\n * @param  {Array}  bundleSeeds       Early-stage bundle objects without module\n *                                    or moduleHashes properties.\n * @param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules.\n *\n * @return {Array}                    Bundle objects with explicit intersections\n *                                    removed and new module and moduleHashes\n *                                    properties.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Array",
+                      "name": "bundleSeeds",
+                      "optional": false,
+                      "description": "Early-stage bundle objects without module\nor moduleHashes properties.",
+                      "line": 13,
+                      "source": "@param  {Array}  bundleSeeds       Early-stage bundle objects without module\nor moduleHashes properties."
+                    },
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "modulesByAbsPath",
+                      "optional": false,
+                      "description": "Map of absolute paths to compiled modules.",
+                      "line": 15,
+                      "source": "@param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Array",
+                      "name": "Bundle",
+                      "optional": false,
+                      "description": "objects with explicit intersections\nremoved and new module and moduleHashes\nproperties.",
+                      "line": 17,
+                      "source": "@return {Array}                    Bundle objects with explicit intersections\nremoved and new module and moduleHashes\nproperties."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "First, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.",
+                  "source": "First, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n@param  {Array}  bundleSeeds       Early-stage bundle objects without module\n                                   or moduleHashes properties.\n@param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules.\n\n@return {Array}                    Bundle objects with explicit intersections\n                                   removed and new module and moduleHashes\n                                   properties."
+                }
               },
               "children": [],
-              "markdown": "## initBundle\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L5-L17).\n\n  ",
+              "markdown": "## dedupeExplicit\n  \nFirst, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundleSeeds** | Array | Early-stage bundle objects without module or moduleHashes properties. |\n| Parameter | **modulesByAbsPath** | Object | Map of absolute paths to compiled modules. |\n| Return value |  | Array | Bundle objects with explicit intersections removed and new module and moduleHashes properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-explicit.js#L53).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L27-L51).\n\n  ",
               "size": 1
+            },
+            {
+              "name": "dedupeImplicit",
+              "node": {
+                "path": "src/compile/bundles/dedupe-implicit.js",
+                "pluggableLine": 49,
+                "edges": [
+                  "initBundle"
+                ],
+                "fnParams": [
+                  "explicitBundles"
+                ],
+                "name": "dedupeImplicit",
+                "fnStart": 49,
+                "fnEnd": 51,
+                "doc": "*\n * Given an array of explicitly defined bundles, generate a new array of bundles\n * including new implicit bundles.  These implicit bundles will be generated from\n * the intersections of two (or more) bundles' module hashes.\n *\n * This ensures that no module is included in more than one bundle.  It further\n * ensures that any module that is depended upon by more than one bundle will be\n * split off into its own new bundle.\n *\n * @param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.\n *\n * @return {Array}                   Explicit bundles plus new implicit bundles.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Array",
+                      "name": "explicitBundles",
+                      "optional": false,
+                      "description": "Bundles with module and moduleHashes properties.",
+                      "line": 9,
+                      "source": "@param  {Array}  explicitBundles  Bundles with module and moduleHashes properties."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Array",
+                      "name": "Explicit",
+                      "optional": false,
+                      "description": "bundles plus new implicit bundles.",
+                      "line": 11,
+                      "source": "@return {Array}                   Explicit bundles plus new implicit bundles."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.",
+                  "source": "Given an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n@param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.\n\n@return {Array}                   Explicit bundles plus new implicit bundles."
+                }
+              },
+              "children": [
+                {
+                  "name": "initBundle",
+                  "node": {
+                    "path": "src/compile/bundles/init.js",
+                    "pluggableLine": 3,
+                    "edges": [],
+                    "fnParams": [
+                      null
+                    ],
+                    "name": "initBundle",
+                    "fnStart": 3,
+                    "fnEnd": 29,
+                    "doc": null,
+                    "parsedDoc": null
+                  },
+                  "children": [],
+                  "markdown": "## initBundle\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/init.js#L3-L29).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## dedupeImplicit\n  \nGiven an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **explicitBundles** | Array | Bundles with module and moduleHashes properties. |\n| Return value |  | Array | Explicit bundles plus new implicit bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L49-L51).\n\n  "
             }
           ],
-          "markdown": "## getBundleSeeds\n  \nGiven the set of early-stage modules (originally generated from the bundle definitions)\nand the set of fully compiled modules (indexed by their absolute path), turn an array\nof early-stage bundles.  These bundles do not yet know about which modules they contain,\nbut do hold a reference to the root module of their branch of the dependency graph.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage modules, indexed by path relative to the compilation context. |\n| Parameter | **modulesByPath** | Object | Fully compiled modules, indexed by absolute path. |\n| Return value |  | Array | Early-stage bundles with `module` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L31-L38).\n\n  "
-        },
-        {
-          "name": "dedupeExplicit",
-          "node": {
-            "path": "src/compile/bundles/dedupe-explicit.js",
-            "pluggableLine": 53,
-            "edges": [],
-            "fnParams": [
-              "bundleSeeds",
-              "modulesByAbsPath"
-            ],
-            "name": "dedupeExplicit",
-            "fnStart": 27,
-            "fnEnd": 51,
-            "doc": "*\n * First, update the bundle's `module` property to refer to the compiled\n * version of the module.  Then generate a moduleHashes property for each\n * of the bundles, containing all hashes for all modules in the bundle's\n * dependency branch.\n *\n * Then, identify bundles that include the entry module from another bundle.\n * When found, remove all of the second module's bundles from the first.\n *\n * This will ensure that for any explicitly-defined bundle, other bundles\n * will not include its module or module-dependencies.  This avoids copies\n * of a module from appearing in multiple bundles.\n *\n * @param  {Array}  bundleSeeds       Early-stage bundle objects without module\n *                                    or moduleHashes properties.\n * @param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules.\n *\n * @return {Array}                    Bundle objects with explicit intersections\n *                                    removed and new module and moduleHashes\n *                                    properties.\n ",
-            "parsedDoc": {
-              "tags": [
-                {
-                  "tag": "param",
-                  "type": "Array",
-                  "name": "bundleSeeds",
-                  "optional": false,
-                  "description": "Early-stage bundle objects without module\nor moduleHashes properties.",
-                  "line": 13,
-                  "source": "@param  {Array}  bundleSeeds       Early-stage bundle objects without module\nor moduleHashes properties."
-                },
-                {
-                  "tag": "param",
-                  "type": "Object",
-                  "name": "modulesByAbsPath",
-                  "optional": false,
-                  "description": "Map of absolute paths to compiled modules.",
-                  "line": 15,
-                  "source": "@param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules."
-                },
-                {
-                  "tag": "return",
-                  "type": "Array",
-                  "name": "Bundle",
-                  "optional": false,
-                  "description": "objects with explicit intersections\nremoved and new module and moduleHashes\nproperties.",
-                  "line": 17,
-                  "source": "@return {Array}                    Bundle objects with explicit intersections\nremoved and new module and moduleHashes\nproperties."
-                }
-              ],
-              "line": 0,
-              "description": "First, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.",
-              "source": "First, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n@param  {Array}  bundleSeeds       Early-stage bundle objects without module\n                                   or moduleHashes properties.\n@param  {Object} modulesByAbsPath  Map of absolute paths to compiled modules.\n\n@return {Array}                    Bundle objects with explicit intersections\n                                   removed and new module and moduleHashes\n                                   properties."
-            }
-          },
-          "children": [],
-          "markdown": "## dedupeExplicit\n  \nFirst, update the bundle's `module` property to refer to the compiled\nversion of the module.  Then generate a moduleHashes property for each\nof the bundles, containing all hashes for all modules in the bundle's\ndependency branch.\n\nThen, identify bundles that include the entry module from another bundle.\nWhen found, remove all of the second module's bundles from the first.\n\nThis will ensure that for any explicitly-defined bundle, other bundles\nwill not include its module or module-dependencies.  This avoids copies\nof a module from appearing in multiple bundles.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundleSeeds** | Array | Early-stage bundle objects without module or moduleHashes properties. |\n| Parameter | **modulesByAbsPath** | Object | Map of absolute paths to compiled modules. |\n| Return value |  | Array | Bundle objects with explicit intersections removed and new module and moduleHashes properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-explicit.js#L53).\n      The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L27-L51).\n\n  ",
-          "size": 1
-        },
-        {
-          "name": "dedupeImplicit",
-          "node": {
-            "path": "src/compile/bundles/dedupe-implicit.js",
-            "pluggableLine": 51,
-            "edges": [],
-            "fnParams": [
-              "explicitBundles"
-            ],
-            "name": "dedupeImplicit",
-            "fnStart": 51,
-            "fnEnd": 59,
-            "doc": "*\n * Given an array of explicitly defined bundles, generate a new array of bundles\n * including new implicit bundles.  These implicit bundles will be generated from\n * the intersections of two (or more) bundles' module hashes.\n *\n * This ensures that no module is included in more than one bundle.  It further\n * ensures that any module that is depended upon by more than one bundle will be\n * split off into its own new bundle.\n *\n * @param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.\n *\n * @return {Array}                   Explicit bundles plus new implicit bundles.\n ",
-            "parsedDoc": {
-              "tags": [
-                {
-                  "tag": "param",
-                  "type": "Array",
-                  "name": "explicitBundles",
-                  "optional": false,
-                  "description": "Bundles with module and moduleHashes properties.",
-                  "line": 9,
-                  "source": "@param  {Array}  explicitBundles  Bundles with module and moduleHashes properties."
-                },
-                {
-                  "tag": "return",
-                  "type": "Array",
-                  "name": "Explicit",
-                  "optional": false,
-                  "description": "bundles plus new implicit bundles.",
-                  "line": 11,
-                  "source": "@return {Array}                   Explicit bundles plus new implicit bundles."
-                }
-              ],
-              "line": 0,
-              "description": "Given an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.",
-              "source": "Given an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n@param  {Array}  explicitBundles  Bundles with module and moduleHashes properties.\n\n@return {Array}                   Explicit bundles plus new implicit bundles."
-            }
-          },
-          "children": [],
-          "markdown": "## dedupeImplicit\n  \nGiven an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **explicitBundles** | Array | Bundles with module and moduleHashes properties. |\n| Return value |  | Array | Explicit bundles plus new implicit bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L51-L59).\n\n  ",
-          "size": 1
+          "markdown": "## partitionBundles\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L38-L42).\n\n  "
         },
         {
           "name": "hashBundle",
@@ -1182,7 +1222,7 @@
           "size": 1
         }
       ],
-      "markdown": "## generateBundles\n  \nGiven a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ncreate bundle objects that are deduped, are populated with module objects,\nare hashed, and have their filenames interpolated.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |\n| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |\n| Return value |  | Array | Fully compiled bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L57).\n\n  "
+      "markdown": "## generateBundles\n  \nGiven a set of module seeds - originally generated from the bundle definitions\npassed into the Interlock constructor - and the set of fully generated modules,\ngenerate the full set of bundles that should be emitted, populate them with\nmodule objects, hash them, and interpolate any output filenames.\n\nBundles outputted from this function should be ready to be transformed into\nstrings using AST->source transformation, and then written to disk.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |\n| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |\n| Return value |  | Array | Fully compiled bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L60-L66).\n\n  "
     },
     {
       "name": "buildOutput",

@@ -27,7 +27,7 @@ const populateBundleModules = pluggable(function populateBundleModules (bundle, 
  * a finalized array of bundles.  These bundles will be early-stage and should
  * not be populated with the actual modules.  Instead, each bundle will be defined
  * by the module hashes (unique IDs) of the modules that comprise the bundle.
- * 
+ *
  * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their
  *                                 path relative to the compilation context.
  * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both

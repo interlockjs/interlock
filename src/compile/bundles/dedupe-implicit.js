@@ -1,8 +1,10 @@
 import _ from "lodash";
+import Promise from "bluebird";
 
 import pluggable from "../../pluggable";
+import initBundle from "./init";
 
-function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disable-line max-len,max-statements
+const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
   bundles = bundles.slice();
 
   for (let a = 0; a < bundles.length; a++) {
@@ -19,21 +21,17 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
         bundles[a] = Object.assign({}, bundleA, { moduleHashes: moduleHashesA });
         bundles[b] = Object.assign({}, bundleB, { moduleHashes: moduleHashesB });
 
-        bundles.push({
+        bundles.push(yield this.initBundle({
           moduleHashes: intersection,
-          dest: implicitBundleDest,
-          type: bundles[a].type
-        });
+          type: bundles[a].type,
+          excludeRuntime: true
+        }));
       }
     }
   }
 
-  for (const bundle of bundles) {
-    if (bundle.moduleHashes.length) {
-      yield bundle;
-    }
-  }
-}
+  return _.filter(bundles, bundle => bundle.moduleHashes.length);
+});
 
 /**
  * Given an array of explicitly defined bundles, generate a new array of bundles
@@ -49,11 +47,5 @@ function* genBundlesWithImplicit (bundles, implicitBundleDest) { // eslint-disab
  * @return {Array}                   Explicit bundles plus new implicit bundles.
  */
 export default pluggable(function dedupeImplicit (explicitBundles) {
-  // Take the explicit bundles array and emit implicit bundles (where the dependency
-  // sets of two explicit bundles intersect) followed by the explicit bundles themselves.
-  const allBundles = [];
-  for (const bundle of genBundlesWithImplicit(explicitBundles, this.opts.implicitBundleDest)) {
-    allBundles.push(bundle);
-  }
-  return allBundles;
-});
+  return genBundlesWithImplicit.call(this, explicitBundles);
+}, { initBundle});

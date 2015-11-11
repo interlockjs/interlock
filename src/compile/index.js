@@ -37,8 +37,8 @@ export const constructBundle = pluggable(function constructBundle (bundle, urls)
   return this.constructBundleAst({
     modules: bundle.modules,
     includeRuntime: bundle.includeRuntime,
-    urls: bundle.isEntry ? urls : null,
-    entryModuleHash: bundle.isEntry && bundle.module && bundle.module.hash || null
+    urls: bundle.isEntryPt ? urls : null,
+    entryModuleHash: bundle.isEntryPt && bundle.module && bundle.module.hash || null
   })
     .then(ast => Object.assign({}, bundle, { ast }));
 }, { constructBundleAst });

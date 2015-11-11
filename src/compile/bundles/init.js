@@ -10,7 +10,7 @@ export default pluggable(function initBundle (opts = {}) {
     type = "javascript",
     excludeRuntime = false
   } = opts;
-  const includeRuntime = !excludeRuntime;
+  const includeRuntime = isEntryPt && !excludeRuntime;
 
   if (type !== "javascript") {
     throw new Error("Cannot create JS bundle for non-JavaScript module. " +

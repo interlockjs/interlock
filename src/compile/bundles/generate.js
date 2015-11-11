@@ -23,10 +23,29 @@ const populateBundleModules = pluggable(function populateBundleModules (bundle, 
 });
 
 /**
+ * Given a set of module seeds and the set of fully generated modules, generate
+ * a finalized array of bundles.  These bundles will be early-stage and should
+ * not be populated with the actual modules.  Instead, each bundle will be defined
+ * by the module hashes (unique IDs) of the modules that comprise the bundle.
+ * 
+ * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their
+ *                                 path relative to the compilation context.
+ * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both
+ *                                 absolute path and hash.
+
+ * @return {Array}                 Early-stage bundles.
+ */
+const partitionBundles = pluggable(function partitionBundles (moduleSeeds, moduleMaps) {
+  return this.getBundleSeeds(moduleSeeds, moduleMaps.byAbsPath)
+    .then(seedBundles => this.dedupeExplicit(seedBundles, moduleMaps.byAbsPath))
+    .then(this.dedupeImplicit);
+}, { getBundleSeeds, dedupeExplicit, dedupeImplicit });
+
+/**
  * Given a set of module seeds - originally generated from the bundle definitions
  * passed into the Interlock constructor - and the set of fully generated modules,
- * create bundle objects that are deduped, are populated with module objects,
- * are hashed, and have their filenames interpolated.
+ * generate the full set of bundles that should be emitted, populate them with
+ * module objects, hash them, and interpolate any output filenames.
  *
  * Bundles outputted from this function should be ready to be transformed into
  * strings using AST->source transformation, and then written to disk.
@@ -39,19 +58,9 @@ const populateBundleModules = pluggable(function populateBundleModules (bundle, 
  * @return {Array}                 Fully compiled bundles.
  */
 export default pluggable(function generateBundles (moduleSeeds, moduleMaps) {
-
-  return this.getBundleSeeds(moduleSeeds, moduleMaps.byAbsPath)
-    .then(seedBundles => this.dedupeExplicit(seedBundles, moduleMaps.byAbsPath))
-    .then(this.dedupeImplicit)
+  return this.partitionBundles(moduleSeeds, moduleMaps)
     .then(bundles => Promise.all(bundles.map(bundle =>
       this.populateBundleModules(bundle, moduleMaps))))
     .then(bundles => Promise.all(bundles.map(this.hashBundle)))
     .then(bundles => Promise.all(bundles.map(this.interpolateFilename)));
-}, {
-  getBundleSeeds,
-  dedupeExplicit,
-  dedupeImplicit,
-  hashBundle,
-  interpolateFilename,
-  populateBundleModules
-});
+}, { partitionBundles, hashBundle, interpolateFilename, populateBundleModules });

@@ -203,7 +203,7 @@ of a module from appearing in multiple bundles.
 
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-explicit.js#L53).
-The function that it wraps can be found [here](../src/compile/bundles/dedupe-explicit.js#L27-L51).
+The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-explicit.js#L27-L51).
 
 ## dedupeImplicit
 
@@ -363,7 +363,7 @@ to that same bundle with a new `hash` property.
 
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L40).
-The function that it wraps can be found [here](../src/compile/bundles/hash.js#L27-L38).
+The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L38).
 
 ## hashModule
 
@@ -501,7 +501,7 @@ to a file on disk, returning a module seed.
 
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L53).
-The function that it wraps can be found [here](../src/compile/modules/resolve.js#L32-L51).
+The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L32-L51).
 
 ## setLoadEntry
 

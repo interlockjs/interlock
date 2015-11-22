@@ -257,7 +257,7 @@ function renderToMarkdown (pluggable) {
     linksInfo = `This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/${pluggable.path}#L${pluggable.fnStart}-L${pluggable.fnEnd}).`;
   } else {
     linksInfo = `This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/${pluggable.path}#L${pluggable.pluggableLine}).
-      The function that it wraps can be found [here](../${pluggable.path}#L${pluggable.fnStart}-L${pluggable.fnEnd}).`;
+      The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/${pluggable.path}#L${pluggable.fnStart}-L${pluggable.fnEnd}).`;
   }
   /*eslint-enable max-len */
 

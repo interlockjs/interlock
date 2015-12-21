@@ -136,6 +136,9 @@ function getPluggablesForFile (fpath) {
 
 function parseDoc (pluggable) {
   const parsedDoc = pluggable.doc ? commentParser("/*" + pluggable.doc + "*/")[0] : null;
+  if (pluggable.doc && !parsedDoc) {
+    throw new Error(`Unable to parse JSDoc for "${pluggable.name}".\n\n/*${pluggable.doc}*/\n`);
+  }
   return Object.assign({}, pluggable, { parsedDoc });
 }
 

@@ -32,7 +32,7 @@ const populateBundleModules = pluggable(function populateBundleModules (bundle, 
  *                                 path relative to the compilation context.
  * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both
  *                                 absolute path and hash.
-
+ *
  * @return {Array}                 Early-stage bundles.
  */
 const partitionBundles = pluggable(function partitionBundles (moduleSeeds, moduleMaps) {

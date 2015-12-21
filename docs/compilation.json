@@ -839,7 +839,41 @@
             "name": "partitionBundles",
             "fnStart": 38,
             "fnEnd": 42,
-            "doc": "*\n * Given a set of module seeds and the set of fully generated modules, generate\n * a finalized array of bundles.  These bundles will be early-stage and should\n * not be populated with the actual modules.  Instead, each bundle will be defined\n * by the module hashes (unique IDs) of the modules that comprise the bundle.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n\n * @return {Array}                 Early-stage bundles.\n "
+            "doc": "*\n * Given a set of module seeds and the set of fully generated modules, generate\n * a finalized array of bundles.  These bundles will be early-stage and should\n * not be populated with the actual modules.  Instead, each bundle will be defined\n * by the module hashes (unique IDs) of the modules that comprise the bundle.\n *\n * @param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n *                                 path relative to the compilation context.\n * @param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n *                                 absolute path and hash.\n *\n * @return {Array}                 Early-stage bundles.\n ",
+            "parsedDoc": {
+              "tags": [
+                {
+                  "tag": "param",
+                  "type": "Object",
+                  "name": "moduleSeeds",
+                  "optional": false,
+                  "description": "Early-stage module objects, indexed by their\npath relative to the compilation context.",
+                  "line": 6,
+                  "source": "@param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\npath relative to the compilation context."
+                },
+                {
+                  "tag": "param",
+                  "type": "Object",
+                  "name": "moduleMaps",
+                  "optional": false,
+                  "description": "Maps of fully compiled modules, indexed by both\nabsolute path and hash.",
+                  "line": 8,
+                  "source": "@param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\nabsolute path and hash."
+                },
+                {
+                  "tag": "return",
+                  "type": "Array",
+                  "name": "Early-stage",
+                  "optional": false,
+                  "description": "bundles.",
+                  "line": 11,
+                  "source": "@return {Array}                 Early-stage bundles."
+                }
+              ],
+              "line": 0,
+              "description": "Given a set of module seeds and the set of fully generated modules, generate\na finalized array of bundles.  These bundles will be early-stage and should\nnot be populated with the actual modules.  Instead, each bundle will be defined\nby the module hashes (unique IDs) of the modules that comprise the bundle.",
+              "source": "Given a set of module seeds and the set of fully generated modules, generate\na finalized array of bundles.  These bundles will be early-stage and should\nnot be populated with the actual modules.  Instead, each bundle will be defined\nby the module hashes (unique IDs) of the modules that comprise the bundle.\n\n@param  {Object}  moduleSeeds   Early-stage module objects, indexed by their\n                                path relative to the compilation context.\n@param  {Object}  moduleMaps    Maps of fully compiled modules, indexed by both\n                                absolute path and hash.\n\n@return {Array}                 Early-stage bundles."
+            }
           },
           "children": [
             {
@@ -1034,7 +1068,7 @@
               "markdown": "## dedupeImplicit\n  \nGiven an array of explicitly defined bundles, generate a new array of bundles\nincluding new implicit bundles.  These implicit bundles will be generated from\nthe intersections of two (or more) bundles' module hashes.\n\nThis ensures that no module is included in more than one bundle.  It further\nensures that any module that is depended upon by more than one bundle will be\nsplit off into its own new bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **explicitBundles** | Array | Bundles with module and moduleHashes properties. |\n| Return value |  | Array | Explicit bundles plus new implicit bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L49-L51).\n\n  "
             }
           ],
-          "markdown": "## partitionBundles\n  \n  \n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L38-L42).\n\n  "
+          "markdown": "## partitionBundles\n  \nGiven a set of module seeds and the set of fully generated modules, generate\na finalized array of bundles.  These bundles will be early-stage and should\nnot be populated with the actual modules.  Instead, each bundle will be defined\nby the module hashes (unique IDs) of the modules that comprise the bundle.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Object | Early-stage module objects, indexed by their path relative to the compilation context. |\n| Parameter | **moduleMaps** | Object | Maps of fully compiled modules, indexed by both absolute path and hash. |\n| Return value |  | Array | Early-stage bundles. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L38-L42).\n\n  "
         },
         {
           "name": "hashBundle",

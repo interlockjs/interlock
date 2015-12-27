@@ -126,7 +126,7 @@ export const constructRegisterUrls = pluggable(
  * @return {Array}         Body of bundle.
  */
 export const constructBundleBody = pluggable(function constructBundleBody (opts) {
-  const globalName = opts.globalName || "__interlock__";
+  const globalName = this.opts.globalName || "__interlock__";
 
   return Promise.all([
     opts.includeRuntime && this.constructRuntime(globalName),

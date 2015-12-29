@@ -111,6 +111,7 @@ describe("src/index", () => {
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { dest: "bundle.js" }},
         split: {},
+        globalName: "__interlock__",
         srcRoot: path.join(__dirname, "/../.."),
         context: path.join(__dirname, "../.."),
         destRoot: path.join(__dirname, "../..", "dist"),
@@ -134,6 +135,7 @@ describe("src/index", () => {
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { "dest": "bundle.js" } },
         split: {},
+        globalName: "__interlock__",
         srcRoot: path.join(__dirname, "/../.."),
         context: "custom context",
         destRoot: "custom destRoot",

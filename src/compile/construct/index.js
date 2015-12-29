@@ -126,13 +126,11 @@ export const constructRegisterUrls = pluggable(
  * @return {Array}         Body of bundle.
  */
 export const constructBundleBody = pluggable(function constructBundleBody (opts) {
-  const globalName = this.opts.globalName || "__interlock__";
-
   return Promise.all([
-    opts.includeRuntime && this.constructRuntime(globalName),
-    opts.urls && this.constructRegisterUrls(opts.urls, globalName),
-    opts.modules && this.constructModuleSet(opts.modules, globalName),
-    opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, globalName)
+    opts.includeRuntime && this.constructRuntime(this.opts.globalName),
+    opts.urls && this.constructRegisterUrls(opts.urls, this.opts.globalName),
+    opts.modules && this.constructModuleSet(opts.modules, this.opts.globalName),
+    opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, this.opts.globalName)
   ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
       [].concat(runtime, urls, moduleSet, loadEntry));

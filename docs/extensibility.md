@@ -107,7 +107,7 @@ back into JavaScript code.
 | Return value |  | ASTnode | Single program AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L171-L174).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L169-L172).
 
 ## constructBundleBody
 
@@ -120,7 +120,7 @@ Builds body of output bundle, to be inserted into the IIFE.
 | Return value |  | Array | Body of bundle. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L128-L139).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L128-L137).
 
 ## constructCommonModule
 

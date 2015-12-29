@@ -2,7 +2,7 @@ import * as path from "path";
 import * as fs from "fs";
 
 import { watch } from "chokidar";
-import {sync as mkdirp} from "mkdirp";
+import { sync as mkdirp } from "mkdirp";
 import _ from "lodash";
 import Joi from "joi";
 
@@ -69,10 +69,12 @@ export default function Interlock (options) {
       throw new Error("Invalid srcRoot - cannot find package.json");
     }
 
-    value.ns = value.ns || packageJSON.name;
-    value.entry = normalizeEntryPoints(value.entry);
-    value.split = normalizeEntryPoints(value.split);
-    this.options = value;
+    this.options = Object.assign(value, {
+      globalName: "__interlock__",
+      ns: value.ns || packageJSON.name,
+      entry: normalizeEntryPoints(value.entry),
+      split: normalizeEntryPoints(value.split)
+    });
   });
 }
 

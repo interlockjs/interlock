@@ -49,8 +49,9 @@ function normalizeEntryPoints (entryPoints) {
  *                                            attempting to resolve that require-string.
  * @param   {String}    options.ns            The namespace for the build.  If omitted, the value
  *                                            will be borrowed from `name` in package.json.
- * @param   {Boolean}   options.sourceMaps    Emit source maps with the bundles
- * @param   {Array}     options.plugins       An Array of interlock Plugins
+ * @param   {Boolean}   options.sourceMaps    Emit source maps with the bundles.
+ * @param   {String}    options.globalName    Name to use for run-time global variable.
+ * @param   {Array}     options.plugins       An Array of interlock Plugins.
  * @param   {Boolean}   options.includeComments     Include comments in the compiled bundles
  * @param   {String}    options.implicitBundleDest  The location to emit shared dependency bundles
  *

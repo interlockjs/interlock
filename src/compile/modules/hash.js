@@ -37,6 +37,9 @@ export default pluggable(function hashModule (module) {
   const update = shasum.update.bind(shasum);
 
   return this.updateModuleHash(update, module)
-    .then(() => shasum.digest("hex"))
+    .then(() => shasum.digest("base64")
+      .replace(/\//g, "_")
+      .replace(/\+/g, "-")
+      .replace(/=+$/, ""))
     .then(hash => Object.assign({}, module, { hash }));
 }, { updateModuleHash });

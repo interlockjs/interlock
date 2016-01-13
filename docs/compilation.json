@@ -556,7 +556,7 @@
                 ],
                 "name": "hashModule",
                 "fnStart": 33,
-                "fnEnd": 42,
+                "fnEnd": 45,
                 "doc": "*\n * Given a mostly-compiled module, generate a hash for that module and resolve\n * to that module with a new `hash` property.\n *\n * @param  {Object}  module  Module that needs to be hashed hash.\n *\n * @return {Object}          Module that now has a hash property.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -630,7 +630,7 @@
                   "size": 1
                 }
               ],
-              "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | Module that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L42).\n\n  "
+              "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | Module that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L45).\n\n  "
             },
             {
               "name": "parseModule",

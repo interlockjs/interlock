@@ -377,7 +377,7 @@ to that module with a new `hash` property.
 | Return value |  | Object | Module that now has a hash property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L42).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L45).
 
 ## initBundle
 

@@ -34,6 +34,6 @@ export default pluggable(function parseModule (module) {
 
     return Object.assign({}, module, { ast });
   } catch (err) {
-    return Promise.reject(`Unable to parse file: ${module.path}\n${err.toString()}`);
+    return Promise.reject(`Unable to parse file: ${module.path}\n${err.stack}`);
   }
 });

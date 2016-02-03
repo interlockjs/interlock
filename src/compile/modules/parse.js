@@ -1,9 +1,8 @@
 import path from "path";
 
-import { parse } from "babel-core";
+import { parse } from "babylon";
+import traverse from "babel-traverse";
 
-import transform from "../../ast/transform";
-import { deepAssign } from "../../util/object";
 import pluggable from "../../pluggable";
 
 
@@ -21,15 +20,19 @@ export default pluggable(function parseModule (module) {
   }
 
   try {
-    const babelAst = parse(module.rawSource, {
-      locations: true,
-      ranges: true
-    });
+    const ast = parse(module.rawSource, {
+      sourceType: "module",
+      // See: https://github.com/babel/babel/tree/master/packages/babylon#plugins
+      plugins: [
+        "jsx"
+      ]
+    }).program;
 
-    const ast = transform(babelAst, ({ node/*, type, parents*/ }) => {
-      return node.loc ?
-        deepAssign(node, "loc.source", path.join(module.ns, module.nsPath)) :
-        node;
+    const sourcePath = path.join(module.ns, module.nsPath);
+    traverse.cheap(ast, node => {
+      if (node.loc) {
+        node.loc.source = sourcePath;
+      }
     });
 
     return Object.assign({}, module, { ast });

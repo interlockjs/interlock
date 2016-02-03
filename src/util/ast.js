@@ -1,6 +1,7 @@
 import _ from "lodash";
-import { builders as b } from "ast-types";
-import { parse } from "babel-core";
+import * as t from "babel-types";
+import { parse } from "babylon";
+
 
 function fromVal (val) {
   if (_.isArray(val)) {
@@ -9,19 +10,22 @@ function fromVal (val) {
     return fromObject(val); // eslint-disable-line no-use-before-define
   } else if (_.isFunction(val)) {
     return fromFunction(val); // eslint-disable-line no-use-before-define
-  } else if (_.isNumber(val) || _.isString(val)) {
-    return b.literal(val);
+  } else if (_.isNumber(val)) {
+    return t.numericLiteral(val);
+  } else if (_.isString(val)) {
+    return t.stringLiteral(val);
   }
   throw new Error("Cannot transform value into AST.", val);
 }
 
 export function fromObject (obj) {
-  return b.objectExpression(Object.keys(obj).map(key =>
-    b.property("init", b.literal(key), fromVal(obj[key]))));
+  return t.objectExpression(Object.keys(obj).map(key =>
+    t.objectProperty(t.stringLiteral(key), fromVal(obj[key]))
+  ));
 }
 
 export function fromArray (arr) {
-  return b.arrayExpression(arr.map(fromVal));
+  return t.arrayExpression(arr.map(fromVal));
 }
 
 export function fromFunction (fn) {

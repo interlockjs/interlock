@@ -1,18 +1,6 @@
-import escodegen from "escodegen";
+import generate from "babel-generator";
 
 import pluggable from "../../pluggable";
-
-const uglyFormat = {
-  compact: true,
-  newline: ""
-};
-
-const prettyFormat = {
-  indent: {
-    style: "  ",
-    adjustMultilineComment: true
-  }
-};
 
 /**
  * Given a compiled bundle object, return an array of one or more bundles with
@@ -37,16 +25,15 @@ export default pluggable(function generateRawBundles (bundle) {
     throw new Error("Cannot generate JS source for non-JavaScript bundle.");
   }
 
-  const { code, map } = escodegen.generate(bundle.ast, {
-    format: this.opts.pretty === false ? uglyFormat : prettyFormat,
-    sourceMap: !!this.opts.sourceMaps,
-    sourceMapWithCode: true,
-    comment: !!this.opts.includeComments
+  const { code } = generate(bundle.ast, {
+    comments: !!this.opts.includeComments,
+    compact: !this.opts.pretty,
+    quotes: "double"
   });
 
+  // TODO: Determine method for babel-generator to output sourcemaps
+  //       from multiple sources.
+
   const outputBundle = Object.assign({}, bundle, { raw: code });
-  const mapDest = bundle.dest + ".map";
-  return this.opts.sourceMaps === true ?
-    [outputBundle, { raw: map, dest: mapDest }] :
-    [outputBundle];
+  return [ outputBundle ];
 });

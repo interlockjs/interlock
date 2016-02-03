@@ -1,4 +1,4 @@
-import { Plugin, transform } from "babel-core";
+import { transformFromAst } from "babel-core";
 
 import pluggable from "../../pluggable";
 
@@ -14,22 +14,21 @@ import pluggable from "../../pluggable";
  *                           module hashes.
  */
 export default pluggable(function updateRequires (module) {
-  const updatePlugin = new Plugin("getRequires", {
+  const updatePlugin = {
     visitor: {
-      CallExpression (node/*, parent */) {
-        if (node.callee.name === "require") {
-          const originalVal = node.arguments[0].value;
+      CallExpression (path) {
+        if (path.node.callee.name === "require") {
+          const originalVal = path.node.arguments[0].value;
           const correspondingModule = module.dependenciesByInternalRef[originalVal];
-          node.arguments[0].value = correspondingModule.hash;
-          node.arguments[0].raw = `"$(correspondingModule.hash)"`;
+          path.node.arguments[0].value = correspondingModule.hash;
+          path.node.arguments[0].raw = `"$(correspondingModule.hash)"`;
         }
       }
     }
-  });
+  };
 
-  const ast = transform.fromAst(module.ast, null, {
+  const ast = transformFromAst(module.ast, null, {
     code: false,
-    whitelist: ["react"],
     plugins: [updatePlugin]
   }).ast.program;
 

@@ -1,6 +1,5 @@
 import _ from "lodash";
-import { Plugin, types as t } from "babel-core";
-
+import { types as t } from "babel-core";
 
 /**
  * Return the AST equivalent of `require(requireStr)`, where requireStr is
@@ -111,7 +110,7 @@ function toCommonJs (defineArray, defineFunction) {
 export default function () {
   let topLevelNode;
 
-  return new Plugin("convert-from-amd", {
+  return {
     visitor: {
       ExpressionStatement (node, parent) {
         if (parent.type === "Program") {
@@ -136,6 +135,6 @@ export default function () {
         }
       }
     }
-  });
+  };
 
 }

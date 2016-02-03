@@ -1,17 +1,16 @@
 module.exports = function (babel) {
-  var Plugin = babel.Plugin;
   var t = babel.types;
-  return new Plugin("plugin-example", {
+  return {
     visitor: {
-      FunctionDeclaration: function (node, parent) {
-        var id = node.id;
-        node.type = "FunctionExpression";
-        node.id   = null;
+      FunctionDeclaration: function (path) {
+        var id = path.node.id;
+        path.node.type = "FunctionExpression";
+        path.node.id = null;
 
-        return t.variableDeclaration("var", [
-          t.variableDeclarator(id, node)
-        ]);
+        path.replaceWith(t.variableDeclaration("var", [
+          t.variableDeclarator(id, path.node)
+        ]));
       }
     }
-  });
+  };
 }

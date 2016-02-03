@@ -14,6 +14,7 @@ var ilk = new Interlock({
     "./app/shared/lib-a.js": "[setHash].js"
   },
 
+  pretty: true,
   includeComments: true,
   sourceMaps: true,
 

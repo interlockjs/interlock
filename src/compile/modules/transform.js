@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Plugin, transform } from "babel-core";
+import { transformFromAst } from "babel-core";
 
 import pluggable from "../../pluggable";
 import transformAmd from "./transform-amd";
@@ -22,35 +22,26 @@ export default pluggable(function transformModule (module) {
   const babelUserConfig = this.opts.babelConfig || {};
   let synchronousRequires = [];
 
-  const getRequires = new Plugin("get-requires", {
+  const getRequires = {
     visitor: {
-      CallExpression (node/*, parent */) {
-        if (node.callee.name === "require") {
-          if (node.arguments.length === 0) {
+      CallExpression (path) {
+        if (path.node.callee.name === "require") {
+          if (path.node.arguments.length === 0) {
             throw new Error("Require expressions must include a target.");
           }
-          synchronousRequires.push(node.arguments[0].value);
+          synchronousRequires.push(path.node.arguments[0].value);
         }
       }
     }
-  });
+  };
 
   const config = _.extend({}, babelUserConfig, {
-    whitelist: babelUserConfig.whitelist ?
-      _.uniq(["es6.modules", ...(babelUserConfig.whitelist || [])]) :
-      undefined,
     code: false,
     ast: true,
-    plugins: [...(babelUserConfig.plugins || []), {
-      transformer: transformAmd(),
-      position: "after"
-    }, {
-      transformer: getRequires,
-      position: "after"
-    }]
+    plugins: [...(babelUserConfig.plugins || []), transformAmd(), getRequires]
   });
 
-  const { ast } = transform.fromAst(module.ast, null, config);
+  const { ast } = transformFromAst(module.ast, null, config);
   synchronousRequires = _.uniq(synchronousRequires);
 
   return Object.assign({}, module, {

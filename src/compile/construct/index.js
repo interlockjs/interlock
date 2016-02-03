@@ -2,27 +2,29 @@ import fs from "fs";
 import path from "path";
 
 import Promise from "bluebird";
-import { builders as b } from "ast-types";
+import * as t from "babel-types";
+import template from "../../util/template";
 
 import pluggable from "../../pluggable";
-import { programTmpl, bodyTmpl, expressionStmtTmpl, expressionTmpl } from "../../ast/template";
 import { fromObject } from "../../util/ast";
 
 
-function getTemplate (templateName, tmplType) {
+function getTemplate (templateName, transform) {
+  transform = transform || (node => node);
   const absPath = path.join(__dirname, `templates/${templateName}.jst`);
   const templateStr = fs.readFileSync(absPath, "utf-8")
     // Remove ESlint rule exclusions from parsed templates.
     .replace(/\s*\/\/\s*eslint-disable-line.*/g, "");
-  return tmplType(templateStr);
+  const _template = template(templateStr);
+  return opts => transform(_template(opts));
 }
 
-const commonModuleTmpl = getTemplate("common-module", expressionTmpl);
-const moduleSetTmpl = getTemplate("module-set", expressionStmtTmpl);
-const runtimeTmpl = getTemplate("runtime", bodyTmpl);
-const loadModuleWhenReadyTmpl = getTemplate("load-module-when-ready", expressionStmtTmpl);
-const registerUrlsTmpl = getTemplate("register-urls", bodyTmpl);
-const iifeTmpl = getTemplate("iife", programTmpl);
+const commonModuleTmpl = getTemplate("common-module", node => node.expression);
+const moduleSetTmpl = getTemplate("module-set");
+const runtimeTmpl = getTemplate("runtime");
+const loadModuleWhenReadyTmpl = getTemplate("load-module-when-ready");
+const registerUrlsTmpl = getTemplate("register-urls");
+const iifeTmpl = getTemplate("iife");
 
 /**
  * Given an array of AST nodes from a module's body along with that module's
@@ -36,10 +38,9 @@ const iifeTmpl = getTemplate("iife", programTmpl);
  */
 export const constructCommonModule = pluggable(
   function constructCommonModule (moduleBody, deps) {
-    const depsHashes = deps.map(dependency => b.literal(dependency.hash));
     return commonModuleTmpl({
-      body: { "MODULE_BODY": moduleBody },
-      identifier: { "DEPS": b.arrayExpression(depsHashes) }
+      MODULE_BODY: moduleBody,
+      DEPS: t.arrayExpression(deps.map(dep => t.stringLiteral(dep.hash)))
     });
   }
 );
@@ -57,13 +58,11 @@ export const constructModuleSet = pluggable(
   function constructModuleSet (modules, globalName) {
     return Promise.all(modules.map(module =>
       this.constructCommonModule(module.ast.body, module.dependencies)
-        .then(moduleAst => b.property("init", b.literal(module.hash), moduleAst))
+        .then(moduleAst => t.objectProperty(t.stringLiteral(module.hash), moduleAst))
     ))
-      .then(moduleHashNodes => moduleSetTmpl({
-        identifier: {
-          "GLOBAL_NAME": b.literal(globalName),
-          "MODULES_HASH": b.objectExpression(moduleHashNodes)
-        }
+      .then(moduleProps => moduleSetTmpl({
+        GLOBAL_NAME: t.stringLiteral(globalName),
+        MODULES_HASH: t.objectExpression(moduleProps)
       }));
   },
   { constructCommonModule }
@@ -78,7 +77,7 @@ export const constructModuleSet = pluggable(
  */
 export const constructRuntime = pluggable(function constructRuntime (globalName) {
   return runtimeTmpl({
-    identifier: { "GLOBAL_NAME": b.literal(globalName) }
+    GLOBAL_NAME: t.stringLiteral(globalName)
   });
 });
 
@@ -92,10 +91,8 @@ export const constructRuntime = pluggable(function constructRuntime (globalName)
  */
 export const setLoadEntry = pluggable(function setLoadEntry (moduleHash, globalName) {
   return loadModuleWhenReadyTmpl({
-    identifier: {
-      "GLOBAL_NAME": b.literal(globalName),
-      "MODULE_HASH": b.literal(moduleHash)
-    }
+    GLOBAL_NAME: t.stringLiteral(globalName),
+    MODULE_HASH: t.stringLiteral(moduleHash)
   });
 });
 
@@ -110,10 +107,8 @@ export const setLoadEntry = pluggable(function setLoadEntry (moduleHash, globalN
 export const constructRegisterUrls = pluggable(
   function constructRegisterUrls (urls, globalName) {
     return registerUrlsTmpl({
-      identifier: {
-        "GLOBAL_NAME": b.literal(globalName),
-        "URLS": fromObject(urls)
-      }
+      GLOBAL_NAME: t.stringLiteral(globalName),
+      URLS: fromObject(urls)
     });
   }
 );
@@ -168,5 +163,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
  */
 export const constructBundleAst = pluggable(function constructBundleAst (opts) {
   return this.constructBundleBody(opts)
-    .then(body => iifeTmpl({ body: { "BODY": body.filter(x => x) } }));
+    .then(body => iifeTmpl({
+      BODY: body.filter(x => x)
+    }));
 }, { constructBundleBody });

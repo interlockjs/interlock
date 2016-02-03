@@ -16,7 +16,7 @@ import pluggable from "../../pluggable";
  */
 export default pluggable(function parseModule (module) {
   if (module.type !== "javascript") {
-    throw new Error("Cannot process non-JavaScript.  Please configure appropriate plugin.");
+    throw new Error("Cannot parse non-JavaScript.  Please configure appropriate plugin.");
   }
 
   try {

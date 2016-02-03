@@ -1,3 +1,5 @@
+Error.stackTraceLimit = Infinity;
+
 require("babel/register");
 
 const requireDir = require("require-dir");

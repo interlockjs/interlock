@@ -1,19 +1,18 @@
 #!/usr/bin/env node
-const path = require("path");
-const fs = require("fs");
-const glob = require("glob");
+import { join, relative } from "path";
+import fs from "fs";
+import glob from "glob";
 
-const _ = require("lodash");
-const commentParser = require("comment-parser");
-const babel = require("babel-core");
-const estraverse = require("estraverse");
-const parse = babel.parse;
+import _ from "lodash";
+import commentParser from "comment-parser";
+import traverse from "babel-traverse";
+import { parse } from "babylon";
 
-const rootPath = path.join(__dirname, "..");
-const outputPath = path.join(rootPath, "docs/extensibility.md");
-const jsonOutputPath = path.join(rootPath, "docs/compilation.json");
-const srcGlob = path.join(__dirname, "../src/**/*.js");
 
+const rootPath = join(__dirname, "..");
+const outputPath = join(rootPath, "docs/extensibility.md");
+const jsonOutputPath = join(rootPath, "docs/compilation.json");
+const srcGlob = join(__dirname, "../src/**/*.js");
 
 const PREAMBLE = `# Extensibility
 
@@ -43,46 +42,45 @@ function red (text) {
 function loadAst (fpath) {
   const rawSource = fs.readFileSync(fpath, "utf-8");
   return parse(rawSource, {
-    locations: true,
-    ranges: true,
-    sourceFile: fpath
+    sourceType: "module"
   });
 }
 
-function findDoc (node, parents) {
+function findDoc (node, anscestorPaths) {
   if (node.leadingComments && node.leadingComments.length > 0) {
     return node.leadingComments[0].value;
   }
-  for (const anscestor of parents) {
+  for (const anscestor of anscestorPaths) {
     if ((anscestor.type === "VariableDeclaration" ||
         anscestor.type === "ExportNamedDeclaration" ||
         anscestor.type === "ExportDefaultDeclaration") &&
-        anscestor.leadingComments &&
-        anscestor.leadingComments.length > 0) {
-      return anscestor.leadingComments[0].value;
+        anscestor.node.leadingComments &&
+        anscestor.node.leadingComments.length > 0) {
+      return anscestor.node.leadingComments[0].value;
     }
   }
   return null;
 }
 
 function getNamedFunctions (ast) {
-  const controller = new estraverse.Controller();
   const functions = {};
 
-  function enter (node) {
-    if (node.type === "FunctionDeclaration" || node.type === "FunctionExpression" &&
-        node.id !== null) {
-      functions[node.id.name] = {
-        fnParams: node.params,
-        name: node.id.name,
-        fnStart: node.loc.start.line,
-        fnEnd: node.loc.end.line,
-        doc: findDoc(node, controller.parents().reverse())
-      };
+  traverse(ast, {
+    enter (path) {
+      const node = path.node;
+      if ((node.type === "FunctionDeclaration" || node.type === "FunctionExpression") &&
+          node.id !== null) {
+        functions[node.id.name] = {
+          fnParams: node.params,
+          name: node.id.name,
+          fnStart: node.loc.start.line,
+          fnEnd: node.loc.end.line,
+          doc: findDoc(node, path.getAncestry())
+        };
+      }
     }
-  }
+  });
 
-  controller.traverse(ast, { enter });
   return functions;
 }
 
@@ -95,42 +93,42 @@ function getEdges (objNode) {
 
 function getPluggablesForFile (fpath) {
   const ast = loadAst(fpath);
-  const relPath = path.relative(rootPath, fpath);
+  const relPath = relative(rootPath, fpath);
   const namedFunctions = getNamedFunctions(ast);
 
   const pluggables = [];
 
-  const controller = new estraverse.Controller();
+  traverse(ast, {
+    enter (path) {
+      const node = path.node;
+      if (node.type === "CallExpression" &&
+          node.callee.name === "pluggable") {
 
-  function enter (node) {
-    if (node.type === "CallExpression" &&
-        node.callee.name === "pluggable") {
+        const pluggable = {
+          path: relPath,
+          pluggableLine: node.loc.start.line,
+          edges: getEdges(node.arguments[1])
+        };
 
-      const pluggable = {
-        path: relPath,
-        pluggableLine: node.loc.start.line,
-        edges: getEdges(node.arguments[1])
-      };
+        if (node.arguments[0].type === "FunctionExpression") {
+          Object.assign(pluggable, {
+            fnParams: node.arguments[0].params,
+            name: node.arguments[0].id.name,
+            fnStart: node.loc.start.line,
+            fnEnd: node.loc.end.line,
+            doc: findDoc(node, path.getAncestry())
+          });
+        } else {
+          Object.assign(pluggable, namedFunctions[node.arguments[0].name]);
+        }
 
-      if (node.arguments[0].type === "FunctionExpression") {
-        Object.assign(pluggable, {
-          fnParams: node.arguments[0].params,
-          name: node.arguments[0].id.name,
-          fnStart: node.loc.start.line,
-          fnEnd: node.loc.end.line,
-          doc: findDoc(node, controller.parents().reverse())
-        });
-      } else {
-        Object.assign(pluggable, namedFunctions[node.arguments[0].name]);
+        pluggable.fnParams = pluggable.fnParams.map(param => param.name);
+
+        pluggables.push(pluggable);
       }
-
-      pluggable.fnParams = pluggable.fnParams.map(param => param.name);
-
-      pluggables.push(pluggable);
     }
-  }
+  });
 
-  controller.traverse(ast, { enter });
   return pluggables;
 }
 

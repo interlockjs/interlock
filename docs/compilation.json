@@ -636,14 +636,14 @@
               "name": "parseModule",
               "node": {
                 "path": "src/compile/modules/parse.js",
-                "pluggableLine": 18,
+                "pluggableLine": 17,
                 "edges": [],
                 "fnParams": [
                   "module"
                 ],
                 "name": "parseModule",
-                "fnStart": 18,
-                "fnEnd": 39,
+                "fnStart": 17,
+                "fnEnd": 42,
                 "doc": "*\n * Parse the source of the provided early-stage module.  Resolves to the same\n * module with a new `ast` property (or equivalent for non-JavaScript modules).\n *\n * @param  {Object}  module  Unparsed module with rawSource property.\n *\n * @return {Object}          Parsed module with new `ast` property.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -672,7 +672,7 @@
                 }
               },
               "children": [],
-              "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L39).\n\n  ",
+              "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule with a new `ast` property (or equivalent for non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L42).\n\n  ",
               "size": 1
             },
             {
@@ -686,7 +686,7 @@
                 ],
                 "name": "transformModule",
                 "fnStart": 18,
-                "fnEnd": 60,
+                "fnEnd": 51,
                 "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to type-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -715,7 +715,7 @@
                 }
               },
               "children": [],
-              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L60).\n\n  ",
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L51).\n\n  ",
               "size": 1
             },
             {
@@ -729,7 +729,7 @@
                 ],
                 "name": "updateRequires",
                 "fnStart": 16,
-                "fnEnd": 37,
+                "fnEnd": 36,
                 "doc": "*\n * Give a module whose dependencies have been identified and compiled, replace\n * all original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n *\n * @param  {Object}  module  Module with AST containing original require expressions.\n *\n * @return {Object}          Module with AST containing require expressions whose\n *                           arguments have been replaced with corresponding dependency\n *                           module hashes.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -758,7 +758,7 @@
                 }
               },
               "children": [],
-              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L16-L37).\n\n  ",
+              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L16-L36).\n\n  ",
               "size": 1
             }
           ],
@@ -1453,7 +1453,7 @@
                   "name": "constructBundleAst",
                   "node": {
                     "path": "src/compile/construct/index.js",
-                    "pluggableLine": 169,
+                    "pluggableLine": 164,
                     "edges": [
                       "constructBundleBody"
                     ],
@@ -1461,8 +1461,8 @@
                       "opts"
                     ],
                     "name": "constructBundleAst",
-                    "fnStart": 169,
-                    "fnEnd": 172,
+                    "fnStart": 164,
+                    "fnEnd": 169,
                     "doc": "*\n * Construct the AST for an output bundle.  A number of optional options-args are\n * allowed, to give flexibility to the compiler for what sort of bundle should be\n * constructed.\n *\n * For example, in the case of a bundle with an entry module, you'll want everything\n * to be included.  The run-time is needed, because there is no guarantee another\n * bundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\n * should be included, as again there is no guarantee another bundle has already\n * set those values.  The modules of the bundle itself need to be included, etc.\n *\n * However, you might instead generate a specialized bundle that only contains the\n * run-time and URLs.  This bundle might be inlined into the page, or guaranteed\n * to be loaded first, so that redundant copies of the run-time be included in\n * every other bundle generated.\n *\n * The output for this function should be a root AST node, ready to be transformed\n * back into JavaScript code.\n *\n * @param  {Object}  opts                 Options.\n * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n * @param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\n *                                        will be emitted.\n * @param  {Array}   opts.modules         Optional. If included, the module objects will be\n *                                        transformed into output module AST and emitted.\n * @param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\n *                                        to invoke the specified module on load.\n *\n * @return {ASTnode}                      Single program AST node.\n ",
                     "parsedDoc": {
                       "tags": [
@@ -1531,7 +1531,7 @@
                       "name": "constructBundleBody",
                       "node": {
                         "path": "src/compile/construct/index.js",
-                        "pluggableLine": 128,
+                        "pluggableLine": 123,
                         "edges": [
                           "constructModuleSet",
                           "constructRuntime",
@@ -1542,8 +1542,8 @@
                           "opts"
                         ],
                         "name": "constructBundleBody",
-                        "fnStart": 128,
-                        "fnEnd": 137,
+                        "fnStart": 123,
+                        "fnEnd": 132,
                         "doc": "*\n * Builds body of output bundle, to be inserted into the IIFE.\n *\n * @param  {Object}  opts  Same options object passed to constructBundleBody.\n *\n * @return {Array}         Body of bundle.\n ",
                         "parsedDoc": {
                           "tags": [
@@ -1576,7 +1576,7 @@
                           "name": "constructModuleSet",
                           "node": {
                             "path": "src/compile/construct/index.js",
-                            "pluggableLine": 56,
+                            "pluggableLine": 57,
                             "edges": [
                               "constructCommonModule"
                             ],
@@ -1585,8 +1585,8 @@
                               "globalName"
                             ],
                             "name": "constructModuleSet",
-                            "fnStart": 56,
-                            "fnEnd": 70,
+                            "fnStart": 57,
+                            "fnEnd": 69,
                             "doc": "*\n * Given an array of compiled modules, construct the AST for JavaScript that would\n * register those modules for consumption by the Interlock run-time.\n *\n * @param  {Array}  modules        Array of compiled modules.\n * @param  {String} globalName     Global variable name of the Interlock run-time.\n *\n * @return {Array}                 Array of AST nodes to be emitted as JavaScript.\n ",
                             "parsedDoc": {
                               "tags": [
@@ -1628,15 +1628,15 @@
                               "name": "constructCommonModule",
                               "node": {
                                 "path": "src/compile/construct/index.js",
-                                "pluggableLine": 37,
+                                "pluggableLine": 39,
                                 "edges": [],
                                 "fnParams": [
                                   "moduleBody",
                                   "deps"
                                 ],
                                 "name": "constructCommonModule",
-                                "fnStart": 37,
-                                "fnEnd": 45,
+                                "fnStart": 39,
+                                "fnEnd": 46,
                                 "doc": "*\n * Given an array of AST nodes from a module's body along with that module's\n * dependencies, construct an AST object expression that represents its run-time\n * equivalent.\n *\n * @param  {Array}  moduleBody  Array of AST nodes.\n * @param  {Array}  deps        Array of modules upon which module is dependent.\n *\n * @return {ASTnode}            Object expression AST node.\n ",
                                 "parsedDoc": {
                                   "tags": [
@@ -1674,24 +1674,24 @@
                                 }
                               },
                               "children": [],
-                              "markdown": "## constructCommonModule\n  \nGiven an array of AST nodes from a module's body along with that module's\ndependencies, construct an AST object expression that represents its run-time\nequivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleBody** | Array | Array of AST nodes. |\n| Parameter | **deps** | Array | Array of modules upon which module is dependent. |\n| Return value |  | ASTnode | Object expression AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L37-L45).\n\n  ",
+                              "markdown": "## constructCommonModule\n  \nGiven an array of AST nodes from a module's body along with that module's\ndependencies, construct an AST object expression that represents its run-time\nequivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleBody** | Array | Array of AST nodes. |\n| Parameter | **deps** | Array | Array of modules upon which module is dependent. |\n| Return value |  | ASTnode | Object expression AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L39-L46).\n\n  ",
                               "size": 1
                             }
                           ],
-                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L56-L70).\n\n  "
+                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L57-L69).\n\n  "
                         },
                         {
                           "name": "constructRuntime",
                           "node": {
                             "path": "src/compile/construct/index.js",
-                            "pluggableLine": 79,
+                            "pluggableLine": 78,
                             "edges": [],
                             "fnParams": [
                               "globalName"
                             ],
                             "name": "constructRuntime",
-                            "fnStart": 79,
-                            "fnEnd": 83,
+                            "fnStart": 78,
+                            "fnEnd": 82,
                             "doc": "*\n * Construct the guts of the Interlock run-time for inclusion in file output.\n *\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {Array}              Array of AST nodes.\n ",
                             "parsedDoc": {
                               "tags": [
@@ -1720,22 +1720,22 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## constructRuntime\n  \nConstruct the guts of the Interlock run-time for inclusion in file output.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | Array | Array of AST nodes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L79-L83).\n\n  ",
+                          "markdown": "## constructRuntime\n  \nConstruct the guts of the Interlock run-time for inclusion in file output.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | Array | Array of AST nodes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L78-L82).\n\n  ",
                           "size": 1
                         },
                         {
                           "name": "setLoadEntry",
                           "node": {
                             "path": "src/compile/construct/index.js",
-                            "pluggableLine": 93,
+                            "pluggableLine": 92,
                             "edges": [],
                             "fnParams": [
                               "moduleHash",
                               "globalName"
                             ],
                             "name": "setLoadEntry",
-                            "fnStart": 93,
-                            "fnEnd": 100,
+                            "fnStart": 92,
+                            "fnEnd": 97,
                             "doc": "*\n * Construct a statement to instruct the runtime to run the specified module.\n *\n * @param  {String} moduleHash  Hash of the module to be required.\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {ASTnode}            Single AST node.\n ",
                             "parsedDoc": {
                               "tags": [
@@ -1773,22 +1773,22 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## setLoadEntry\n  \nConstruct a statement to instruct the runtime to run the specified module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleHash** | String | Hash of the module to be required. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L93-L100).\n\n  ",
+                          "markdown": "## setLoadEntry\n  \nConstruct a statement to instruct the runtime to run the specified module.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleHash** | String | Hash of the module to be required. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L92-L97).\n\n  ",
                           "size": 1
                         },
                         {
                           "name": "constructRegisterUrls",
                           "node": {
                             "path": "src/compile/construct/index.js",
-                            "pluggableLine": 110,
+                            "pluggableLine": 107,
                             "edges": [],
                             "fnParams": [
                               "urls",
                               "globalName"
                             ],
                             "name": "constructRegisterUrls",
-                            "fnStart": 110,
-                            "fnEnd": 119,
+                            "fnStart": 107,
+                            "fnEnd": 114,
                             "doc": "*\n * Transforms a map of module-hashes-to-URLs to the AST equivalent.\n *\n * @param  {Object} urls        Keys are module hashes, values are URL strings.\n * @param  {String} globalName  Global variable name of Interlock run-time.\n *\n * @return {ASTnode}            Single AST node.\n ",
                             "parsedDoc": {
                               "tags": [
@@ -1826,14 +1826,14 @@
                             }
                           },
                           "children": [],
-                          "markdown": "## constructRegisterUrls\n  \nTransforms a map of module-hashes-to-URLs to the AST equivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L110-L119).\n\n  ",
+                          "markdown": "## constructRegisterUrls\n  \nTransforms a map of module-hashes-to-URLs to the AST equivalent.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **urls** | Object | Keys are module hashes, values are URL strings. |\n| Parameter | **globalName** | String | Global variable name of Interlock run-time. |\n| Return value |  | ASTnode | Single AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L107-L114).\n\n  ",
                           "size": 1
                         }
                       ],
-                      "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | Body of bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L128-L137).\n\n  "
+                      "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | Body of bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L123-L132).\n\n  "
                     }
                   ],
-                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L169-L172).\n\n  "
+                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L164-L169).\n\n  "
                 }
               ],
               "markdown": "## constructBundle\n  \nGiven a compiled bundle and moduleHash-to-URL lookup object, output\nthe same bundle with generated AST.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Fully compiled bundle, ready to be outputed. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Object | Bundle with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L36-L44).\n\n  "
@@ -1842,14 +1842,14 @@
               "name": "generateRawBundles",
               "node": {
                 "path": "src/compile/bundles/generate-raw.js",
-                "pluggableLine": 35,
+                "pluggableLine": 23,
                 "edges": [],
                 "fnParams": [
                   "bundle"
                 ],
                 "name": "generateRawBundles",
-                "fnStart": 35,
-                "fnEnd": 52,
+                "fnStart": 23,
+                "fnEnd": 39,
                 "doc": "*\n * Given a compiled bundle object, return an array of one or more bundles with\n * new `raw` property.  This raw property should be generated from the bundle's\n * AST or equivalent intermediate representation.\n *\n * This is a one-to-many transformation because it is quite possible for multiple\n * output files to result from a single bundle object.  The canonical example (and\n * default behavior of this function, when sourcemaps are enabled) is for one\n * bundle to result in a `.js` file and a `.map` file.\n *\n * @param  {Object} bundle    Bundle object without `raw` property.\n *\n * @return {Array}            Array of bundle objects.  At minimum, these bundle\n *                            objects should have a `raw` property - a string\n *                            representation of the file to be written to disk -\n *                            and a `dest` property - the relative filepath\n *                            of the file to be written to disk.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -1878,7 +1878,7 @@
                 }
               },
               "children": [],
-              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L35-L52).\n\n  ",
+              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L39).\n\n  ",
               "size": 1
             }
           ],

@@ -7,9 +7,9 @@ try {
 }
 
 if (useTranspiled) {
-  require("babel/polyfill");
+  require("babel-polyfill");
   module.exports = require("./lib");
 } else {
-  require("babel/register");
+  require("babel-core/register");
   module.exports = require("./src");
 }

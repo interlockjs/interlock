@@ -1,6 +1,6 @@
 Error.stackTraceLimit = Infinity;
 
-require("babel/register");
+require("babel-core/register");
 
 const requireDir = require("require-dir");
 const chai = require("chai");

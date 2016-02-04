@@ -686,7 +686,7 @@
                 ],
                 "name": "transformModule",
                 "fnStart": 18,
-                "fnEnd": 51,
+                "fnEnd": 56,
                 "doc": "*\n * Transforms the module's AST, returning a module object with transformed\n * `ast` property as well as a new `synchronousRequires` property.  If the\n * module is not of type \"javascript\", transformations to type-specific\n * intermediate representation should occur at this step.\n *\n * @param  {Object} module  Module object, with `ast` property.\n *\n * @return {Object}         Module object with transformed `ast` property\n *                          and new `synchronousRequires` property.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -715,7 +715,7 @@
                 }
               },
               "children": [],
-              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L51).\n\n  ",
+              "markdown": "## transformModule\n  \nTransforms the module's AST, returning a module object with transformed\n`ast` property as well as a new `synchronousRequires` property.  If the\nmodule is not of type \"javascript\", transformations to type-specific\nintermediate representation should occur at this step.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module object, with `ast` property. |\n| Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L56).\n\n  ",
               "size": 1
             },
             {

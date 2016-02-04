@@ -38,7 +38,12 @@ export default pluggable(function transformModule (module) {
   const config = _.extend({}, babelUserConfig, {
     code: false,
     ast: true,
-    plugins: [...(babelUserConfig.plugins || []), transformAmd(), getRequires]
+    plugins: [
+      ...(babelUserConfig.plugins || []),
+      "transform-es2015-modules-commonjs",
+      transformAmd(),
+      getRequires
+    ]
   });
 
   const { ast } = transformFromAst(module.ast, null, config);

@@ -25,14 +25,16 @@ export default pluggable(function generateRawBundles (bundle) {
     throw new Error("Cannot generate JS source for non-JavaScript bundle.");
   }
 
+  const bundleSources = bundle.modules.reduce((hash, module) => {
+    hash[module.sourcePath] = module.rawSource;
+    return hash;
+  }, {});
+
   const { code } = generate(bundle.ast, {
     comments: !!this.opts.includeComments,
     compact: !this.opts.pretty,
     quotes: "double"
-  });
-
-  // TODO: Determine method for babel-generator to output sourcemaps
-  //       from multiple sources.
+  }, bundleSources);
 
   const outputBundle = Object.assign({}, bundle, { raw: code });
   return [ outputBundle ];

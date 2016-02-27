@@ -1,18 +1,18 @@
 import path from "path";
 
 import { parse } from "babylon";
-import traverse from "babel-traverse";
 
 import pluggable from "../../pluggable";
 
 
 /**
  * Parse the source of the provided early-stage module.  Resolves to the same
- * module with a new `ast` property (or equivalent for non-JavaScript modules).
+ * module object, with additional `ast` and `sourcePath` properties (or equivalent
+ * for non-JavaScript modules).
  *
  * @param  {Object}  module  Unparsed module with rawSource property.
  *
- * @return {Object}          Parsed module with new `ast` property.
+ * @return {Object}          Parsed module with new `ast` and `sourcePath` properties.
  */
 export default pluggable(function parseModule (module) {
   if (module.type !== "javascript") {
@@ -20,22 +20,17 @@ export default pluggable(function parseModule (module) {
   }
 
   try {
+    const sourcePath = path.join(module.ns, module.nsPath);
     const ast = parse(module.rawSource, {
       sourceType: "module",
+      sourceFilename: sourcePath,
       // See: https://github.com/babel/babel/tree/master/packages/babylon#plugins
       plugins: [
         "jsx"
       ]
     }).program;
 
-    const sourcePath = path.join(module.ns, module.nsPath);
-    traverse.cheap(ast, node => {
-      if (node.loc) {
-        node.loc.source = sourcePath;
-      }
-    });
-
-    return Object.assign({}, module, { ast });
+    return Object.assign({}, module, { ast, sourcePath });
   } catch (err) {
     return Promise.reject(`Unable to parse file: ${module.path}\n${err.stack}`);
   }

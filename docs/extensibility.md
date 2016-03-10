@@ -302,7 +302,7 @@ bundle to result in a `.js` file and a `.map` file.
 | Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L39).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L41).
 
 ## getBundleSeeds
 
@@ -414,16 +414,17 @@ This Pluggable's definition can be found [here](http://github.com/interlockjs/in
 ## parseModule
 
 Parse the source of the provided early-stage module.  Resolves to the same
-module with a new `ast` property (or equivalent for non-JavaScript modules).
+module object, with additional `ast` and `sourcePath` properties (or equivalent
+for non-JavaScript modules).
 
 
 |     | Name | Type | Description |
 | --- | ---- | ---- | ----------- |
 | Parameter | **module** | Object | Unparsed module with rawSource property. |
-| Return value |  | Object | Parsed module with new `ast` property. |
+| Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L42).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L37).
 
 ## partitionBundles
 

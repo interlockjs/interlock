@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 
 /**

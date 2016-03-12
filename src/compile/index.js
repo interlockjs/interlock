@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Promise from "bluebird";
 
-import pluggable from "../pluggable";
+import { pluggable } from "pluggable";
 import getCompilationContext from "./get-context";
 import { constructBundleAst } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";

@@ -2,7 +2,7 @@ import path from "path";
 
 import { parse } from "babylon";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 
 /**

@@ -5,7 +5,7 @@ import Promise from "bluebird";
 import * as t from "babel-types";
 import template from "../../util/template";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 import { fromObject } from "../../util/ast";
 
 

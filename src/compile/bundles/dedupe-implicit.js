@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Promise from "bluebird";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 import initBundle from "./init";
 
 const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
@@ -48,4 +48,4 @@ const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
  */
 export default pluggable(function dedupeImplicit (explicitBundles) {
   return genBundlesWithImplicit.call(this, explicitBundles);
-}, { initBundle});
+}, { initBundle });

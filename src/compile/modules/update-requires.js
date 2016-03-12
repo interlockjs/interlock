@@ -1,6 +1,6 @@
 import { transformFromAst } from "babel-core";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 
 /**

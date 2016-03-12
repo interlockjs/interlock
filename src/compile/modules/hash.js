@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 /**
  * Use data from the provided module to generate a hash, utilizing the provided

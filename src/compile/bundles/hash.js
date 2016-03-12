@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 /**
  * Calculate the bundle's hash by invoking `update` with data from the bundle.

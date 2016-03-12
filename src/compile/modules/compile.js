@@ -3,7 +3,7 @@ import path from "path";
 import _ from "lodash";
 import Promise from "bluebird";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";

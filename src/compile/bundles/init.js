@@ -1,4 +1,4 @@
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 export default pluggable(function initBundle (opts = {}) {
   const {

@@ -1,4 +1,4 @@
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 import getBundleSeeds from "./get-seeds";
 import dedupeExplicit from "./dedupe-explicit";
 import dedupeImplicit from "./dedupe-implicit";

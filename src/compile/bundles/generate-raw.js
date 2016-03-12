@@ -1,6 +1,6 @@
 import generate from "babel-generator";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 /**
  * Given a compiled bundle object, return an array of one or more bundles with

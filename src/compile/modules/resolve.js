@@ -1,4 +1,4 @@
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 import resolve from "../../resolve";
 
 

@@ -1,4 +1,4 @@
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 /**
  * Given a bundle, determine its ultimate output filepath by replacing

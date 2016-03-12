@@ -2,7 +2,7 @@ import fs from "fs";
 
 import Promise from "bluebird";
 
-import pluggable from "../../pluggable";
+import { pluggable } from "pluggable";
 
 
 const readFilePromise = Promise.promisify(fs.readFile, fs);

@@ -1,9 +1,8 @@
-import fs from "fs";
 import path from "path";
+
 import _ from "lodash";
 
-
-const WINDOWS = process.platform === "win32";
+import { isFile, isDir, getPossiblePaths } from "./util/file";
 
 
 function select (items, fn) {
@@ -12,18 +11,6 @@ function select (items, fn) {
     if (result) { return result; }
   }
   return null;
-}
-
-function isFile (absPath) {
-  let stat;
-  try { stat = fs.statSync(absPath); } catch (e) { return false; }
-  return stat.isFile() || stat.isFIFO();
-}
-
-function isDir (absPath) {
-  let stat;
-  try { stat = fs.statSync(absPath); } catch (e) { return false; }
-  return stat.isDirectory();
 }
 
 function resolveFile (absPath, extensions) {
@@ -51,21 +38,6 @@ function resolveDir (absPath, extensions) {
 
   const fallback = path.join(absPath, "index.js");
   return isFile(fallback) && fallback || null;
-}
-
-function getNodeModulesPaths (contextPath) {
-  const prefix = WINDOWS && /^[A-Za-z]:[\/\\]/.test(contextPath) ?
-    contextPath.slice(0, 3) :
-    "/";
-  const nestedDirs = contextPath.split(WINDOWS ? /[\/\\]+/ : /\/+/);
-
-  return _.chain(0)
-    .range(nestedDirs.length + 1)
-    .map(idx => {
-      const pathPieces = nestedDirs.slice(0, nestedDirs.length - idx);
-      return path.resolve(prefix, ...pathPieces, "node_modules");
-    })
-    .value();
 }
 
 function resolveSimple (requireStr, contextPath, nsRoot, extensions) {
@@ -116,7 +88,7 @@ export default function resolve (requireStr, contextPath, ns, nsRoot, extensions
   if (/^(\.\.?)?\//.test(requireStr)) { return null; }
 
   ns = requireStr.split("/")[0];
-  const resolvedPath = select(searchPaths.concat(getNodeModulesPaths(contextPath)), searchPath => {
+  const resolvedPath = select(searchPaths.concat(getPossiblePaths(contextPath, "node_modules")), searchPath => { // eslint-disable-line max-len
     const searchCandidate = path.join(searchPath, requireStr);
     nsRoot = path.join(searchPath, ns);
     return resolveFile(searchCandidate, extensions) || resolveDir(searchCandidate, extensions);

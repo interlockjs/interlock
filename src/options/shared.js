@@ -17,6 +17,7 @@ export const shared = [{
   flagType: "count",
   flags: ["verbose", "v"],
   flagTransform: getLogger,
+  cmdOpts: { global: true },
 
   description: {
     short: "Compiler verbosity (sent to STDOUT).",

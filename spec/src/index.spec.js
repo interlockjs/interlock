@@ -21,47 +21,47 @@ describe("src/index", () => {
 
       // Invalid options.entry
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: true })); })
-        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'entry': true.");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: 1 })); })
-        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'entry': 1.");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { entry: null })); })
-        .to.throw(Error, "child \"entry\" fails because [\"entry\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'entry': null.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
           { entry: null },
           { entry: {"fakepath": {}} }
         );
         new Interlock(invalidConfig);
-      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
-        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      }).to.throw(Error, "Received invalid value for option 'entry': {\"fakepath\":{}}.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
           { entry: null },
           { entry: {"fakepath": {dest: true}} }
         );
         new Interlock(invalidConfig);
-      }).to.throw(Error, "child \"entry\" fails because [child \"fakepath\" fails because " +
-        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      }).to.throw(
+        Error,
+        "Received invalid value for option 'entry': {\"fakepath\":{\"dest\":true}}."
       );
 
       // Invalid options.split
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: true })); })
-        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'split': true.");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: 1 })); })
-        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'split': 1.");
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: null })); })
-        .to.throw(Error, "child \"split\" fails because [\"split\" must be an object]");
+        .to.throw(Error, "Received invalid value for option 'split': null.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig, { split: {"fakepath": {}} });
         new Interlock(invalidConfig);
-      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
-        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" is required]]]");
+      }).to.throw(Error, "Received invalid value for option \'split\': {\"fakepath\":{}}.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
           { split: {"fakepath": {dest: true}} });
         new Interlock(invalidConfig);
-      }).to.throw(Error, "child \"split\" fails because [child \"fakepath\" fails because " +
-        "[\"fakepath\" must be a string, child \"dest\" fails because [\"dest\" must be a string]]]"
+      }).to.throw(
+        Error,
+        "Received invalid value for option \'split\': {\"fakepath\":{\"dest\":true}}."
       );
 
       // Conditional options.split || options.entry requirement
@@ -98,26 +98,27 @@ describe("src/index", () => {
         .to.throw(Error);
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { srcRoot: null })); })
         .to.throw(Error);
-      expect(() => {
-        const invalidConfig = _.merge({}, minimalValidConfig);
-        delete invalidConfig.srcRoot;
-        new Interlock(invalidConfig);
-      }).to.throw(Error);
     });
 
     it("fills in default values when not passed in", function () {
       const ilk = new Interlock(minimalValidConfig);
+
+      // Can't do deep-equal comparison on function objects.
+      delete ilk.options.log;
 
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { dest: "bundle.js" }},
         split: {},
         globalName: "__interlock__",
         srcRoot: path.join(__dirname, "/../.."),
-        context: path.join(__dirname, "../.."),
         destRoot: path.join(__dirname, "../..", "dist"),
         extensions: [ ".js", ".jsx", ".es6" ],
         ns: "interlock",
-        implicitBundleDest: "[setHash].js"
+        implicitBundleDest: "[setHash].js",
+        includeComments: false,
+        plugins: [],
+        pretty: false,
+        sourceMaps: false
       });
     });
 
@@ -132,6 +133,9 @@ describe("src/index", () => {
         implicitBundleDest: "custom-dest"
       });
 
+      // Can't do deep-equal comparison on function objects.
+      delete ilk.options.log;
+
       expect(ilk.options).to.deep.equal({
         entry: { "./index.js": { "dest": "bundle.js" } },
         split: {},
@@ -141,7 +145,11 @@ describe("src/index", () => {
         destRoot: "custom destRoot",
         extensions: [".custom"],
         ns: "custom-namespace",
-        implicitBundleDest: "custom-dest"
+        implicitBundleDest: "custom-dest",
+        includeComments: false,
+        plugins: [],
+        pretty: false,
+        sourceMaps: false
       });
     });
   });

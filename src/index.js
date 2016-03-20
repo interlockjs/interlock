@@ -4,11 +4,10 @@ import * as fs from "fs";
 import { watch } from "chokidar";
 import { sync as mkdirp } from "mkdirp";
 import _ from "lodash";
-import Joi from "joi";
 
 import compile from "./compile";
+import * as options from "./options";
 import { entries } from "./util/object";
-import { interlockConstructorInput } from "./schemas/index";
 import compileModules from "./compile/modules/compile";
 
 
@@ -27,55 +26,44 @@ function normalizeEntryPoints (entryPoints) {
 /**
  * The entry point for the Interlock application
  *
- * @param   {Object}    options               Compilation options.
+ * @param   {Object}    opts               Compilation options.
  *
- * @param   {Object}    options.entry         A hash where keys are input files, relative to
- *                                            srcRoot and treated as entry points, and values
- *                                            are entry definitions.  Entry definitions can be
- *                                            string paths relative to destRoot, or objects with
- *                                            `dest` value and other config.
- * @param   {Object}    options.split         A hash where keys are input files, relative to
- *                                            srcRoot, and values are split definitions.  Split
- *                                            definitions can be string paths relative to
- *                                            destRoot, or objects with `dest` value and other
- *                                            config.
- * @param   {String}    options.srcRoot       The absolute path from which all relative source
- *                                            paths will be resolved.
- * @param   {String}    options.destRoot      The absolute path from which all relative destination
- *                                            paths will be resolved.
- * @param   {String}    options.context       Interlock's working directory.
- * @param   {Array}     options.extensions    The list of file extentions that Interlock will
- *                                            automatically append to require-strings when
- *                                            attempting to resolve that require-string.
- * @param   {String}    options.ns            The namespace for the build.  If omitted, the value
- *                                            will be borrowed from `name` in package.json.
- * @param   {Boolean}   options.sourceMaps    Emit source maps with the bundles.
- * @param   {String}    options.globalName    Name to use for run-time global variable.
- * @param   {Array}     options.plugins       An Array of interlock Plugins.
- * @param   {Boolean}   options.includeComments     Include comments in the compiled bundles
- * @param   {String}    options.implicitBundleDest  The location to emit shared dependency bundles
+ * @param   {Object}    opts.entry         A hash where keys are input files, relative to
+ *                                         srcRoot and treated as entry points, and values
+ *                                         are entry definitions.  Entry definitions can be
+ *                                         string paths relative to destRoot, or objects with
+ *                                         `dest` value and other config.
+ * @param   {Object}    opts.split         A hash where keys are input files, relative to
+ *                                         srcRoot, and values are split definitions.  Split
+ *                                         definitions can be string paths relative to
+ *                                         destRoot, or objects with `dest` value and other
+ *                                         config.
+ * @param   {String}    opts.srcRoot       The absolute path from which all relative source
+ *                                         paths will be resolved.
+ * @param   {String}    opts.destRoot      The absolute path from which all relative destination
+ *                                         paths will be resolved.
+ * @param   {String}    opts.context       Interlock's working directory.
+ * @param   {Array}     opts.extensions    The list of file extentions that Interlock will
+ *                                         automatically append to require-strings when
+ *                                         attempting to resolve that require-string.
+ * @param   {String}    opts.ns            The namespace for the build.  If omitted, the value
+ *                                         will be borrowed from `name` in package.json.
+ * @param   {Boolean}   opts.sourceMaps    Emit source maps with the bundles.
+ * @param   {String}    opts.globalName    Name to use for run-time global variable.
+ * @param   {Array}     opts.plugins       An Array of interlock Plugins.
+ * @param   {Boolean}   opts.includeComments     Include comments in the compiled bundles
+ * @param   {String}    opts.implicitBundleDest  The location to emit shared dependency bundles
  *
  * @returns {void}
  */
-export default function Interlock (options) {
-  Joi.validate(options || {}, interlockConstructorInput, (err, value) => {
-    if (err) { throw err; }
+export default function Interlock (opts) {
+  opts = options.validate(opts, options.compile);
+  opts = options.validate(opts, options.shared);
 
-    // It is not possible to extend joi though it is an open discussion for a future version
-    // https://github.com/hapijs/joi/issues/577
-    let packageJSON;
-    try {
-      packageJSON = require(path.join(value.srcRoot, "./package.json"));
-    } catch (e) {
-      throw new Error("Invalid srcRoot - cannot find package.json");
-    }
-
-    this.options = Object.assign(value, {
-      globalName: "__interlock__",
-      ns: value.ns || packageJSON.name,
-      entry: normalizeEntryPoints(value.entry),
-      split: normalizeEntryPoints(value.split)
-    });
+  this.options = Object.assign({}, opts, {
+    globalName: "__interlock__",
+    entry: normalizeEntryPoints(opts.entry),
+    split: normalizeEntryPoints(opts.split)
   });
 }
 

@@ -72,7 +72,7 @@ function resolveSimple (requireStr, contextPath, nsRoot, extensions) {
  *
  * @returns {null}               Will return null if resolve fails.
  */
-export default function resolve (requireStr, contextPath, ns, nsRoot, extensions, searchPaths = []) { // eslint-disable-line max-len
+export default function resolve (requireStr, contextPath, ns, nsRoot, extensions, searchPaths = []) { // eslint-disable-line max-len,max-params
   const resolvedSimple = resolveSimple(requireStr, contextPath, nsRoot, extensions);
 
   if (resolvedSimple) {

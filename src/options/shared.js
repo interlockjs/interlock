@@ -11,11 +11,13 @@ function getLogger (verbosity) {
 
 export const shared = [{
   key: "log",
-  flagType: "count",
   default: () => getLogger(0),
   schema: val => typeof val === "object",
+
+  flagType: "count",
   flags: ["verbose", "v"],
   flagTransform: getLogger,
+
   description: {
     short: "Compiler verbosity (sent to STDOUT).",
     full: `TODO`

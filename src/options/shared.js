@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-function getLogger (verbosity) {
+export function getLogger (verbosity) {
   return {
-    error: (...msgs) => console.log(...msgs),
-    warn: verbosity >= 1 ? (...msgs) => console.log(...msgs) : () => {},
-    info: verbosity >= 2 ? (...msgs) => console.log(...msgs) : () => {},
-    debug: verbosity >= 3 ? (...msgs) => console.log(...msgs) : () => {}
+    error: (...msgs) => console.log(...msgs) || true,
+    warn: verbosity >= 1 ? (...msgs) => console.log(...msgs) || true : () => false,
+    info: verbosity >= 2 ? (...msgs) => console.log(...msgs) || true: () => false,
+    debug: verbosity >= 3 ? (...msgs) => console.log(...msgs) || true: () => false
   };
 }
 /* eslint-enable no-console */

@@ -2,7 +2,7 @@ import path from "path";
 
 
 export { compile } from "./compile";
-export { shared } from "./shared";
+export { shared, getLogger } from "./shared";
 
 
 export function loadConfig (configPath) {

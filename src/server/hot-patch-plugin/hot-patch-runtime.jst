@@ -1,0 +1,12 @@
+var updates = new EventSource("/ilk/events");
+updates.addEventListener("my-event", ev => {
+  console.log(ev.type, JSON.parse(ev.data));
+});
+
+function update (moduleHash, functionString) {
+  var module = r.modules[moduleHash];
+
+  if (module.exports) { delete module.exports }
+  module.fn = new Function ("require", "module", "exports", functionString);
+
+}

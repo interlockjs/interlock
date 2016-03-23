@@ -17,6 +17,11 @@ options.buildArgs(y, options.shared)
     "Transform source files to destination JS.",
     require("./ilk-build")
   )
+  .command(
+    "server",
+    "Run a development server with live-updated assets.",
+    require("./ilk-server")
+  )
 
   .demand(1, "You must specify an Interlock command.")
 

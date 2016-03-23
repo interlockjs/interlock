@@ -1,3 +1,6 @@
+import _ from "lodash";
+
+
 /* eslint-disable no-console */
 export function getLogger (verbosity) {
   return {
@@ -12,7 +15,7 @@ export function getLogger (verbosity) {
 export const shared = [{
   key: "log",
   default: () => getLogger(0),
-  schema: val => typeof val === "object",
+  schema: _.isObject,
 
   flagType: "count",
   flags: ["verbose", "v"],
@@ -21,6 +24,17 @@ export const shared = [{
 
   description: {
     short: "Compiler verbosity (sent to STDOUT).",
+    full: `TODO`
+  }
+}, {
+  key: "config",
+
+  flagType: "string",
+  flags: ["config", "c"],
+  cmdOpts: { global: true },
+
+  description: {
+    short: "Path to Interlock config file.",
     full: `TODO`
   }
 }];

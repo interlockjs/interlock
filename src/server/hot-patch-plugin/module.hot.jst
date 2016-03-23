@@ -1,0 +1,68 @@
+// require: function (moduleHash) {
+//     var module = r.modules[moduleHash];
+
+module.hot = {
+  status: "idle"
+};
+
+moduleObj.hot = {
+  accept: function (a, b) {
+    module.hot.accept = {};
+    if (a && b) {
+      module.hot.accept.dependencies = [].concat(a);
+      module.hot.accept.callback = b;
+    } else if (a) {
+      module.hot.accept.errHandler = a;
+    }
+  },
+
+  decline: function (dependencies) {
+    module.hot.decline = {};
+    if (dependencies) {
+      // There could be a single dependency expressed as a string literal.
+      module.hot.decline.dependencies = [].concat(dependencies);
+    }
+  },
+
+  dispose: function (callback) {
+    module.hot.dispose = { callback };
+  },
+
+  removeDisposeHandler: function (callback) {
+    if (module.hot.dispose === callback) {
+      module.hot.dispose === null;
+    }
+  },
+
+  check: function (autoApply, callback) {
+    // todo
+  },
+
+  apply: function (options, callback) {
+    // todo
+  },
+
+  status: function (cb) {
+    if (!cb) { return module.hot.status; }
+    module.hot.onStatusChange = cb;
+  },
+
+  removeStatusHandler: function (cb) {
+    if (module.hot.onStatusChange === cb) {
+      module.hot.onStatusChange = null;
+    }
+  }
+};
+
+moduleObj.addDisposeHandler = moduleObj.dispose;
+moduleObj.addStatusHandler = moduleObj.status;
+
+
+// check([autoApply], callback: (err: Error, outdatedModules: Module[]) => void
+// apply([options], callback: (err: Error, outdatedModules: Module[]) => void
+// status() => string  - returns one of:
+//   idle, check, watch, watch-delay, prepare, ready, dispose, apply, abort or fail.
+// status(callback: (status: string) => void) => void
+// addStatusHandler(callback: (status: string) => void) => void
+// removeStatusHandler(callback: (status: string) => void) => void
+// 

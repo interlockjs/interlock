@@ -32,37 +32,36 @@ moduleObj.hot = {
     if (module.hot.dispose === callback) {
       module.hot.dispose === null;
     }
-  },
-
-  check: function (autoApply, callback) {
-    // todo
-  },
-
-  apply: function (options, callback) {
-    // todo
-  },
-
-  status: function (cb) {
-    if (!cb) { return module.hot.status; }
-    module.hot.onStatusChange = cb;
-  },
-
-  removeStatusHandler: function (cb) {
-    if (module.hot.onStatusChange === cb) {
-      module.hot.onStatusChange = null;
-    }
   }
+
+  // check: function (autoApply, callback) {
+  //   // todo
+  // },
+
+  // apply: function (options, callback) {
+  //   // todo
+  // },
+
+  // status: function (cb) {
+  //   if (!cb) { return module.hot.status; }
+  //   module.hot.onStatusChange = cb;
+  // },
+
+  // removeStatusHandler: function (cb) {
+  //   if (module.hot.onStatusChange === cb) {
+  //     module.hot.onStatusChange = null;
+  //   }
+  // }
 };
 
 moduleObj.addDisposeHandler = moduleObj.dispose;
 moduleObj.addStatusHandler = moduleObj.status;
 
-
-// check([autoApply], callback: (err: Error, outdatedModules: Module[]) => void
-// apply([options], callback: (err: Error, outdatedModules: Module[]) => void
-// status() => string  - returns one of:
-//   idle, check, watch, watch-delay, prepare, ready, dispose, apply, abort or fail.
-// status(callback: (status: string) => void) => void
-// addStatusHandler(callback: (status: string) => void) => void
-// removeStatusHandler(callback: (status: string) => void) => void
-// 
+// TODO: Add management API.
+//   - check([autoApply], callback: (err: Error, outdatedModules: Module[]) => void
+//   - apply([options], callback: (err: Error, outdatedModules: Module[]) => void
+//   - status() => string  - returns one of:
+//       idle, check, watch, watch-delay, prepare, ready, dispose, apply, abort or fail.
+//   - status(callback: (status: string) => void) => void
+//   - addStatusHandler(callback: (status: string) => void) => void
+//   - removeStatusHandler(callback: (status: string) => void) => void

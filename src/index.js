@@ -126,6 +126,8 @@ Interlock.prototype.watch = function (cb, opts = {}) {
   }
 
   watcher.on("change", changedFilePath => {
+    cb({ change: changedFilePath }); // eslint-disable-line callback-return
+
     for (const modulePath of Object.keys(absPathToModuleHash)) { watcher.unwatch(modulePath); }
 
     getRefreshedAsset(lastCompilation, changedFilePath)

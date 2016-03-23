@@ -6,7 +6,7 @@ import _ from "lodash";
 export const server = [{
   key: "port",
   default: () => 1337,
-  schema: portNum => _.isInteger(portNum) && portNum > 0,
+  schema: portNum => Number.isInteger(portNum) && portNum > 0,
 
   flagType: "number",
   flags: ["port"],
@@ -18,7 +18,7 @@ export const server = [{
 }, {
   key: "retryTimeout",
   default: () => 3000,
-  schema: timeout => _.isInteger(timeout) && timeout > 0,
+  schema: timeout => Number.isInteger(timeout) && timeout > 0,
 
   flagType: "number",
   flags: ["retry-timeout"],
@@ -53,5 +53,17 @@ export const server = [{
   description: {
     short: "Pairs of URL patterns and the local filepaths they should resolve to.",
     full: `TODO`
+  }
+}, {
+  key: "hot",
+  default: () => false,
+  schema: _.isBoolean,
+
+  flagType: "boolean",
+  flags: ["hot"],
+
+  description: {
+    short: "Enable hot-reloading of client modules.",
+    long: `TODO`
   }
 }];

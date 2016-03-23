@@ -1,5 +1,11 @@
 var updates = new EventSource("/ilk/events");
-updates.addEventListener("my-event", ev => {
+updates.addEventListener("recompiling", ev => {
+  console.log(ev.type, JSON.parse(ev.data));
+});
+updates.addEventListener("update", ev => {
+  console.log(ev.type, JSON.parse(ev.data));
+});
+updates.addEventListener("compilation", ev => {
   console.log(ev.type, JSON.parse(ev.data));
 });
 
@@ -8,5 +14,4 @@ function update (moduleHash, functionString) {
 
   if (module.exports) { delete module.exports }
   module.fn = new Function ("require", "module", "exports", functionString);
-
 }

@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-import { cheap as traverseCheap } from "babel-traverse";
+import traverse from "babel-traverse";
 import { parse } from "babylon";
 
 
@@ -11,12 +11,10 @@ const moduleHotStr = fs.readFileSync(path.join(__dirname, "module.hot.jst"), "ut
 const moduleHot = parse(moduleHotStr, {}).program.body;
 
 
-export default (override, transform) => {
+export default function (override, transform) {
   transform("constructRuntime", runtimeBody => {
-    console.log(runtimeBody);
-    process.exit(1);
-
-    traverseCheap(runtimeBody, node => {
+    // Attach `hot` property to module in `require`.
+    traverse.cheap(runtimeBody, node => {
       if (
         node.type === "ObjectProperty" &&
         node.key.name === "require"
@@ -31,6 +29,7 @@ export default (override, transform) => {
       }
     });
 
+    // Attach the hot-patch run-time to the end of the run-time body.
     return runtimeBody.concat(hotPatchRuntime);
   });
-};
+}

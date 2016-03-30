@@ -205,7 +205,7 @@ var r = window[GLOBAL_NAME] = window[GLOBAL_NAME] || { // eslint-disable-line no
    */
   require: function (moduleHash) {
     var module = r.modules[moduleHash];
-    if (module.exports) { return module.exports; }
+    if ("exports" in module) { return module.exports; }
 
     var moduleObj = { exports: {} };
     module.fn.call(window, r.require.bind(r), moduleObj, moduleObj.exports);

@@ -26,7 +26,20 @@ export default pluggable(function parseModule (module) {
       sourceFilename: sourcePath,
       // See: https://github.com/babel/babel/tree/master/packages/babylon#plugins
       plugins: [
-        "jsx"
+        "jsx",
+        "flow",
+        "asyncFunctions",
+        "classConstructorCall",
+        "doExpressions",
+        "trailingFunctionCommas",
+        "objectRestSpread",
+        "decorators",
+        "classProperties",
+        "exportExtensions",
+        "exponentiationOperator",
+        "asyncGenerators",
+        "functionBind",
+        "functionSent"
       ]
     }).program;
 

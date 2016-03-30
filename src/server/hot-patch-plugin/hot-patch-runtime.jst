@@ -9,9 +9,15 @@ updates.addEventListener("compilation", ev => {
   console.log(ev.type, JSON.parse(ev.data));
 });
 
-function update (moduleHash, functionString) {
-  var module = r.modules[moduleHash];
+function update (newId, oldId, functionString) {
+  delete r.modules[oldId].exports;
+  r.modules[oldId].fn = function (require, module) { module.exports = require(newId); };
+
+  var module = r.modules[newId];
 
   if (module.exports) { delete module.exports }
   module.fn = new Function ("require", "module", "exports", functionString);
+
+  // trigger hot updates for anything that depends on oldId 
+  // trigger module.hot.accept callback for oldId (??? or newId ???)
 }

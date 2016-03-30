@@ -1,3 +1,5 @@
+import generate from "babel-generator";
+
 import Interlock from "..";
 import * as options from "../options";
 import { createServer } from "../server/server";
@@ -46,7 +48,7 @@ export const handler = argv => {
 
     let resume = pause();
     ilk.watch(buildEvent => {
-      const { change, patchModules, compilation } = buildEvent;
+      const { change, patchModules, compilation, oldHash } = buildEvent;
 
       if (change) {
         resume = pause();
@@ -55,8 +57,16 @@ export const handler = argv => {
       }
 
       if (patchModules) {
-        console.log("updates:", patchModules);
-        notify("update", { update: true });
+        const updates = patchModules.map(module => {
+          const { code } = generate(module.ast, {
+            comments: !!opts.includeComments,
+            compact: !opts.pretty,
+            quotes: "double"
+          }, { [module.uri]: module.rawSource });
+          return { code, oldHash, hash: module.hash, filename: "UNKNOWN", stuff: true };
+        });
+
+        notify("update", updates);
       } else if (compilation) {
         const newAssets = Object.keys(compilation.bundles).reduce((assets, filename) => {
           assets["/" + filename] = compilation.bundles[filename].raw;

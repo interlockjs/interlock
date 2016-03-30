@@ -130,13 +130,14 @@ Interlock.prototype.watch = function (cb, opts = {}) {
 
     for (const modulePath of Object.keys(absPathToModuleHash)) { watcher.unwatch(modulePath); }
 
+    const oldHash = absPathToModuleHash[changedFilePath];
     getRefreshedAsset(lastCompilation, changedFilePath)
       .then(refreshedAsset => {
         delete lastCompilation.cache.modulesByAbsPath[changedFilePath];
         return compileModules.call(lastCompilation, [refreshedAsset]);
       })
       .then(patchModules => {
-        cb({ patchModules, changedFilePath }); // eslint-disable-line callback-return
+        cb({ patchModules, changedFilePath, oldHash }); // eslint-disable-line callback-return
         return compile(lastCompilation.opts).then(onCompileComplete);
       });
   });

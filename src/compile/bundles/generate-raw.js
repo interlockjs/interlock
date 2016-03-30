@@ -30,7 +30,14 @@ export default pluggable(function generateRawBundles (bundle) {
     return hash;
   }, {});
 
-  const { code } = generate(bundle.ast, {
+  const ast = bundle.ast.type === "Program" || bundle.ast.type === "File" ?
+    bundle.ast :
+    { type: "Program", body: [].concat(bundle.ast) };
+
+  // TODO: Re-add sourcemaps output that was removed with
+  //       533af4aedca1e2e5699a97a5d9566cd66701bbdf
+
+  const { code } = generate(ast, {
     comments: !!this.opts.includeComments,
     compact: !this.opts.pretty,
     quotes: "double"

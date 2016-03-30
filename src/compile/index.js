@@ -1,8 +1,7 @@
 import _ from "lodash";
 import Promise from "bluebird";
 
-import { pluggable } from "pluggable";
-import getCompilationContext from "./get-context";
+import { pluggable, getBaseContext } from "pluggable";
 import { constructBundleAst } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
 import generateModuleMaps from "./modules/generate-maps";
@@ -116,5 +115,10 @@ const compile = pluggable(function compile () {
 
 
 export default function (opts) {
-  return compile.call(getCompilationContext(opts));
+  return compile.call(getBaseContext({
+    cache: {
+      modulesByAbsPath: Object.create(null)
+    },
+    opts: Object.freeze(opts)
+  }, opts.plugins));
 }

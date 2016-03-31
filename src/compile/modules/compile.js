@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import path from "path";
 
 import _ from "lodash";
@@ -21,8 +22,8 @@ import updateRequires from "./update-requires";
  *
  * @return {Promise}         Resolves to compiled module.
  */
-const _compileModule = pluggable(function _compileModule () {
-  return compileModule.apply(this, arguments); // eslint-disable-line no-use-before-define
+const compileModuleR = pluggable(function compileModuleR () {
+  return compileModule.apply(this, arguments);
 });
 
 /**
@@ -40,7 +41,7 @@ const generateDependencies = pluggable(function generateDependencies (module) {
   // that reference and compile the dependency (recursively).
   const getDependency = (requireStr, contextPath, contextNs, contextNsRoot) => {
     return this.resolveModule(requireStr, contextPath, contextNs, contextNsRoot)
-      .then(dependency => this._compileModule(dependency))
+      .then(dependency => this.compileModuleR(dependency))
       .then(childModule => [requireStr, childModule]);
   };
 
@@ -69,7 +70,7 @@ const generateDependencies = pluggable(function generateDependencies (module) {
       // they resolved to.
       dependenciesByInternalRef: _.object(depTuples)
     }));
-}, { resolveModule, _compileModule });
+}, { resolveModule, compileModuleR });
 
 /**
  * Given an unprocess module that has been loaded from disk, return a promise

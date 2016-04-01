@@ -53,6 +53,8 @@ export const setModuleType = pluggable(function setModuleType (module) {
  * @return {Object}           Module seed plus `rawSource` and `type` properties.
  */
 const loadModule = pluggable(function loadModule (module) {
+  if (module.type) { return module; }
+
   return this.readSource(module)
     .then(this.setModuleType);
 }, { readSource, setModuleType });

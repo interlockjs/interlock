@@ -455,7 +455,7 @@ Given a module seed, read the module from disk and determine its type.
 | Return value |  | Object | Module seed plus `rawSource` and `type` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L55-L58).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L55-L60).
 
 ## parseModule
 

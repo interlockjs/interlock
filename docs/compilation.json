@@ -339,7 +339,7 @@
                     ],
                     "name": "loadModule",
                     "fnStart": 55,
-                    "fnEnd": 58,
+                    "fnEnd": 60,
                     "doc": "*\n * Given a module seed, read the module from disk and determine its type.\n *\n * @param  {Object}  module   Module seed.\n *\n * @return {Object}           Module seed plus `rawSource` and `type` properties.\n ",
                     "parsedDoc": {
                       "tags": [
@@ -455,7 +455,7 @@
                       "size": 1
                     }
                   ],
-                  "markdown": "## loadModule\n  \nGiven a module seed, read the module from disk and determine its type.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module seed. |\n| Return value |  | Object | Module seed plus `rawSource` and `type` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L55-L58).\n\n  "
+                  "markdown": "## loadModule\n  \nGiven a module seed, read the module from disk and determine its type.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module seed. |\n| Return value |  | Object | Module seed plus `rawSource` and `type` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/load.js#L55-L60).\n\n  "
                 },
                 {
                   "name": "parseModule",

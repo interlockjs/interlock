@@ -184,6 +184,29 @@ export const compile = [{
     short: "Plugins array.  Should take the form of a JS array.",
     full: `TODO`
   }
+}, {
+  "key": "multiprocess",
+  default: () => false,
+  schema: _.isBoolean,
+
+  flags: ["multiprocess"],
+  flagType: "boolean",
+
+  description: {
+    short: "Distribute work over multiple processors.",
+    full: `TODO`
+  }
+}, {
+  "key": "workers",
+  schema: val => Number.isInteger(val) && val > 0,
+
+  flags: ["workers"],
+  flagType: "number",
+
+  description: {
+    short: "Number of processes to use (implies multiprocess).",
+    full: `TODO`
+  }
 }];
 
 compile.or = [

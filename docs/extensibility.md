@@ -28,7 +28,7 @@ object will have three key/value pairs:
 | Return value |  | Promise | Compilation object. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L83-L95).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L87-L99).
 
 ## compile
 
@@ -43,7 +43,7 @@ to disk or served over HTTP.
 | Return value |  | Promise | Resolves to an object with three properties: `bundles`, `opts`, and `cache`. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L106-L114).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L110-L118).
 
 ## compileModule
 
@@ -105,7 +105,7 @@ the same bundle with generated AST.
 | Return value |  | Object | Bundle with new `ast` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L35-L43).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L39-L47).
 
 ## constructBundleAst
 
@@ -275,7 +275,7 @@ may output an array of raw bundles.
 | Return value |  | Array | Bundles with new `raw` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L61-L69).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L65-L73).
 
 ## generateBundles
 
@@ -394,7 +394,7 @@ to the destination path of the bundles that contains them.
 | Return value |  | Object | moduleHash-to-URL lookup dictionary. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L19-L24).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L23-L28).
 
 ## hashBundle
 

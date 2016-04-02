@@ -14,8 +14,8 @@ const WORKER_PATH = require.resolve("./worker");
 export default function (opts = {}) {
   const farmOpts = {
     maxCallsPerWorker: Infinity,
-    maxConcurrentWorkers: opts.cpus && opts.cpus < MAX_PROCESSES ?
-      opts.cpus :
+    maxConcurrentWorkers: opts.workers && opts.workers < MAX_PROCESSES ?
+      opts.workers :
       MAX_PROCESSES,
     maxConcurrentCallsPerWorker: Infinity,
     maxConcurrentCalls: Infinity,
@@ -43,6 +43,7 @@ export default function (opts = {}) {
         WORKER_PATH,
         MULTIPROCESS_OVERRIDES.map(pluggableName => `${pluggableName}MP`)
       );
+
       return override.CONTINUE;
     });
 

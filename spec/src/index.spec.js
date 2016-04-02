@@ -116,6 +116,7 @@ describe("src/index", () => {
         ns: "interlock",
         implicitBundleDest: "[setHash].js",
         includeComments: false,
+        multiprocess: false,
         plugins: [],
         pretty: false,
         sourceMaps: false
@@ -147,6 +148,7 @@ describe("src/index", () => {
         ns: "custom-namespace",
         implicitBundleDest: "custom-dest",
         includeComments: false,
+        multiprocess: false,
         plugins: [],
         pretty: false,
         sourceMaps: false

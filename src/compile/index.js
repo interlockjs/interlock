@@ -2,11 +2,15 @@ import _ from "lodash";
 import Promise from "bluebird";
 
 import { pluggable, getBaseContext } from "pluggable";
+
 import { constructBundleAst } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
 import generateModuleMaps from "./modules/generate-maps";
 import generateBundles from "./bundles/generate";
 import generateRawBundles from "./bundles/generate-raw";
+
+import multiprocessPlugin from "../optimizations/multiprocess";
+
 
 /**
  * Given an array of bundles, generate a lookup dictionary of module hashes
@@ -115,10 +119,18 @@ const compile = pluggable(function compile () {
 
 
 export default function (opts) {
+  const plugins = [].concat(opts.plugins);
+
+  if (opts.multiprocess || opts.workers) {
+    plugins.push(multiprocessPlugin({
+      workers: opts.workers
+    }));
+  }
+
   return compile.call(getBaseContext({
     cache: {
       modulesByAbsPath: Object.create(null)
     },
     opts: Object.freeze(opts)
-  }, opts.plugins));
+  }, plugins));
 }

@@ -19,6 +19,6 @@ module.exports = {
   plugins: [],
 
   babelConfig: {
-    plugins: [require("./example-plugin")]
+    plugins: [require.resolve("./example-plugin")]
   }
 };

@@ -34,7 +34,12 @@ function hashBundle (bundle) {
   const update = shasum.update.bind(shasum);
 
   return this.updateBundleHash(update, bundle)
-    .then(() => Object.assign({}, bundle, { hash: shasum.digest() }));
+    .then(() => Object.assign({}, bundle, {
+      hash: shasum.digest("base64")
+        .replace(/\//g, "_")
+        .replace(/\+/g, "-")
+        .replace(/=+$/, "")
+    }));
 }
 
 export default pluggable(hashBundle, { updateBundleHash });

@@ -1197,7 +1197,7 @@
           "name": "hashBundle",
           "node": {
             "path": "src/compile/bundles/hash.js",
-            "pluggableLine": 40,
+            "pluggableLine": 45,
             "edges": [
               "updateBundleHash"
             ],
@@ -1206,7 +1206,7 @@
             ],
             "name": "hashBundle",
             "fnStart": 27,
-            "fnEnd": 38,
+            "fnEnd": 43,
             "doc": "*\n * Given an otherwise prepared bundle, generate a hash for that bundle and resolve\n * to that same bundle with a new `hash` property.\n *\n * @param   {Object} bundle  Unhashed bundle.\n *\n * @returns {Object}         Bundle plus new `hash` property, a 40-character SHA1\n *                           that uniquely identifies the bundle.\n ",
             "parsedDoc": {
               "tags": [
@@ -1280,7 +1280,7 @@
               "size": 1
             }
           ],
-          "markdown": "## hashBundle\n  \nGiven an otherwise prepared bundle, generate a hash for that bundle and resolve\nto that same bundle with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Unhashed bundle. |\n| Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L40).\n      The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L38).\n\n  "
+          "markdown": "## hashBundle\n  \nGiven an otherwise prepared bundle, generate a hash for that bundle and resolve\nto that same bundle with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Unhashed bundle. |\n| Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L45).\n      The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L43).\n\n  "
         },
         {
           "name": "interpolateFilename",

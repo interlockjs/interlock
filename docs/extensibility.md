@@ -408,8 +408,8 @@ to that same bundle with a new `hash` property.
 | Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L40).
-The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L38).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L45).
+The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L43).
 
 ## hashModule
 

@@ -11,7 +11,7 @@ import { pluggable } from "pluggable";
 export default pluggable(function interpolateFilename (bundle) {
   let dest = bundle.dest
     .replace("[setHash]", bundle.setHash)
-    .replace("[bundleHash]", bundle.bundleHash);
+    .replace("[hash]", bundle.hash);
   if (bundle.module) {
     dest = dest.replace("[primaryModuleHash]", bundle.module.hash);
   }

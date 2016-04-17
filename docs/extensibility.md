@@ -348,7 +348,7 @@ bundle to result in a `.js` file and a `.map` file.
 | Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L41).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L48).
 
 ## getBundleSeeds
 
@@ -470,7 +470,7 @@ for non-JavaScript modules).
 | Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L37).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L50).
 
 ## partitionBundles
 

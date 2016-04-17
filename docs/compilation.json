@@ -468,7 +468,7 @@
                     ],
                     "name": "parseModule",
                     "fnStart": 17,
-                    "fnEnd": 37,
+                    "fnEnd": 50,
                     "doc": "*\n * Parse the source of the provided early-stage module.  Resolves to the same\n * module object, with additional `ast` and `sourcePath` properties (or equivalent\n * for non-JavaScript modules).\n *\n * @param  {Object}  module  Unparsed module with rawSource property.\n *\n * @return {Object}          Parsed module with new `ast` and `sourcePath` properties.\n ",
                     "parsedDoc": {
                       "tags": [
@@ -497,7 +497,7 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule object, with additional `ast` and `sourcePath` properties (or equivalent\nfor non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L37).\n\n  ",
+                  "markdown": "## parseModule\n  \nParse the source of the provided early-stage module.  Resolves to the same\nmodule object, with additional `ast` and `sourcePath` properties (or equivalent\nfor non-JavaScript modules).\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Unparsed module with rawSource property. |\n| Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L50).\n\n  ",
                   "size": 1
                 },
                 {
@@ -1972,7 +1972,7 @@
                 ],
                 "name": "generateRawBundles",
                 "fnStart": 23,
-                "fnEnd": 41,
+                "fnEnd": 48,
                 "doc": "*\n * Given a compiled bundle object, return an array of one or more bundles with\n * new `raw` property.  This raw property should be generated from the bundle's\n * AST or equivalent intermediate representation.\n *\n * This is a one-to-many transformation because it is quite possible for multiple\n * output files to result from a single bundle object.  The canonical example (and\n * default behavior of this function, when sourcemaps are enabled) is for one\n * bundle to result in a `.js` file and a `.map` file.\n *\n * @param  {Object} bundle    Bundle object without `raw` property.\n *\n * @return {Array}            Array of bundle objects.  At minimum, these bundle\n *                            objects should have a `raw` property - a string\n *                            representation of the file to be written to disk -\n *                            and a `dest` property - the relative filepath\n *                            of the file to be written to disk.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -2001,7 +2001,7 @@
                 }
               },
               "children": [],
-              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L41).\n\n  ",
+              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L48).\n\n  ",
               "size": 1
             }
           ],

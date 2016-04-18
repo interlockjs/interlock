@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 
+import { assign } from "lodash";
 import Promise from "bluebird";
 import * as t from "babel-types";
 import template from "../../util/template";
@@ -45,6 +46,14 @@ export const constructCommonModule = pluggable(
   }
 );
 
+function markAsEntry (moduleAst) {
+  return assign({}, moduleAst, {
+    properties: moduleAst.properties.concat(
+      t.objectProperty(t.identifier("entry"), t.booleanLiteral(true))
+    )
+  });
+}
+
 /**
  * Given an array of compiled modules, construct the AST for JavaScript that would
  * register those modules for consumption by the Interlock run-time.
@@ -55,9 +64,13 @@ export const constructCommonModule = pluggable(
  * @return {Array}                 Array of AST nodes to be emitted as JavaScript.
  */
 export const constructModuleSet = pluggable(
-  function constructModuleSet (modules, globalName) {
+  function constructModuleSet (modules, globalName, entryModuleHash) {
     return Promise.all(modules.map(module =>
       this.constructCommonModule(module.ast.body, module.dependencies)
+        .then(moduleAst => module.hash === entryModuleHash ?
+          markAsEntry(moduleAst) :
+          moduleAst
+        )
         .then(moduleAst => t.objectProperty(t.stringLiteral(module.hash), moduleAst))
     ))
       .then(moduleProps => moduleSetTmpl({
@@ -124,8 +137,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
   return Promise.all([
     opts.includeRuntime && this.constructRuntime(this.opts.globalName),
     opts.urls && this.constructRegisterUrls(opts.urls, this.opts.globalName),
-    opts.modules && this.constructModuleSet(opts.modules, this.opts.globalName),
-    opts.entryModuleHash && this.setLoadEntry(opts.entryModuleHash, this.opts.globalName)
+    opts.modules && this.constructModuleSet(opts.modules, this.opts.globalName, opts.entryModuleHash)
   ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
       [].concat(runtime, urls, moduleSet, loadEntry));

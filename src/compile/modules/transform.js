@@ -40,7 +40,7 @@ export default pluggable(function transformModule (module) {
     ast: true,
     plugins: [
       ...(babelUserConfig.plugins || []),
-      "transform-es2015-modules-commonjs",
+      require.resolve("babel-plugin-transform-es2015-modules-commonjs"),
       transformAmd(),
       getRequires
     ]

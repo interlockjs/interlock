@@ -58,8 +58,9 @@ function markAsEntry (moduleAst) {
  * Given an array of compiled modules, construct the AST for JavaScript that would
  * register those modules for consumption by the Interlock run-time.
  *
- * @param  {Array}  modules        Array of compiled modules.
- * @param  {String} globalName     Global variable name of the Interlock run-time.
+ * @param  {Array}   modules          Array of compiled modules.
+ * @param  {String}  globalName       Global variable name of the Interlock run-time.
+ * @param  {String}  entryModuleHash  Module-hash of the entry module.
  *
  * @return {Array}                 Array of AST nodes to be emitted as JavaScript.
  */
@@ -137,7 +138,11 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
   return Promise.all([
     opts.includeRuntime && this.constructRuntime(this.opts.globalName),
     opts.urls && this.constructRegisterUrls(opts.urls, this.opts.globalName),
-    opts.modules && this.constructModuleSet(opts.modules, this.opts.globalName, opts.entryModuleHash)
+    opts.modules && this.constructModuleSet(
+      opts.modules,
+      this.opts.globalName,
+      opts.entryModuleHash
+    )
   ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
       [].concat(runtime, urls, moduleSet, loadEntry));

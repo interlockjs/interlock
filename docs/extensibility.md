@@ -138,7 +138,7 @@ back into JavaScript code.
 | Return value |  | ASTnode | Single program AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L164-L169).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L181-L186).
 
 ## constructBundleBody
 
@@ -151,7 +151,7 @@ Builds body of output bundle, to be inserted into the IIFE.
 | Return value |  | Array | Body of bundle. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L123-L132).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L137-L149).
 
 ## constructCommonModule
 
@@ -167,7 +167,7 @@ equivalent.
 | Return value |  | ASTnode | Object expression AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L39-L46).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L40-L47).
 
 ## constructModuleSet
 
@@ -179,10 +179,11 @@ register those modules for consumption by the Interlock run-time.
 | --- | ---- | ---- | ----------- |
 | Parameter | **modules** | Array | Array of compiled modules. |
 | Parameter | **globalName** | String | Global variable name of the Interlock run-time. |
+| Parameter | **entryModuleHash** | String | Module-hash of the entry module. |
 | Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L57-L69).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L67-L83).
 
 ## constructRegisterUrls
 
@@ -196,7 +197,7 @@ Transforms a map of module-hashes-to-URLs to the AST equivalent.
 | Return value |  | ASTnode | Single AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L107-L114).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L121-L128).
 
 ## constructRuntime
 
@@ -209,7 +210,7 @@ Construct the guts of the Interlock run-time for inclusion in file output.
 | Return value |  | Array | Array of AST nodes. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L78-L82).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L92-L96).
 
 ## dedupeExplicit
 
@@ -574,7 +575,7 @@ Construct a statement to instruct the runtime to run the specified module.
 | Return value |  | ASTnode | Single AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L92-L97).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L106-L111).
 
 ## setModuleType
 

@@ -23,7 +23,6 @@ function getTemplate (templateName, transform) {
 const commonModuleTmpl = getTemplate("common-module", node => node.expression);
 const moduleSetTmpl = getTemplate("module-set");
 const runtimeTmpl = getTemplate("runtime");
-const loadModuleWhenReadyTmpl = getTemplate("load-module-when-ready");
 const registerUrlsTmpl = getTemplate("register-urls");
 const iifeTmpl = getTemplate("iife");
 
@@ -96,21 +95,6 @@ export const constructRuntime = pluggable(function constructRuntime (globalName)
 });
 
 /**
- * Construct a statement to instruct the runtime to run the specified module.
- *
- * @param  {String} moduleHash  Hash of the module to be required.
- * @param  {String} globalName  Global variable name of Interlock run-time.
- *
- * @return {ASTnode}            Single AST node.
- */
-export const setLoadEntry = pluggable(function setLoadEntry (moduleHash, globalName) {
-  return loadModuleWhenReadyTmpl({
-    GLOBAL_NAME: t.stringLiteral(globalName),
-    MODULE_HASH: t.stringLiteral(moduleHash)
-  });
-});
-
-/**
  * Transforms a map of module-hashes-to-URLs to the AST equivalent.
  *
  * @param  {Object} urls        Keys are module hashes, values are URL strings.
@@ -146,7 +130,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
   ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
       [].concat(runtime, urls, moduleSet, loadEntry));
-}, { constructModuleSet, constructRuntime, setLoadEntry, constructRegisterUrls });
+}, { constructModuleSet, constructRuntime, constructRegisterUrls });
 
 /**
  * Construct the AST for an output bundle.  A number of optional options-args are

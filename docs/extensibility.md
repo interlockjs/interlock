@@ -138,7 +138,7 @@ back into JavaScript code.
 | Return value |  | ASTnode | Single program AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L181-L186).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L165-L170).
 
 ## constructBundleBody
 
@@ -151,7 +151,7 @@ Builds body of output bundle, to be inserted into the IIFE.
 | Return value |  | Array | Body of bundle. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L137-L149).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L121-L133).
 
 ## constructCommonModule
 
@@ -167,7 +167,7 @@ equivalent.
 | Return value |  | ASTnode | Object expression AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L40-L47).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L39-L46).
 
 ## constructModuleSet
 
@@ -183,7 +183,7 @@ register those modules for consumption by the Interlock run-time.
 | Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L67-L83).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L66-L82).
 
 ## constructRegisterUrls
 
@@ -197,7 +197,7 @@ Transforms a map of module-hashes-to-URLs to the AST equivalent.
 | Return value |  | ASTnode | Single AST node. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L121-L128).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L105-L112).
 
 ## constructRuntime
 
@@ -210,7 +210,7 @@ Construct the guts of the Interlock run-time for inclusion in file output.
 | Return value |  | Array | Array of AST nodes. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L92-L96).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L91-L95).
 
 ## dedupeExplicit
 
@@ -562,20 +562,6 @@ to a file on disk, returning a module seed.
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L53).
 The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/resolve.js#L32-L51).
-
-## setLoadEntry
-
-Construct a statement to instruct the runtime to run the specified module.
-
-
-|     | Name | Type | Description |
-| --- | ---- | ---- | ----------- |
-| Parameter | **moduleHash** | String | Hash of the module to be required. |
-| Parameter | **globalName** | String | Global variable name of Interlock run-time. |
-| Return value |  | ASTnode | Single AST node. |
-
-
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L106-L111).
 
 ## setModuleType
 

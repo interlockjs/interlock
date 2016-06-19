@@ -18,7 +18,7 @@ function resolveFile (absPath, extensions) {
 
   if (isFile(absPath)) { return absPath; }
 
-  return _.any(extensions, function (ext) {
+  return _.some(extensions, function (ext) {
     altPath = absPath + ext;
     return isFile(altPath) && altPath;
   }) && altPath || null;

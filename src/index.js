@@ -19,7 +19,7 @@ function normalizeEntryPoints (entryPoints) {
         entryDefinition;
       return [entrySrcPath, entryDefinition];
     })
-    .object()
+    .fromPairs()
     .value();
 }
 

@@ -57,7 +57,7 @@ export const compile = [{
 
   flags: ["entry", "e"],
   flagType: "string",
-  flagTransform: val => _.chain(val).chunk(2).object().value(),
+  flagTransform: val => _.chain(val).chunk(2).fromPairs().value(),
   cmdOpts: { nargs: 2 },
 
   description: {
@@ -77,7 +77,7 @@ export const compile = [{
 
   flags: ["split", "s"],
   flagType: "string",
-  flagTransform: val => _.chain(val).chunk(2).object().value(),
+  flagTransform: val => _.chain(val).chunk(2).fromPairs().value(),
   cmdOpts: { nargs: 2 },
 
   description: {

@@ -60,15 +60,15 @@ const generateDependencies = pluggable(function generateDependencies (module) {
   return Promise.all([directDependencies, directDependencies.then(getDeepDependencies)])
     .then(([depTuples, deepDependencies]) => Object.assign({}, module, {
       // De-dupe any (deep-)dependencies by their hash.
-      deepDependencies: _.chain(deepDependencies).indexBy("hash").values().value(),
+      deepDependencies: _.chain(deepDependencies).keyBy("hash").values().value(),
       dependencies: _.chain(depTuples)
         .map(([, dependency]) => dependency)
-        .indexBy("hash")
+        .keyBy("hash")
         .values()
         .value(),
       // Generate a mapping between the original require strings and the modules
       // they resolved to.
-      dependenciesByInternalRef: _.object(depTuples)
+      dependenciesByInternalRef: _.fromPairs(depTuples)
     }));
 }, { resolveModule, compileModuleR });
 

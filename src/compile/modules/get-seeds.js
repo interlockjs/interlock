@@ -17,5 +17,5 @@ export default pluggable(function getModuleSeeds () {
       .map(relPath => this.resolveModule(relPath)
         .then(module => [relPath, module])
     ))
-    .then(_.object);
+    .then(_.fromPairs);
 }, { resolveModule });

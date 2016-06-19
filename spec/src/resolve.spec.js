@@ -48,17 +48,18 @@ describe("src/resolve", function () {
 
   it("resolves a node_modules package", function () {
     const resolved = attemptResolve("lodash");
+    console.log("resolved", resolved);
     expect(resolved).to.have.property("ns", "lodash");
-    expect(resolved).to.have.property("nsPath", "index.js");
+    expect(resolved).to.have.property("nsPath", "lodash.js");
     expect(resolved.path)
-      .to.equal(path.join(baseDir, "node_modules/lodash", "index.js"));
+      .to.equal(path.join(baseDir, "node_modules/lodash", "lodash.js"));
   });
 
   it("resolves a file in node_modules package", function () {
-    const resolved = attemptResolve("lodash/array/slice.js");
+    const resolved = attemptResolve("lodash/slice.js");
     expect(resolved).to.have.property("ns", "lodash");
-    expect(resolved).to.have.property("nsPath", "array/slice.js");
+    expect(resolved).to.have.property("nsPath", "slice.js");
     expect(resolved.path)
-      .to.equal(path.join(baseDir, "node_modules/lodash/array/slice.js"));
+      .to.equal(path.join(baseDir, "node_modules/lodash/slice.js"));
   });
 });

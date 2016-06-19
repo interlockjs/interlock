@@ -89,7 +89,7 @@ export const buildOutput = pluggable(function buildOutput (bundles) {
     .then(urls => this.emitRawBundles(bundles, urls))
     .then(rawBundles => _.chain(rawBundles)
         .map(rawBundle => [rawBundle.dest, rawBundle])
-        .object()
+        .fromPairs()
         .value())
     .then(bundlesByDest => ({
       bundles: bundlesByDest,

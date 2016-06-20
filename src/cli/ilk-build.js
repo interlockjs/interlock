@@ -3,11 +3,6 @@ import * as options from "../options";
 
 
 export const builder = yargs => {
-  yargs = yargs.option("config", {
-    alias: "c",
-    describe: "Path to Interlock config file.",
-    type: "string"
-  });
   return options
     .buildArgs(yargs, options.compile)
     .epilogue("For more information, see http://www.interlockjs.com/docs/ilk-build.");

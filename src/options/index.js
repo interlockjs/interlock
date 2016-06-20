@@ -1,8 +1,11 @@
 import path from "path";
 
+import _ from "lodash";
+
 
 export { compile } from "./compile";
 export { shared, getLogger } from "./shared";
+export { server } from "./server";
 
 
 export function loadConfig (configPath) {
@@ -18,8 +21,8 @@ export function loadConfig (configPath) {
   }
 }
 
-export function buildArgs (yargs, optionsDef) {
-  return optionsDef.reduce((_yargs, option) => {
+export function buildArgs (yargs, ...optionsDefs) {
+  return _.flatten(optionsDefs).reduce((_yargs, option) => {
     if (!option.flags) {
       return _yargs;
     }

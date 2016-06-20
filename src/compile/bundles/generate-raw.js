@@ -34,15 +34,18 @@ export default pluggable(function generateRawBundles (bundle) {
     bundle.ast :
     { type: "Program", body: [].concat(bundle.ast) };
 
-  // TODO: Re-add sourcemaps output that was removed with
-  //       533af4aedca1e2e5699a97a5d9566cd66701bbdf
-
-  const { code } = generate(ast, {
+  const { code, map } = generate(ast, {
+    sourceMaps: !!this.opts.sourceMaps,
+    sourceMapTarget: this.opts.sourceMaps && bundle.dest,
     comments: !!this.opts.includeComments,
     compact: !this.opts.pretty,
     quotes: "double"
   }, bundleSources);
 
   const outputBundle = Object.assign({}, bundle, { raw: code });
-  return [ outputBundle ];
+  const mapDest = bundle.dest + ".map";
+
+  return this.opts.sourceMaps ?
+    [ outputBundle, { raw: JSON.stringify(map), dest: mapDest } ] :
+    [ outputBundle ];
 });

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { has, cloneDeep } from "lodash";
 import * as babylon from "babylon";
 import * as t from "babel-types";
 import traverse from "babel-traverse";
@@ -6,6 +6,23 @@ import traverse from "babel-traverse";
 
 const FROM_TEMPLATE = "_fromTemplate";
 const TEMPLATE_SKIP = Symbol();
+const CLEAR_KEYS = [ "tokens", "start", "end", "loc", "raw", "rawValue" ];
+
+
+// Adapted from `babel-traverse`'s `traverse.clearNode`.
+function clearNode (node) {
+  CLEAR_KEYS.forEach(key => {
+    if (node[key] !== null) { node[key] = undefined; }
+  });
+
+  for (const key in node) {
+    if (key[0] === "_" && node[key] !== null) { node[key] = undefined; }
+  }
+
+  Object.getOwnPropertySymbols(node).forEach(sym => {
+    node[sym] = null;
+  });
+}
 
 
 const templateVisitor = {
@@ -20,7 +37,7 @@ const templateVisitor = {
     let replacement;
 
     if (t.isIdentifier(node) && node[FROM_TEMPLATE]) {
-      if (_.has(replacements, node.name)) {
+      if (has(replacements, node.name)) {
         replacement = replacements[node.name];
       }
     }
@@ -36,7 +53,7 @@ const templateVisitor = {
 
 
 function useTemplate (ast, replacements) {
-  ast = _.cloneDeep(ast);
+  ast = cloneDeep(ast);
   const { program } = ast;
 
   traverse(ast, templateVisitor, null, replacements);
@@ -69,6 +86,7 @@ export default function template (code) {
       });
 
       traverse.cheap(ast, function (node) {
+        clearNode(node);
         node[FROM_TEMPLATE] = true;
       });
     } catch (err) {

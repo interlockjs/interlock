@@ -60,7 +60,7 @@ export function createServer (opts = {}) {
   }
 
   const server = http.createServer((req, res) => {
-    shouldRespond.then(() => {
+    shouldRespond.then(() => { // eslint-disable-line max-statements
       const acceptType = req.headers.accept;
       const url = req.url.toLowerCase();
 

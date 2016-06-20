@@ -48,7 +48,6 @@ export const handler = argv => {
       }
 
       if (patchModules) {
-        console.log("updates:", patchModules);
         notify("update", { update: true });
       } else if (compilation) {
         const newAssets = Object.keys(compilation.bundles).reduce((assets, filename) => {

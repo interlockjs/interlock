@@ -48,7 +48,6 @@ describe("src/resolve", function () {
 
   it("resolves a node_modules package", function () {
     const resolved = attemptResolve("lodash");
-    console.log("resolved", resolved);
     expect(resolved).to.have.property("ns", "lodash");
     expect(resolved).to.have.property("nsPath", "lodash.js");
     expect(resolved.path)

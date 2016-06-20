@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { types as t } from "babel-core";
+import * as t from "babel-types";
+
 
 /**
  * Return the AST equivalent of `require(requireStr)`, where requireStr is
@@ -13,7 +14,7 @@ import { types as t } from "babel-core";
  * @return {AST}                Call expression node.
  */
 function requireCallExpression (requireStr) {
-  return t.callExpression(t.identifier("require"), [t.literal(requireStr)]);
+  return t.callExpression(t.identifier("require"), [t.stringLiteral(requireStr)]);
 }
 
 /**
@@ -112,23 +113,23 @@ export default function () {
 
   return {
     visitor: {
-      ExpressionStatement (node, parent) {
-        if (parent.type === "Program") {
-          topLevelNode = node;
+      ExpressionStatement (nodePath) {
+        if (nodePath.parent.type === "Program") {
+          topLevelNode = nodePath.node;
         }
       },
-      CallExpression (node, parent) {
-        if (parent === topLevelNode && node.callee.name === "define") {
-          const args = node.arguments;
+      CallExpression (nodePath) {
+        if (nodePath.parent === topLevelNode && nodePath.node.callee.name === "define") {
+          const args = nodePath.node.arguments;
           if (args.length === 2 &&
               args[0].type === "ArrayExpression" &&
               args[1].type === "FunctionExpression") {
-            this.replaceWith(toCommonJs(args[0], args[1]));
+            nodePath.replaceWith(toCommonJs(args[0], args[1]));
             return;
           } else if (args.length === 3 &&
                      args[1].type === "ArrayExpression" &&
                      args[1].type === "FunctionExpression") {
-            this.replaceWith(toCommonJs(args[1], args[2]));
+            nodePath.replaceWith(toCommonJs(args[1], args[2]));
             return;
           }
           throw new Error("Could not parse `define` block.");

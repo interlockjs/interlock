@@ -592,7 +592,7 @@ intermediate representation should occur at this step.
 | Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L56).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L57).
 
 ## updateBundleHash
 

@@ -36,6 +36,7 @@ export default pluggable(function transformModule (module) {
   };
 
   const config = _.extend({}, babelUserConfig, {
+    filename: module.path,
     code: false,
     ast: true,
     plugins: [

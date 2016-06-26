@@ -1,3 +1,4 @@
 {
-  "presets": ["nodejs-lts"]
+  "presets": ["nodejs-lts"],
+  "plugins": ["transform-flow-strip-types"]
 }

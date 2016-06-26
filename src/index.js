@@ -1,3 +1,5 @@
+/* @flow */
+
 import * as path from "path";
 import * as fs from "fs";
 
@@ -95,6 +97,9 @@ Interlock.prototype._saveBundles = function (compilation) {
 };
 
 function getRefreshedAsset (compilation, changedFilePath) {
+  if (compilation === null) {
+    return Promise.resolve();
+  }
   return compilation.cache.modulesByAbsPath[changedFilePath]
     .then(origAsset => Object.assign({}, origAsset, {
       rawSource: null,
@@ -132,10 +137,12 @@ Interlock.prototype.watch = function (cb, opts = {}) {
 
     getRefreshedAsset(lastCompilation, changedFilePath)
       .then(refreshedAsset => {
+        if (!lastCompilation) { return Promise.resolve(); }
         delete lastCompilation.cache.modulesByAbsPath[changedFilePath];
         return compileModules.call(lastCompilation, [refreshedAsset]);
       })
       .then(patchModules => {
+        if (!lastCompilation) { return Promise.resolve(); }
         cb({ patchModules, changedFilePath }); // eslint-disable-line callback-return
         return compile(lastCompilation.opts).then(onCompileComplete);
       });

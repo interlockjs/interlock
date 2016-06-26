@@ -1,9 +1,13 @@
+/* @flow */
+
 export const PROFILER_ACTIVE = process.env.INTERLOCK_PROFILER === "true";
+
+type EventRecord = { total: number; events: number; avg?: number; };
 
 const invocations = [];
 
 function getStats () {
-  const deduped = {};
+  const deduped: ({ [key: string]: EventRecord }) = {};
   invocations.forEach(({ name, sec, nsec }) => {
     if (!(name in deduped)) {
       deduped[name] = { total: 0, events: 0 };
@@ -51,7 +55,7 @@ if (PROFILER_ACTIVE) {
   });
 }
 
-export function createEvent (name) {
+export function createEvent (name: string) {
   const startTime = process.hrtime();
   return function () {
     const [sec, nsec] = process.hrtime(startTime);

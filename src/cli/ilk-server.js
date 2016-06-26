@@ -1,15 +1,17 @@
+/* @flow */
+
 import Interlock from "..";
 import * as options from "../options";
 import { createServer } from "../server/server";
 
 
-export const builder = yargs => {
+export const builder = (yargs: any) => {
   return options
     .buildArgs(yargs, options.server, options.compile)
     .epilogue("For more information, see http://www.interlockjs.com/docs/ilk-build.");
 };
 
-export const handler = argv => {
+export const handler = (argv: { [key: string]: any }) => {
   const config = argv.config ? options.loadConfig(argv.config) : {};
   const logger = options.getLogger(argv.verbose);
 
@@ -37,7 +39,7 @@ export const handler = argv => {
   try {
     const ilk = new Interlock(opts);
 
-    let resume = pause();
+    let resume: Function = pause();
     ilk.watch(buildEvent => {
       const { change, patchModules, compilation } = buildEvent;
 

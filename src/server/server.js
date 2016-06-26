@@ -1,3 +1,5 @@
+/* @flow */
+
 import http from "http";
 import path from "path";
 import fs from "fs";
@@ -36,7 +38,7 @@ function sendEvent (connections, id, eventName, data, retryTimeout) {
 }
 
 
-export function createServer (opts = {}) {
+export function createServer (opts: ({ [key: string]: any }) = {}) {
   const eventsUrl = opts.eventsUrl || "/ilk/events";
   const connections = {};
   let nextConnectionID = 0;
@@ -50,9 +52,9 @@ export function createServer (opts = {}) {
     return resume;
   }
 
-  function setDynamicAssets (assets) { dynamicResources = assets; }
+  function setDynamicAssets (assets: { [key: string]: any }) { dynamicResources = assets; }
 
-  function notify (eventName, data) {
+  function notify (eventName: string, data: any) {
     Object.keys(connections).forEach(key => {
       if (!connections[key]) { return; }
       sendEvent(connections, key, eventName, data, opts.retryTimeout);

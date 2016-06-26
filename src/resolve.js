@@ -1,8 +1,19 @@
+/* @flow */
+
 import path from "path";
 
 import _ from "lodash";
 
 import { isFile, isDir, getPossiblePaths } from "./util/file";
+
+
+type Resolved = {
+  path: string,
+  ns: string,
+  nsPath: string,
+  nsRoot: string,
+  uri: string
+};
 
 
 function select (items, fn) {
@@ -13,7 +24,7 @@ function select (items, fn) {
   return null;
 }
 
-function resolveFile (absPath, extensions) {
+function resolveFile (absPath: string, extensions: Array<string>) {
   let altPath;
 
   if (isFile(absPath)) { return absPath; }
@@ -24,12 +35,12 @@ function resolveFile (absPath, extensions) {
   }) && altPath || null;
 }
 
-function resolveDir (absPath, extensions) {
+function resolveDir (absPath: string, extensions: Array<string>) {
   if (!isDir(absPath)) { return null; }
 
   const packageJsonPath = path.join(absPath, "package.json");
   if (isFile(packageJsonPath)) {
-    const main = require(packageJsonPath).main;
+    const main: string = require(packageJsonPath).main;
     if (main) {
       const mainAbsPath = path.join(absPath, main);
       return resolveFile(mainAbsPath, extensions) || resolveDir(mainAbsPath, extensions);
@@ -72,7 +83,14 @@ function resolveSimple (requireStr, contextPath, nsRoot, extensions) {
  *
  * @returns {null}               Will return null if resolve fails.
  */
-export default function resolve (requireStr, contextPath, ns, nsRoot, extensions, searchPaths = []) { // eslint-disable-line max-len,max-params
+export default function resolve ( // eslint-disable-line max-params
+  requireStr: string,
+  contextPath: string,
+  ns: string,
+  nsRoot: string,
+  extensions: Array<string>,
+  searchPaths: Array<string> = []
+): ?Resolved {
   const resolvedSimple = resolveSimple(requireStr, contextPath, nsRoot, extensions);
 
   if (resolvedSimple) {

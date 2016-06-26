@@ -1,14 +1,16 @@
+/* @flow */
+
 import Interlock from "..";
 import * as options from "../options";
 
 
-export const builder = yargs => {
+export const builder = (yargs: any) => {
   return options
     .buildArgs(yargs, options.compile)
     .epilogue("For more information, see http://www.interlockjs.com/docs/ilk-build.");
 };
 
-export const handler = argv => {
+export const handler = (argv: { [key: string]: any }) => {
   const config = argv.config ? options.loadConfig(argv.config) : {};
   const logger = options.getLogger(argv.verbose);
 

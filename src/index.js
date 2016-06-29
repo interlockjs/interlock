@@ -70,9 +70,13 @@ function flattenPresets (opts) {
  * @returns {void}
  */
 export default function Interlock (opts) {
+  // The ordering of validation/flattening is important here.  Presets are defined as
+  // a shared option - so that validation should occur first.  Once all nested presets
+  // have been flattened, validation must occur on the compilation options that have
+  // been flattened.
+  opts = options.validate(opts, options.shared);
   opts = flattenPresets(opts, opts.presets);
   opts = options.validate(opts, options.compile);
-  opts = options.validate(opts, options.shared);
 
   this.options = Object.assign({}, opts, {
     globalName: "__interlock__",

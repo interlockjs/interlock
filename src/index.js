@@ -23,6 +23,18 @@ function normalizeEntryPoints (entryPoints) {
     .value();
 }
 
+function flattenPresets (opts) {
+  if (!_.isArray(opts.presets)) {
+    throw new Error("Provided `presets` option is not an array.  This check is performed recursively."); // eslint-disable-line max-len
+  }
+
+  return opts.presets.reduce((_opts, preset) => {
+    if (preset.presets) { preset = flattenPresets(preset); }
+    return _.merge({}, preset, _opts);
+  }, opts);
+}
+
+
 /**
  * The entry point for the Interlock application
  *
@@ -51,12 +63,14 @@ function normalizeEntryPoints (entryPoints) {
  * @param   {Boolean}   opts.sourceMaps    Emit source maps with the bundles.
  * @param   {String}    opts.globalName    Name to use for run-time global variable.
  * @param   {Array}     opts.plugins       An Array of interlock Plugins.
+ * @param   {Array}     opts.presets       An Array for valid compilation options objects.
  * @param   {Boolean}   opts.includeComments     Include comments in the compiled bundles
  * @param   {String}    opts.implicitBundleDest  The location to emit shared dependency bundles
  *
  * @returns {void}
  */
 export default function Interlock (opts) {
+  opts = flattenPresets(opts, opts.presets);
   opts = options.validate(opts, options.compile);
   opts = options.validate(opts, options.shared);
 

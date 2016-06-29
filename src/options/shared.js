@@ -1,3 +1,5 @@
+import path from "path";
+
 import _ from "lodash";
 
 
@@ -35,6 +37,24 @@ export const shared = [{
 
   description: {
     short: "Path to Interlock config file.",
+    full: `TODO`
+  }
+}, {
+  key: "presets",
+  default: () => [],
+  schema: presets => {
+    return _.isArray(presets) && presets.reduce((isValid, preset) => {
+      return isValid && _.isObject(preset);
+    }, true);
+  },
+
+  flags: ["preset"],
+  flagType: "string",
+  flagTransform: (val, cwd) => require(path.resolve(cwd, val)),
+  cmdOpts: { global: true },
+
+  description: {
+    short: "Pull in pre-determined Interlock configuration options.",
     full: `TODO`
   }
 }];

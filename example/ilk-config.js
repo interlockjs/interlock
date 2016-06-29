@@ -12,11 +12,12 @@ module.exports = {
     "./app/shared/lib-a.js": "[setHash].js"
   },
 
-  pretty: true,
   includeComments: true,
   sourceMaps: true,
 
   plugins: [],
+
+  presets: [require("./preset")],
 
   babelConfig: {
     plugins: [require.resolve("./example-plugin")]

@@ -207,6 +207,18 @@ export const compile = [{
     short: "Number of processes to use (implies multiprocess).",
     full: `TODO`
   }
+}, {
+  "key": "fcache",
+  default: () => false,
+  schema: val => _.isBoolean(val) || _.isString(val),
+
+  flags: ["fcache"],
+  flagType: "boolean",
+
+  description: {
+    short: "Enable caching of compilation assets for improved build times.",
+    full: `TODO`
+  }
 }];
 
 compile.or = [

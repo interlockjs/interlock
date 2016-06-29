@@ -10,6 +10,7 @@ import generateBundles from "./bundles/generate";
 import generateRawBundles from "./bundles/generate-raw";
 
 import multiprocessPlugin from "../optimizations/multiprocess";
+import fcachePlugin from "../optimizations/file-cache";
 
 
 /**
@@ -125,6 +126,11 @@ export default function (opts) {
     plugins.push(multiprocessPlugin({
       workers: opts.workers
     }));
+  }
+
+  if (opts.fcache) {
+    const cacheDir = opts.fcache === true ? null : opts.fcache;
+    plugins.push(fcachePlugin({ cacheDir }));
   }
 
   return compile.call(getBaseContext({

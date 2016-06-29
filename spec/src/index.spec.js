@@ -119,7 +119,9 @@ describe("src/index", () => {
         multiprocess: false,
         plugins: [],
         pretty: false,
-        sourceMaps: false
+        sourceMaps: false,
+        fcache: false,
+        presets: []
       });
     });
 
@@ -151,7 +153,9 @@ describe("src/index", () => {
         multiprocess: false,
         plugins: [],
         pretty: false,
-        sourceMaps: false
+        sourceMaps: false,
+        fcache: false,
+        presets: []
       });
     });
   });

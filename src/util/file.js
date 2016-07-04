@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import _ from "lodash";
+import { chain } from "lodash";
 
 
 const WINDOWS = process.platform === "win32";
@@ -25,7 +25,7 @@ export function getPossiblePaths (deepPath, desiredFilename) {
     "/";
   const nestedDirs = deepPath.split(WINDOWS ? /[\/\\]+/ : /\/+/);
 
-  return _.chain(0)
+  return chain(0)
     .range(nestedDirs.length + 1)
     .map(idx => {
       const pathPieces = nestedDirs.slice(0, nestedDirs.length - idx);

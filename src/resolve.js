@@ -1,6 +1,6 @@
 import path from "path";
 
-import _ from "lodash";
+import { some } from "lodash";
 
 import { isFile, isDir, getPossiblePaths } from "./util/file";
 
@@ -18,7 +18,7 @@ function resolveFile (absPath, extensions) {
 
   if (isFile(absPath)) { return absPath; }
 
-  return _.some(extensions, function (ext) {
+  return some(extensions, function (ext) {
     altPath = absPath + ext;
     return isFile(altPath) && altPath;
   }) && altPath || null;

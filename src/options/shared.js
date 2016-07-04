@@ -1,6 +1,6 @@
 import path from "path";
 
-import _ from "lodash";
+import { isObject, isArray } from "lodash";
 
 
 /* eslint-disable no-console */
@@ -17,7 +17,7 @@ export function getLogger (verbosity) {
 export const shared = [{
   key: "log",
   default: () => getLogger(0),
-  schema: _.isObject,
+  schema: isObject,
 
   flagType: "count",
   flags: ["verbose", "v"],
@@ -43,8 +43,8 @@ export const shared = [{
   key: "presets",
   default: () => [],
   schema: presets => {
-    return _.isArray(presets) && presets.reduce((isValid, preset) => {
-      return isValid && _.isObject(preset);
+    return isArray(presets) && presets.reduce((isValid, preset) => {
+      return isValid && isObject(preset);
     }, true);
   },
 

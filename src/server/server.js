@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 
 import mime from "mime";
-import _ from "lodash";
+import { findKey } from "lodash";
 
 
 function fileNotFound (res) {
@@ -85,7 +85,7 @@ export function createServer (opts = {}) {
         res.end();
         return;
       }
-      const staticMatch = _.findKey(opts.staticResources, pattern => {
+      const staticMatch = findKey(opts.staticResources, pattern => {
         return pattern.test(url);
       });
 

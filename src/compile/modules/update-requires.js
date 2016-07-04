@@ -1,6 +1,7 @@
 import { transformFromAst } from "babel-core";
 
 import { pluggable } from "pluggable";
+import { assign } from "lodash";
 
 
 /**
@@ -32,5 +33,5 @@ export default pluggable(function updateRequires (module) {
     plugins: [updatePlugin]
   }).ast.program;
 
-  return Object.assign({}, module, { ast });
+  return assign({}, module, { ast });
 });

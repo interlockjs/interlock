@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { assign, chain, flatten, values } from "lodash";
 import Promise from "bluebird";
 
 import { pluggable, getBaseContext } from "pluggable";
@@ -44,7 +44,7 @@ export const constructBundle = pluggable(function constructBundle (bundle, urls)
     urls: bundle.isEntryPt ? urls : null,
     entryModuleHash: bundle.isEntryPt && bundle.module && bundle.module.hash || null
   })
-    .then(ast => Object.assign({}, bundle, { ast }));
+    .then(ast => assign({}, bundle, { ast }));
 }, { constructBundleAst });
 
 /**
@@ -70,7 +70,7 @@ export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, url
   ))
     // generateRawBundles returns arrays of bundles.  This allows, for example, a
     // source map to also be emitted along with its bundle JS.
-    .then(_.flatten);
+    .then(flatten);
 }, { constructBundle, generateRawBundles });
 
 /**
@@ -88,7 +88,7 @@ export const emitRawBundles = pluggable(function emitRawBundles (bundlesArr, url
 export const buildOutput = pluggable(function buildOutput (bundles) {
   return this.getUrls(bundles)
     .then(urls => this.emitRawBundles(bundles, urls))
-    .then(rawBundles => _.chain(rawBundles)
+    .then(rawBundles => chain(rawBundles)
         .map(rawBundle => [rawBundle.dest, rawBundle])
         .fromPairs()
         .value())
@@ -112,7 +112,7 @@ const compile = pluggable(function compile () {
   return this.getModuleSeeds()
     .then(moduleSeeds => Promise.all([
       moduleSeeds,
-      this.generateModuleMaps(_.values(moduleSeeds))
+      this.generateModuleMaps(values(moduleSeeds))
     ]))
     .then(([moduleSeeds, moduleMaps]) => this.generateBundles(moduleSeeds, moduleMaps))
     .then(this.buildOutput);

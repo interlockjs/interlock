@@ -1,13 +1,13 @@
 import os from "os";
 
 import workerFarm from "worker-farm";
-import _ from "lodash";
+import { keys, isFunction, pick } from "lodash";
 
 import * as targets from "./targets";
 
 
 const MAX_PROCESSES = os.cpus().length;
-const MULTIPROCESS_OVERRIDES = Object.keys(targets);
+const MULTIPROCESS_OVERRIDES = keys(targets);
 const WORKER_PATH = require.resolve("./worker");
 
 
@@ -30,7 +30,7 @@ export default function (opts = {}) {
     override("compile", function () {
       if (this.opts.babelConfig && this.opts.babelConfig.plugins) {
         const validPlugins = this.opts.babelConfig.plugins.reduce(
-          (memo, plugin) => memo && !_.isFunction(plugin),
+          (memo, plugin) => memo && !isFunction(plugin),
           true
         );
         if (!validPlugins) {
@@ -55,7 +55,7 @@ export default function (opts = {}) {
     MULTIPROCESS_OVERRIDES.forEach(pluggableName => {
       override(pluggableName, function () {
         const msg = JSON.stringify({
-          cxt: _.pick(this, ["opts"]),
+          cxt: pick(this, ["opts"]),
           args: Array.prototype.slice.call(arguments)
         });
 

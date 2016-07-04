@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import path from "path";
 
-import _ from "lodash";
+import { assign, chain, fromPairs } from "lodash";
 import Promise from "bluebird";
 import { pluggable } from "pluggable";
 
@@ -47,7 +47,7 @@ const generateDependencies = pluggable(function generateDependencies (module) {
 
   // Given an array of compiled module dependencies, generate a recursively flattened
   // list of all module dependencies.
-  const getDeepDependencies = dependencies => _.chain(dependencies)
+  const getDeepDependencies = dependencies => chain(dependencies)
     .map(([, dep]) => dep.deepDependencies.concat(dep))
     .flatten()
     .value();
@@ -58,17 +58,17 @@ const generateDependencies = pluggable(function generateDependencies (module) {
   ));
 
   return Promise.all([directDependencies, directDependencies.then(getDeepDependencies)])
-    .then(([depTuples, deepDependencies]) => Object.assign({}, module, {
+    .then(([depTuples, deepDependencies]) => assign({}, module, {
       // De-dupe any (deep-)dependencies by their hash.
-      deepDependencies: _.chain(deepDependencies).keyBy("hash").values().value(),
-      dependencies: _.chain(depTuples)
+      deepDependencies: chain(deepDependencies).keyBy("hash").values().value(),
+      dependencies: chain(depTuples)
         .map(([, dependency]) => dependency)
         .keyBy("hash")
         .values()
         .value(),
       // Generate a mapping between the original require strings and the modules
       // they resolved to.
-      dependenciesByInternalRef: _.fromPairs(depTuples)
+      dependenciesByInternalRef: fromPairs(depTuples)
     }));
 }, { resolveModule, compileModuleR });
 
@@ -118,7 +118,7 @@ const compileModule = pluggable(function compileModule (module) {
  */
 const compileModules = pluggable(function compileModules (moduleSeeds) {
   return Promise.all(moduleSeeds.map(this.compileModule.bind(this)))
-    .then(compiledSeedModules => _.chain(compiledSeedModules)
+    .then(compiledSeedModules => chain(compiledSeedModules)
       .map(seedModule => seedModule.deepDependencies.concat(seedModule))
       .flatten()
       .uniq()

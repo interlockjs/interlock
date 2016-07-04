@@ -254,7 +254,7 @@ split off into its own new bundle.
 | Return value |  | Array | Explicit bundles plus new implicit bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L49-L51).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/dedupe-implicit.js#L50-L52).
 
 ## emitRawBundles
 
@@ -296,7 +296,7 @@ strings using AST->source transformation, and then written to disk.
 | Return value |  | Array | Fully compiled bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L60-L66).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L63-L70).
 
 ## generateDependencies
 
@@ -349,7 +349,7 @@ bundle to result in a `.js` file and a `.map` file.
 | Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L23-L51).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L25-L53).
 
 ## getBundleSeeds
 
@@ -366,7 +366,7 @@ but do hold a reference to the root module of their branch of the dependency gra
 | Return value |  | Array | Early-stage bundles with `module` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L18-L29).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L19-L30).
 
 ## getModuleSeeds
 
@@ -381,7 +381,7 @@ relative to the compilation context.
 | Return value |  | Object | Early-stage modules indexed by relative path. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L14-L21).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L15-L22).
 
 ## getUrls
 
@@ -409,8 +409,8 @@ to that same bundle with a new `hash` property.
 | Return value |  | Object | Bundle plus new `hash` property, a 40-character SHA1 that uniquely identifies the bundle. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L45).
-The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L27-L43).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L47).
+The function that it wraps can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L29-L45).
 
 ## hashModule
 
@@ -424,12 +424,12 @@ to that module with a new `hash` property.
 | Return value |  | Object | Module that now has a hash property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L33-L45).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L36-L48).
 
 ## initBundle
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/init.js#L3-L29).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/init.js#L4-L30).
 
 ## interpolateFilename
 
@@ -443,7 +443,7 @@ supported placeholders with their dynamic equivalents.
 | Return value |  | Object | Bundle with interpolated `dest` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L11-L20).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L13-L22).
 
 ## loadModule
 
@@ -471,7 +471,7 @@ for non-JavaScript modules).
 | Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L17-L50).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L51).
 
 ## partitionBundles
 
@@ -488,7 +488,7 @@ by the module hashes (unique IDs) of the modules that comprise the bundle.
 | Return value |  | Array | Early-stage bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L38-L42).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L45).
 
 ## populateBundleModules
 
@@ -503,7 +503,7 @@ bundle module hashes are deduped.
 | Return value |  | Object | The bundle object, with modules property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L19-L23).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L22-L26).
 
 ## preresolve
 
@@ -592,7 +592,7 @@ intermediate representation should occur at this step.
 | Return value |  | Object | Module object with transformed `ast` property and new `synchronousRequires` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L18-L57).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/transform.js#L19-L58).
 
 ## updateBundleHash
 
@@ -606,7 +606,7 @@ Calculate the bundle's hash by invoking `update` with data from the bundle.
 | Parameter | **bundle** | Object | The bundle object. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L12-L16).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/hash.js#L14-L18).
 
 ## updateModuleHash
 
@@ -621,7 +621,7 @@ The resulting hash should be deterministic for the same inputs in the same order
 | Parameter | **update** | Function | Function to be invoked with data that uniquely identifies the module (or, more precisely, the run-time behavior of the module). |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L15-L23).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L18-L26).
 
 ## updateRequires
 
@@ -635,5 +635,5 @@ all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
 | Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L16-L36).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L17-L37).
 

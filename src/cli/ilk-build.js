@@ -1,5 +1,6 @@
 import Interlock from "..";
 import * as options from "../options";
+import { assign } from "lodash";
 
 
 export const builder = yargs => {
@@ -23,7 +24,7 @@ export const handler = argv => {
     config
   );
 
-  const opts = Object.assign({}, sharedOpts, compileOpts);
+  const opts = assign({}, sharedOpts, compileOpts);
 
   let ilk;
   try {

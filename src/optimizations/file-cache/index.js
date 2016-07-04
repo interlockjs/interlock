@@ -3,6 +3,7 @@ import { tmpdir } from "os";
 import fs from "fs";
 
 import Promise from "bluebird";
+import { assign } from "lodash";
 import { sync as mkdirp } from "mkdirp";
 import farmhash from "farmhash";
 
@@ -57,7 +58,7 @@ export default function (opts = {}) {
         .then(astJson => {
           const ast = JSON.parse(astJson);
           const sourcePath = path.join(module.ns, module.nsPath);
-          return Object.assign({}, module, { ast, sourcePath });
+          return assign({}, module, { ast, sourcePath });
         })
         .catch(() => override.CONTINUE);
     });

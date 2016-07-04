@@ -1,6 +1,8 @@
 import crypto from "crypto";
+import { assign } from "lodash";
 
 import { pluggable } from "pluggable";
+
 
 /**
  * Calculate the bundle's hash by invoking `update` with data from the bundle.
@@ -34,7 +36,7 @@ function hashBundle (bundle) {
   const update = shasum.update.bind(shasum);
 
   return this.updateBundleHash(update, bundle)
-    .then(() => Object.assign({}, bundle, {
+    .then(() => assign({}, bundle, {
       hash: shasum.digest("base64")
         .replace(/\//g, "_")
         .replace(/\+/g, "-")

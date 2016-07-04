@@ -1,4 +1,6 @@
+import { assign } from "lodash";
 import { pluggable } from "pluggable";
+
 
 /**
  * Given a bundle, determine its ultimate output filepath by replacing
@@ -16,5 +18,5 @@ export default pluggable(function interpolateFilename (bundle) {
     dest = dest.replace("[primaryModuleHash]", bundle.module.hash);
   }
 
-  return Object.assign({}, bundle, { dest });
+  return assign({}, bundle, { dest });
 });

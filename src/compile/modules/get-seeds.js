@@ -1,7 +1,8 @@
-import _ from "lodash";
+import { keys, fromPairs } from "lodash";
 
 import { pluggable } from "pluggable";
 import resolveModule from "./resolve";
+
 
 /**
  * Inspect the compilation options for bundle definitions (provided as
@@ -13,9 +14,9 @@ import resolveModule from "./resolve";
  */
 export default pluggable(function getModuleSeeds () {
   return Promise.all(
-    [].concat(_.keys(this.opts.entry), _.keys(this.opts.split))
+    [].concat(keys(this.opts.entry), keys(this.opts.split))
       .map(relPath => this.resolveModule(relPath)
         .then(module => [relPath, module])
     ))
-    .then(_.fromPairs);
+    .then(fromPairs);
 }, { resolveModule });

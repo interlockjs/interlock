@@ -1,7 +1,8 @@
-import _ from "lodash";
+import { assign, map } from "lodash";
 
 import { pluggable } from "pluggable";
 import initBundle from "./init";
+
 
 /**
  * Given the set of early-stage modules (originally generated from the bundle definitions)
@@ -17,11 +18,11 @@ import initBundle from "./init";
  */
 export default pluggable(function getBundleSeeds (moduleSeeds, modulesByPath) {
   return Promise.all([].concat(
-    _.map(this.opts.entry, (bundleDef, relPath) => this.initBundle(Object.assign({}, bundleDef, {
+    map(this.opts.entry, (bundleDef, relPath) => this.initBundle(assign({}, bundleDef, {
       module: modulesByPath[moduleSeeds[relPath].path],
       isEntryPt: true
     }))),
-    _.map(this.opts.split, (bundleDef, relPath) => this.initBundle(Object.assign({}, bundleDef, {
+    map(this.opts.split, (bundleDef, relPath) => this.initBundle(assign({}, bundleDef, {
       module: modulesByPath[moduleSeeds[relPath].path],
       isEntryPt: false
     })))

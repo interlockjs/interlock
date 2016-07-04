@@ -1,6 +1,8 @@
 import generate from "babel-generator";
+import { assign } from "lodash";
 
 import { pluggable } from "pluggable";
+
 
 /**
  * Given a compiled bundle object, return an array of one or more bundles with
@@ -42,7 +44,7 @@ export default pluggable(function generateRawBundles (bundle) {
     quotes: "double"
   }, bundleSources);
 
-  const outputBundle = Object.assign({}, bundle, { raw: code });
+  const outputBundle = assign({}, bundle, { raw: code });
   const mapDest = bundle.dest + ".map";
 
   return this.opts.sourceMaps ?

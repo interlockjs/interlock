@@ -1,7 +1,7 @@
 import fs from "fs";
 
 import Promise from "bluebird";
-
+import { assign } from "lodash";
 import { pluggable } from "pluggable";
 
 
@@ -29,7 +29,7 @@ const readFilePromise = Promise.promisify(fs.readFile, fs);
  */
 export const readSource = pluggable(function readSource (module) {
   return readFilePromise(module.path, "utf-8")
-    .then(rawSource => Object.assign({}, module, { rawSource }));
+    .then(rawSource => assign({}, module, { rawSource }));
 });
 
 /**
@@ -42,7 +42,7 @@ export const readSource = pluggable(function readSource (module) {
  * @return {Object}         Module with new `type` property.
  */
 export const setModuleType = pluggable(function setModuleType (module) {
-  return Object.assign({}, module, { type: "javascript" });
+  return assign({}, module, { type: "javascript" });
 });
 
 /**

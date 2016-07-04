@@ -1,9 +1,12 @@
+import { assign } from "lodash";
 import { pluggable } from "pluggable";
+
 import getBundleSeeds from "./get-seeds";
 import dedupeExplicit from "./dedupe-explicit";
 import dedupeImplicit from "./dedupe-implicit";
 import hashBundle from "./hash";
 import interpolateFilename from "./interpolate-filename";
+
 
 /**
  * Define the canonical modules array for a bundle.  This should occur after
@@ -17,7 +20,7 @@ import interpolateFilename from "./interpolate-filename";
  * @return {Object}              The bundle object, with modules property.
  */
 const populateBundleModules = pluggable(function populateBundleModules (bundle, moduleMaps) {
-  return Object.assign({}, bundle, {
+  return assign({}, bundle, {
     modules: bundle.moduleHashes.map(hash => moduleMaps.byHash[hash])
   });
 });
@@ -59,8 +62,9 @@ const partitionBundles = pluggable(function partitionBundles (moduleSeeds, modul
  */
 export default pluggable(function generateBundles (moduleSeeds, moduleMaps) {
   return this.partitionBundles(moduleSeeds, moduleMaps)
-    .then(bundles => Promise.all(bundles.map(bundle =>
-      this.populateBundleModules(bundle, moduleMaps))))
+    .then(bundles => Promise.all(
+      bundles.map(bundle => this.populateBundleModules(bundle, moduleMaps)))
+    )
     .then(bundles => Promise.all(bundles.map(this.hashBundle)))
     .then(bundles => Promise.all(bundles.map(this.interpolateFilename)));
 }, { partitionBundles, hashBundle, interpolateFilename, populateBundleModules });

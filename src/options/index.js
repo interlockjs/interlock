@@ -1,6 +1,6 @@
 import path from "path";
 
-import _ from "lodash";
+import { assign, flatten } from "lodash";
 
 
 export { compile } from "./compile";
@@ -22,7 +22,7 @@ export function loadConfig (configPath) {
 }
 
 export function buildArgs (yargs, ...optionsDefs) {
-  return _.flatten(optionsDefs).reduce((_yargs, option) => {
+  return flatten(optionsDefs).reduce((_yargs, option) => {
     if (!option.flags) {
       return _yargs;
     }
@@ -72,7 +72,7 @@ export function validate (options, optionsDef) {
     }
 
     return opts;
-  }, Object.assign({}, options));
+  }, assign({}, options));
 
   if (optionsDef.or) {
     optionsDef.or.forEach(alternatives => {

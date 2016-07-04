@@ -1,8 +1,9 @@
-import _ from "lodash";
+import { assign, difference, intersection, filter } from "lodash";
 import Promise from "bluebird";
 
 import { pluggable } from "pluggable";
 import initBundle from "./init";
+
 
 const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
   bundles = bundles.slice();
@@ -13,13 +14,13 @@ const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
 
     for (let b = a + 1; b < bundleLengthAtIteration; b++) {
       const bundleB = bundles[b];
-      const intersection = _.intersection(bundleA.moduleHashes, bundleB.moduleHashes);
+      const commonHashes = intersection(bundleA.moduleHashes, bundleB.moduleHashes);
 
-      if (intersection.length) {
-        const moduleHashesA = _.difference(bundleA.moduleHashes, intersection);
-        const moduleHashesB = _.difference(bundleB.moduleHashes, intersection);
-        bundles[a] = Object.assign({}, bundleA, { moduleHashes: moduleHashesA });
-        bundles[b] = Object.assign({}, bundleB, { moduleHashes: moduleHashesB });
+      if (commonHashes.length) {
+        const moduleHashesA = difference(bundleA.moduleHashes, commonHashes);
+        const moduleHashesB = difference(bundleB.moduleHashes, commonHashes);
+        bundles[a] = assign({}, bundleA, { moduleHashes: moduleHashesA });
+        bundles[b] = assign({}, bundleB, { moduleHashes: moduleHashesB });
 
         bundles.push(yield this.initBundle({
           moduleHashes: intersection,
@@ -30,7 +31,7 @@ const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
     }
   }
 
-  return _.filter(bundles, bundle => bundle.moduleHashes.length);
+  return filter(bundles, bundle => bundle.moduleHashes.length);
 });
 
 /**

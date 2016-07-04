@@ -1,12 +1,19 @@
 import path from "path";
 
-import _ from "lodash";
+import {
+  isInteger,
+  isString,
+  isObject,
+  isRegExp,
+  isBoolean,
+  chain
+} from "lodash";
 
 
 export const server = [{
   key: "port",
   default: () => 1337,
-  schema: portNum => Number.isInteger(portNum) && portNum > 0,
+  schema: portNum => isInteger(portNum) && portNum > 0,
 
   flagType: "number",
   flags: ["port"],
@@ -18,7 +25,7 @@ export const server = [{
 }, {
   key: "retryTimeout",
   default: () => 3000,
-  schema: timeout => Number.isInteger(timeout) && timeout > 0,
+  schema: timeout => isInteger(timeout) && timeout > 0,
 
   flagType: "number",
   flags: ["retry-timeout"],
@@ -31,14 +38,14 @@ export const server = [{
   key: "staticResources",
   default: () => {},
   schema: resources =>
-    _.isObject(resources) &&
+    isObject(resources) &&
     Object.keys(resources).reduce((allEntriesOkay, fullPath) => {
-      return allEntriesOkay && _.isString(fullPath) && _.isRegExp(resources[fullPath]);
+      return allEntriesOkay && isString(fullPath) && isRegExp(resources[fullPath]);
     }, true),
 
   flagType: "string",
   flags: ["mount"],
-  flagTransform: (val, cwd) => _.chain(val)
+  flagTransform: (val, cwd) => chain(val)
     .chunk(2)
     .map(([urlPattern, localPath]) => {
       return [
@@ -57,7 +64,7 @@ export const server = [{
 }, {
   key: "hot",
   default: () => false,
-  schema: _.isBoolean,
+  schema: isBoolean,
 
   flagType: "boolean",
   flags: ["hot"],

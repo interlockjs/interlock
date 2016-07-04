@@ -1,6 +1,7 @@
 import path from "path";
 
 import { parse } from "babylon";
+import { assign } from "lodash";
 
 import { pluggable } from "pluggable";
 
@@ -43,7 +44,7 @@ export default pluggable(function parseModule (module) {
       ]
     }).program;
 
-    return Object.assign({}, module, { ast, sourcePath });
+    return assign({}, module, { ast, sourcePath });
   } catch (err) {
     return Promise.reject(`Unable to parse file: ${module.path}\n${err.stack}`);
   }

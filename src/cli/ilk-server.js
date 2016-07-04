@@ -1,6 +1,7 @@
 import Interlock from "..";
 import * as options from "../options";
 import { createServer } from "../server/server";
+import { assign, keys } from "lodash";
 
 
 export const builder = yargs => {
@@ -23,7 +24,7 @@ export const handler = argv => {
     options.shared,
     config
   );
-  const opts = Object.assign({}, sharedOpts, compileOpts);
+  const opts = assign({}, sharedOpts, compileOpts);
 
   let serverOpts = options.getInterlockOpts(argv, options.server);
   serverOpts = options.validate(serverOpts, options.server);
@@ -50,7 +51,7 @@ export const handler = argv => {
       if (patchModules) {
         notify("update", { update: true });
       } else if (compilation) {
-        const newAssets = Object.keys(compilation.bundles).reduce((assets, filename) => {
+        const newAssets = keys(compilation.bundles).reduce((assets, filename) => {
           assets["/" + filename] = compilation.bundles[filename].raw;
           return assets;
         }, {});

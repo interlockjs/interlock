@@ -1,6 +1,12 @@
 import path from "path";
 
-import _ from "lodash";
+import {
+  isString,
+  isObject,
+  isArray,
+  isBoolean,
+  chain
+} from "lodash";
 
 import { getPackageJson } from "../util/file";
 
@@ -19,7 +25,7 @@ function evalOption (errorMsg) {
 export const compile = [{
   key: "srcRoot",
   default: cwd => path.join(cwd, "src"),
-  schema: _.isString,
+  schema: isString,
 
   flags: ["src"],
   flagType: "string",
@@ -33,7 +39,7 @@ export const compile = [{
 }, {
   key: "destRoot",
   default: cwd => path.join(cwd, "dist"),
-  schema: _.isString,
+  schema: isString,
 
   flags: ["dest"],
   flagType: "string",
@@ -47,17 +53,17 @@ export const compile = [{
 }, {
   key: "entry",
   schema: entryObj => {
-    return _.isObject(entryObj) && Object.keys(entryObj).reduce((isValid, key) => {
+    return isObject(entryObj) && Object.keys(entryObj).reduce((isValid, key) => {
       return isValid &&
-        _.isString(entryObj[key]) ||
-        _.isObject(entryObj[key]) &&
-        _.isString(entryObj[key].dest);
+        isString(entryObj[key]) ||
+        isObject(entryObj[key]) &&
+        isString(entryObj[key].dest);
     }, true);
   },
 
   flags: ["entry", "e"],
   flagType: "string",
-  flagTransform: val => _.chain(val).chunk(2).fromPairs().value(),
+  flagTransform: val => chain(val).chunk(2).fromPairs().value(),
   cmdOpts: { nargs: 2 },
 
   description: {
@@ -67,17 +73,17 @@ export const compile = [{
 }, {
   key: "split",
   schema: splitObj => {
-    return _.isObject(splitObj) && Object.keys(splitObj).reduce((isValid, key) => {
+    return isObject(splitObj) && Object.keys(splitObj).reduce((isValid, key) => {
       return isValid &&
-        _.isString(splitObj[key]) ||
-        _.isObject(splitObj[key]) &&
-        _.isString(splitObj[key].dest);
+        isString(splitObj[key]) ||
+        isObject(splitObj[key]) &&
+        isString(splitObj[key].dest);
     }, true);
   },
 
   flags: ["split", "s"],
   flagType: "string",
-  flagTransform: val => _.chain(val).chunk(2).fromPairs().value(),
+  flagTransform: val => chain(val).chunk(2).fromPairs().value(),
   cmdOpts: { nargs: 2 },
 
   description: {
@@ -88,8 +94,8 @@ export const compile = [{
   key: "extensions",
   default: () => [".js", ".jsx", ".es6"],
   schema: val =>
-    _.isArray(val) &&
-    val.reduce((result, entry) => result && _.isString(entry), true),
+    isArray(val) &&
+    val.reduce((result, entry) => result && isString(entry), true),
 
   flags: ["ext"],
   flagType: "string",
@@ -102,7 +108,7 @@ export const compile = [{
 }, {
   key: "ns",
   default: cwd => getPackageJson(cwd).name,
-  schema: _.isString,
+  schema: isString,
 
   flags: ["namespace"],
   flagType: "string",
@@ -114,7 +120,7 @@ export const compile = [{
 }, {
   key: "implicitBundleDest",
   default: () => "[setHash].js",
-  schema: _.isString,
+  schema: isString,
 
   flags: ["implicit-bundle-dest"],
   flagType: "string",
@@ -126,7 +132,7 @@ export const compile = [{
 }, {
   key: "sourceMaps",
   default: () => false,
-  schema: _.isBoolean,
+  schema: isBoolean,
 
   flags: ["sourcemaps"],
   flagType: "boolean",
@@ -138,7 +144,7 @@ export const compile = [{
 }, {
   key: "includeComments",
   default: () => false,
-  schema: _.isBoolean,
+  schema: isBoolean,
 
   flagType: "boolean",
   flags: ["comments"],
@@ -150,7 +156,7 @@ export const compile = [{
 }, {
   key: "pretty",
   default: () => false,
-  schema: _.isBoolean,
+  schema: isBoolean,
 
   flags: ["pretty"],
   flagType: "boolean",
@@ -161,7 +167,7 @@ export const compile = [{
   }
 }, {
   key: "babelConfig",
-  schema: _.isObject,
+  schema: isObject,
 
   flags: ["babel-config"],
   flagType: "string",
@@ -174,7 +180,7 @@ export const compile = [{
 }, {
   key: "plugins",
   default: () => [],
-  schema: _.isArray,
+  schema: isArray,
 
   flags: ["plugins"],
   flagType: "string",
@@ -187,7 +193,7 @@ export const compile = [{
 }, {
   "key": "multiprocess",
   default: () => false,
-  schema: _.isBoolean,
+  schema: isBoolean,
 
   flags: ["multiprocess"],
   flagType: "boolean",
@@ -210,7 +216,7 @@ export const compile = [{
 }, {
   "key": "fcache",
   default: () => false,
-  schema: val => _.isBoolean(val) || _.isString(val),
+  schema: val => isBoolean(val) || isString(val),
 
   flags: ["fcache"],
   flagType: "boolean",

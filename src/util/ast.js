@@ -1,18 +1,18 @@
-import _ from "lodash";
+import { isArray, isObject, isFunction, isNumber, isString } from "lodash";
 import * as t from "babel-types";
 import { parse } from "babylon";
 
 
 function fromVal (val) {
-  if (_.isArray(val)) {
+  if (isArray(val)) {
     return fromArray(val); // eslint-disable-line no-use-before-define
-  } else if (_.isObject(val)) {
+  } else if (isObject(val)) {
     return fromObject(val); // eslint-disable-line no-use-before-define
-  } else if (_.isFunction(val)) {
+  } else if (isFunction(val)) {
     return fromFunction(val); // eslint-disable-line no-use-before-define
-  } else if (_.isNumber(val)) {
+  } else if (isNumber(val)) {
     return t.numericLiteral(val);
-  } else if (_.isString(val)) {
+  } else if (isString(val)) {
     return t.stringLiteral(val);
   }
   throw new Error("Cannot transform value into AST.", val);

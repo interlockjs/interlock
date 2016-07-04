@@ -1,5 +1,6 @@
 import { pluggable } from "pluggable";
 
+
 export default pluggable(function initBundle (opts = {}) {
   const {
     dest = this.opts.implicitBundleDest,

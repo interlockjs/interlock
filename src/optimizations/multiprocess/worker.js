@@ -1,6 +1,9 @@
+import { keys } from "lodash";
+
 import * as targets from "./targets";
 
-Object.keys(targets).forEach(pluggableName => {
+
+keys(targets).forEach(pluggableName => {
   module.exports[`${pluggableName}MP`] = function (msg, cb) {
     try {
       const fn = targets[pluggableName];

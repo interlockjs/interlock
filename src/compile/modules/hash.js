@@ -1,6 +1,9 @@
 import crypto from "crypto";
 
+import { assign } from "lodash";
+
 import { pluggable } from "pluggable";
+
 
 /**
  * Use data from the provided module to generate a hash, utilizing the provided
@@ -41,5 +44,5 @@ export default pluggable(function hashModule (module) {
       .replace(/\//g, "_")
       .replace(/\+/g, "-")
       .replace(/=+$/, ""))
-    .then(hash => Object.assign({}, module, { hash }));
+    .then(hash => assign({}, module, { hash }));
 }, { updateModuleHash });

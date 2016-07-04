@@ -3,7 +3,7 @@ import * as fs from "fs";
 
 import { watch } from "chokidar";
 import { sync as mkdirp } from "mkdirp";
-import _ from "lodash";
+import { assign, isArray, merge, chain, isString, keys } from "lodash";
 
 import compile from "./compile";
 import * as options from "./options";
@@ -12,9 +12,9 @@ import compileModules from "./compile/modules/compile";
 
 
 function normalizeEntryPoints (entryPoints) {
-  return _.chain(entryPoints || {})
+  return chain(entryPoints || {})
     .map((entryDefinition, entrySrcPath) => {
-      entryDefinition = _.isString(entryDefinition) ?
+      entryDefinition = isString(entryDefinition) ?
         { dest: entryDefinition } :
         entryDefinition;
       return [entrySrcPath, entryDefinition];
@@ -24,13 +24,13 @@ function normalizeEntryPoints (entryPoints) {
 }
 
 function flattenPresets (opts) {
-  if (!_.isArray(opts.presets)) {
+  if (!isArray(opts.presets)) {
     throw new Error("Provided `presets` option is not an array.  This check is performed recursively."); // eslint-disable-line max-len
   }
 
   return opts.presets.reduce((_opts, preset) => {
     if (preset.presets) { preset = flattenPresets(preset); }
-    return _.merge({}, preset, _opts);
+    return merge({}, preset, _opts);
   }, opts);
 }
 
@@ -78,7 +78,7 @@ export default function Interlock (opts) {
   opts = flattenPresets(opts, opts.presets);
   opts = options.validate(opts, options.compile);
 
-  this.options = Object.assign({}, opts, {
+  this.options = assign({}, opts, {
     globalName: "__interlock__",
     entry: normalizeEntryPoints(opts.entry),
     split: normalizeEntryPoints(opts.split)
@@ -114,7 +114,7 @@ Interlock.prototype._saveBundles = function (compilation) {
 
 function getRefreshedAsset (compilation, changedFilePath) {
   return compilation.cache.modulesByAbsPath[changedFilePath]
-    .then(origAsset => Object.assign({}, origAsset, {
+    .then(origAsset => assign({}, origAsset, {
       rawSource: null,
       ast: null,
       requireNodes: null,
@@ -146,7 +146,7 @@ Interlock.prototype.watch = function (cb, opts = {}) {
   watcher.on("change", changedFilePath => {
     cb({ change: changedFilePath }); // eslint-disable-line callback-return
 
-    for (const modulePath of Object.keys(absPathToModuleHash)) { watcher.unwatch(modulePath); }
+    for (const modulePath of keys(absPathToModuleHash)) { watcher.unwatch(modulePath); }
 
     getRefreshedAsset(lastCompilation, changedFilePath)
       .then(refreshedAsset => {

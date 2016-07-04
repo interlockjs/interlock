@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { zip } from "lodash";
 import * as t from "babel-types";
 
 
@@ -103,7 +103,7 @@ function toRequire (requireVar, requireStr) {
 function toCommonJs (defineArray, defineFunction) {
   const requireStrings = defineArray.elements.map(el => el.value);
   const requireVars = defineFunction.params.map(param => param.name);
-  const requireStatements = _.zip(requireVars, requireStrings)
+  const requireStatements = zip(requireVars, requireStrings)
     .map(([requireVar, requireStr]) => toRequire(requireVar, requireStr));
   return commonJsTemplate(requireStatements, defineFunction.body.body);
 }

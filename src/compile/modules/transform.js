@@ -1,8 +1,9 @@
-import _ from "lodash";
+import { assign, uniq } from "lodash";
 import { transformFromAst } from "babel-core";
 
 import { pluggable } from "pluggable";
 import transformAmd from "./transform-amd";
+
 
 /**
  * Transforms the module's AST, returning a module object with transformed
@@ -35,7 +36,7 @@ export default pluggable(function transformModule (module) {
     }
   };
 
-  const config = _.extend({}, babelUserConfig, {
+  const config = assign({}, babelUserConfig, {
     filename: module.path,
     code: false,
     ast: true,
@@ -48,9 +49,9 @@ export default pluggable(function transformModule (module) {
   });
 
   const { ast } = transformFromAst(module.ast, null, config);
-  synchronousRequires = _.uniq(synchronousRequires);
+  synchronousRequires = uniq(synchronousRequires);
 
-  return Object.assign({}, module, {
+  return assign({}, module, {
     synchronousRequires,
     ast: ast.program
   });

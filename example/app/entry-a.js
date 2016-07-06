@@ -1,3 +1,4 @@
+// var _ = require("lodash");
 var libA = require("./shared/lib-a");
 var libB = require("./shared/lib-b");
 

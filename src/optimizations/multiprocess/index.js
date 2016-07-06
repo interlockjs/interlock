@@ -1,36 +1,35 @@
-import os from "os";
-
-import workerFarm from "worker-farm";
-import _ from "lodash";
+import { fork } from "child_process";
+import zmq from "zmq";
+import { isFunction, pick } from "lodash";
 
 import * as targets from "./targets";
+import monitor from "./monitor";
 
-
-const MAX_PROCESSES = os.cpus().length;
-const MULTIPROCESS_OVERRIDES = Object.keys(targets);
 const WORKER_PATH = require.resolve("./worker");
 
+export const SCHEDULER_ADDRESS = "ipc://interlock-scheduler";
+export const COLLECTOR_ADDRESS = "ipc://interlock-collector";
+
+// const MAX_PROCESSES = os.cpus().length;
+const MULTIPROCESS_OVERRIDES = Object.keys(targets);
 
 export default function (opts = {}) {
-  const farmOpts = {
-    maxCallsPerWorker: Infinity,
-    maxConcurrentWorkers: opts.workers && opts.workers < MAX_PROCESSES ?
-      opts.workers :
-      MAX_PROCESSES,
-    maxConcurrentCallsPerWorker: Infinity,
-    maxConcurrentCalls: Infinity,
-    maxCallTime: Infinity,
-    maxRetries: Infinity,
-    autoStart: false
-  };
+  const worker = fork(WORKER_PATH);
+
+  const scheduler = zmq.socket("push");
+  const collector = zmq.socket("pull");
+
+  monitor(scheduler);
+  monitor(collector);
+
+  scheduler.bindSync(SCHEDULER_ADDRESS);
+  collector.bindSync(COLLECTOR_ADDRESS);
 
   return (override, transform) => {
-    let workers;
-
     override("compile", function () {
       if (this.opts.babelConfig && this.opts.babelConfig.plugins) {
         const validPlugins = this.opts.babelConfig.plugins.reduce(
-          (memo, plugin) => memo && !_.isFunction(plugin),
+          (memo, plugin) => memo && !isFunction(plugin),
           true
         );
         if (!validPlugins) {
@@ -38,35 +37,51 @@ export default function (opts = {}) {
         }
       }
 
-      workers = workerFarm(
-        farmOpts,
-        WORKER_PATH,
-        MULTIPROCESS_OVERRIDES.map(pluggableName => `${pluggableName}MP`)
-      );
-
       return override.CONTINUE;
     });
 
     transform("compile", compilation => {
-      workerFarm.end(workers);
+      scheduler.unbind();
+      collector.unbind();
+      scheduler.unmonitor();
+      collector.unmonitor();
+      worker.kill(0);
       return compilation;
     });
 
     MULTIPROCESS_OVERRIDES.forEach(pluggableName => {
       override(pluggableName, function () {
-        const msg = JSON.stringify({
-          cxt: _.pick(this, ["opts"]),
+        const unitOfWork = {
+          pluggableName,
+          context: pick(this, ["opts"]),
           args: Array.prototype.slice.call(arguments)
-        });
+        };
 
-        return new Promise(function (resolve, reject) {
-          workers[`${pluggableName}MP`](msg, (err, result) => {
-            if (err) {
-              workerFarm.end(workers);
-              return reject(err);
+        return new Promise((resolve, reject) => {
+          collector.on("message", msg => {
+            const {
+              err,
+              result,
+              pluggableName: resultPluggableName
+            } = JSON.parse(msg.toString());
+
+            if (err) { reject(err); }
+
+            if (resultPluggableName === pluggableName) {
+              resolve(result);
             }
-            return resolve(JSON.parse(result));
           });
+
+          scheduler.send(JSON.stringify(unitOfWork));
+
+          setTimeout(() => reject(new Error("Pluggable timed out")), 10000);
+        }).catch(err => {
+          scheduler.unbind();
+          collector.unbind();
+          scheduler.unmonitor();
+          collector.unmonitor();
+          worker.kill(0);
+          throw err;
         });
       });
     });

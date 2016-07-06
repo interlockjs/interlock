@@ -16,6 +16,8 @@ module.exports = {
   includeComments: true,
   sourceMaps: true,
 
+  multiprocess: true,
+
   plugins: [],
 
   babelConfig: {

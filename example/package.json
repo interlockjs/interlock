@@ -8,5 +8,8 @@
   },
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "cache-require-paths": "^0.2.0",
+    "fast-boot": "^1.0.7"
+  }
 }

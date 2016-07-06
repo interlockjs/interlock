@@ -1,16 +1,38 @@
 import * as targets from "./targets";
 
-Object.keys(targets).forEach(pluggableName => {
-  module.exports[`${pluggableName}MP`] = function (msg, cb) {
-    try {
-      const fn = targets[pluggableName];
-      const { cxt, args } = JSON.parse(msg);
+import zmq from "zmq";
 
-      fn.apply(cxt, args)
-        .then(result => cb(null, JSON.stringify(result)))
-        .catch(err => cb(err));
-    } catch (err) {
-      return cb(err);
-    }
-  };
+import { SCHEDULER_ADDRESS, COLLECTOR_ADDRESS } from "./";
+import monitor from "./monitor";
+
+const pluggableResponse = (err, result) => {
+  if (err) {
+    return JSON.stringify({ err });
+  }
+
+  return JSON.stringify(result);
+};
+
+const collector = zmq.socket("pull");
+const parentCollector = zmq.socket("push");
+
+collector.on("message", msg => {
+  try {
+    const { pluggableName, context, args } = JSON.parse(msg);
+    const fn = targets[pluggableName];
+    fn.apply(context, args)
+      .then(result => parentCollector.send(pluggableResponse(null, {
+        pluggableName,
+        result
+      })))
+      .catch(err => parentCollector.send(pluggableResponse(err)));
+  } catch (err) {
+    return parentCollector.send(pluggableResponse(err));
+  }
 });
+
+monitor(collector);
+monitor(parentCollector);
+
+collector.connect(SCHEDULER_ADDRESS);
+parentCollector.connect(COLLECTOR_ADDRESS);

@@ -1,4 +1,4 @@
 module.exports = {
-  pretty: true,
+  pretty: false,
   includeComments: false
 };

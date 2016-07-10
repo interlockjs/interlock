@@ -1,4 +1,5 @@
 import path from "path";
+import Promise from "bluebird";
 
 import { parse } from "babylon";
 import { assign } from "lodash";

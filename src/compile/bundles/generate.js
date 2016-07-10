@@ -1,5 +1,6 @@
 import { assign } from "lodash";
 import { pluggable } from "pluggable";
+import Promise from "bluebird";
 
 import getBundleSeeds from "./get-seeds";
 import dedupeExplicit from "./dedupe-explicit";

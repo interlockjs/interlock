@@ -1,4 +1,5 @@
 import { assign, map } from "lodash";
+import Promise from "bluebird";
 
 import { pluggable } from "pluggable";
 import initBundle from "./init";

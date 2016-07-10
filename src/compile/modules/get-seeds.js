@@ -1,4 +1,5 @@
 import { keys, fromPairs } from "lodash";
+import Promise from "bluebird";
 
 import { pluggable } from "pluggable";
 import resolveModule from "./resolve";

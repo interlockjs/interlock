@@ -1,19 +1,17 @@
-import { keys } from "lodash";
+import { initChild } from "bson-ipc";
 
 import * as targets from "./targets";
 
 
-keys(targets).forEach(pluggableName => {
-  module.exports[`${pluggableName}MP`] = function (msg, cb) {
+initChild().then(({ send, onMessage }) => {
+  onMessage(({ pluggableName, cxt, args}) => {
     try {
       const fn = targets[pluggableName];
-      const { cxt, args } = JSON.parse(msg);
-
       fn.apply(cxt, args)
-        .then(result => cb(null, JSON.stringify(result)))
-        .catch(err => cb(err));
+        .then(result => send({ result }))
+        .catch(err => send({ err }));
     } catch (err) {
-      return cb(err);
+      send({ err });
     }
-  };
+  });
 });

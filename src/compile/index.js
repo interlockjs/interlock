@@ -9,7 +9,6 @@ import generateModuleMaps from "./modules/generate-maps";
 import generateBundles from "./bundles/generate";
 import generateRawBundles from "./bundles/generate-raw";
 
-import multiprocessPlugin from "../optimizations/multiprocess";
 import fcachePlugin from "../optimizations/file-cache";
 
 
@@ -121,12 +120,6 @@ const compile = pluggable(function compile () {
 
 export default function (opts) {
   const plugins = [].concat(opts.plugins);
-
-  if (opts.multiprocess || opts.workers) {
-    plugins.push(multiprocessPlugin({
-      workers: opts.workers
-    }));
-  }
 
   if (opts.fcache) {
     const cacheDir = opts.fcache === true ? null : opts.fcache;

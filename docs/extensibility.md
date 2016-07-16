@@ -28,7 +28,7 @@ object will have three key/value pairs:
 | Return value |  | Promise | Compilation object. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L88-L100).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L87-L99).
 
 ## compile
 
@@ -43,7 +43,7 @@ to disk or served over HTTP.
 | Return value |  | Promise | Resolves to an object with three properties: `bundles`, `opts`, and `cache`. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L111-L119).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L110-L118).
 
 ## compileModule
 
@@ -105,7 +105,7 @@ the same bundle with generated AST.
 | Return value |  | Object | Bundle with new `ast` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L40-L48).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L39-L47).
 
 ## constructBundleAst
 
@@ -276,7 +276,7 @@ may output an array of raw bundles.
 | Return value |  | Array | Bundles with new `raw` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L66-L74).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L65-L73).
 
 ## generateBundles
 
@@ -296,7 +296,7 @@ strings using AST->source transformation, and then written to disk.
 | Return value |  | Array | Fully compiled bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L63-L70).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L64-L71).
 
 ## generateDependencies
 
@@ -366,7 +366,7 @@ but do hold a reference to the root module of their branch of the dependency gra
 | Return value |  | Array | Early-stage bundles with `module` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L19-L30).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/get-seeds.js#L20-L31).
 
 ## getModuleSeeds
 
@@ -381,7 +381,7 @@ relative to the compilation context.
 | Return value |  | Object | Early-stage modules indexed by relative path. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L15-L22).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/get-seeds.js#L16-L23).
 
 ## getUrls
 
@@ -395,7 +395,7 @@ to the destination path of the bundles that contains them.
 | Return value |  | Object | moduleHash-to-URL lookup dictionary. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L24-L29).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L23-L28).
 
 ## hashBundle
 
@@ -471,7 +471,7 @@ for non-JavaScript modules).
 | Return value |  | Object | Parsed module with new `ast` and `sourcePath` properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L18-L51).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/parse.js#L19-L52).
 
 ## partitionBundles
 
@@ -488,7 +488,7 @@ by the module hashes (unique IDs) of the modules that comprise the bundle.
 | Return value |  | Array | Early-stage bundles. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L41-L45).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L42-L46).
 
 ## populateBundleModules
 
@@ -503,7 +503,7 @@ bundle module hashes are deduped.
 | Return value |  | Object | The bundle object, with modules property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L22-L26).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate.js#L23-L27).
 
 ## preresolve
 

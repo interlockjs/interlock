@@ -37,7 +37,6 @@
     "babel-types": "^6.10.2",
     "babylon": "^6.8.1",
     "bluebird": "^3.4.1",
-    "bson-ipc": "^0.3.1",
     "chokidar": "^1.5.2",
     "farmhash": "^1.1.1",
     "lodash": "^4.13.1",

@@ -87,6 +87,8 @@ export default function template (code) {
 
       traverse.cheap(ast, function (node) {
         clearNode(node);
+        if (node.leadingComments) { node.leadingComments.forEach(clearNode); }
+        if (node.trailingComments) { node.trailingComments.forEach(clearNode); }
         node[FROM_TEMPLATE] = true;
       });
     } catch (err) {

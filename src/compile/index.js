@@ -6,6 +6,7 @@ import { pluggable, getBaseContext } from "pluggable";
 import { constructBundleAst } from "./construct";
 import getModuleSeeds from "./modules/get-seeds";
 import generateModuleMaps from "./modules/generate-maps";
+import compileModules from "./modules/compile";
 import generateBundles from "./bundles/generate";
 import generateRawBundles from "./bundles/generate-raw";
 
@@ -111,11 +112,11 @@ const compile = pluggable(function compile () {
   return this.getModuleSeeds()
     .then(moduleSeeds => Promise.all([
       moduleSeeds,
-      this.generateModuleMaps(values(moduleSeeds))
+      this.compileModules(values(moduleSeeds)).then(this.generateModuleMaps.bind(this))
     ]))
     .then(([moduleSeeds, moduleMaps]) => this.generateBundles(moduleSeeds, moduleMaps))
     .then(this.buildOutput);
-}, { getModuleSeeds, generateModuleMaps, generateBundles, buildOutput });
+}, { getModuleSeeds, compileModules, generateModuleMaps, generateBundles, buildOutput });
 
 
 export default function (opts) {

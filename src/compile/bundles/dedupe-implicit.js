@@ -23,7 +23,7 @@ const genBundlesWithImplicit = Promise.coroutine(function* (bundles) {
         bundles[b] = assign({}, bundleB, { moduleHashes: moduleHashesB });
 
         bundles.push(yield this.initBundle({
-          moduleHashes: intersection,
+          moduleHashes: commonHashes,
           type: bundles[a].type,
           excludeRuntime: true
         }));

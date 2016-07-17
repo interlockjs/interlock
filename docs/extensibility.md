@@ -58,7 +58,7 @@ dependencies have also been processed/compiled.
 | Return value |  | Promise | Resolves to compiled module. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L84-L104).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L85-L107).
 
 ## compileModuleR
 
@@ -74,7 +74,7 @@ For true behavior, please see documentation for `compileModule`.
 | Return value |  | Promise | Resolves to compiled module. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L25-L27).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L26-L28).
 
 ## compileModules
 
@@ -90,7 +90,7 @@ gathered and compiled.
 | Return value |  | Promise | Resolves to array of all compiled modules. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L119-L127).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L122-L130).
 
 ## constructBundle
 
@@ -134,7 +134,7 @@ back into JavaScript code.
 | Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |
 | Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |
 | Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |
-| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |
+| Parameter | **opts.entryModuleId** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |
 | Return value |  | ASTnode | Single program AST node. |
 
 
@@ -179,7 +179,7 @@ register those modules for consumption by the Interlock run-time.
 | --- | ---- | ---- | ----------- |
 | Parameter | **modules** | Array | Array of compiled modules. |
 | Parameter | **globalName** | String | Global variable name of the Interlock run-time. |
-| Parameter | **entryModuleHash** | String | Module-hash of the entry module. |
+| Parameter | **entryModuleId** | String | Module-hash of the entry module. |
 | Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |
 
 
@@ -311,7 +311,21 @@ new dependency properties.
 | Return value |  | Object | Module with new dependency properties. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L38-L73).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L39-L74).
+
+## generateModuleId
+
+Given a mostly-compiled module, generate an ID for that module
+and resolve the same module with an `id` property.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **module** | Object | Module that needs an ID. |
+| Return value |  | Object | Module that now has an `id` property. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/generate-id.js#L13-L21).
 
 ## generateModuleMaps
 
@@ -440,7 +454,7 @@ supported placeholders with their dynamic equivalents.
 | Return value |  | Object | Bundle with interpolated `dest` property. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L13-L22).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L13-L23).
 
 ## loadModule
 

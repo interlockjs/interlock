@@ -199,7 +199,7 @@
       "name": "compileModules",
       "node": {
         "path": "src/compile/modules/compile.js",
-        "pluggableLine": 119,
+        "pluggableLine": 122,
         "edges": [
           "compileModule"
         ],
@@ -207,8 +207,8 @@
           "moduleSeeds"
         ],
         "name": "compileModules",
-        "fnStart": 119,
-        "fnEnd": 127,
+        "fnStart": 122,
+        "fnEnd": 130,
         "doc": "*\n * Given one or more module seeds, traverse their dependency graph, collecting any and\n * all dependency modules, and then parse, transform, and hash those modules.  Return\n * a promise that resolves to the full set of modules, once they have been correctly\n * gathered and compiled.\n *\n * @param  {Array}    moduleSeeds  Module seeds, i.e. modules that have not yet been\n *                                 populated with properties such as ast, `dependencies`,\n *                                 etc.  Module objects _should_ have path, rawSource,\n *                                 and namespace values.\n *\n * @return {Promise}               Resolves to array of all compiled modules.\n ",
         "parsedDoc": {
           "tags": [
@@ -241,21 +241,22 @@
           "name": "compileModule",
           "node": {
             "path": "src/compile/modules/compile.js",
-            "pluggableLine": 84,
+            "pluggableLine": 85,
             "edges": [
               "loadModule",
               "parseModule",
               "transformModule",
               "generateDependencies",
               "hashModule",
+              "generateModuleId",
               "updateRequires"
             ],
             "fnParams": [
               "module"
             ],
             "name": "compileModule",
-            "fnStart": 84,
-            "fnEnd": 104,
+            "fnStart": 85,
+            "fnEnd": 107,
             "doc": "*\n * Given an unprocess module that has been loaded from disk, return a promise\n * that resolves to the same module in a processed/compiled state, and whose\n * dependencies have also been processed/compiled.\n *\n * @param  {Object}  module  Seed module.\n *\n * @return {Promise}         Resolves to compiled module.\n ",
             "parsedDoc": {
               "tags": [
@@ -506,7 +507,7 @@
               "name": "generateDependencies",
               "node": {
                 "path": "src/compile/modules/compile.js",
-                "pluggableLine": 38,
+                "pluggableLine": 39,
                 "edges": [
                   "resolveModule",
                   "compileModuleR"
@@ -515,8 +516,8 @@
                   "module"
                 ],
                 "name": "generateDependencies",
-                "fnStart": 38,
-                "fnEnd": 73,
+                "fnStart": 39,
+                "fnEnd": 74,
                 "doc": "*\n * Given a module whose dependency references (like require strings) have been\n * determined, recursively compile all dependencies and return the module with\n * new dependency properties.\n *\n * @param  {Object}  module  Module for whom dependencies should be compiled.\n *\n * @return {Object}          Module with new dependency properties.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -677,12 +678,12 @@
                   "name": "compileModuleR",
                   "node": {
                     "path": "src/compile/modules/compile.js",
-                    "pluggableLine": 25,
+                    "pluggableLine": 26,
                     "edges": [],
                     "fnParams": [],
                     "name": "compileModuleR",
-                    "fnStart": 25,
-                    "fnEnd": 27,
+                    "fnStart": 26,
+                    "fnEnd": 28,
                     "doc": "*\n * Because the `compileModule` and `generateDependencies` functions interact\n * recursively, defining a stand-in pluggable for `compileModule` allows for\n * plugins to utilize `compileModule` from within an overridden `generateDependencies`.\n *\n * For true behavior, please see documentation for `compileModule`.\n *\n * @return {Promise}         Resolves to compiled module.\n ",
                     "parsedDoc": {
                       "tags": [
@@ -702,11 +703,11 @@
                     }
                   },
                   "children": [],
-                  "markdown": "## compileModuleR\n  \nBecause the `compileModule` and `generateDependencies` functions interact\nrecursively, defining a stand-in pluggable for `compileModule` allows for\nplugins to utilize `compileModule` from within an overridden `generateDependencies`.\n\nFor true behavior, please see documentation for `compileModule`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Return value |  | Promise | Resolves to compiled module. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L25-L27).\n\n  ",
+                  "markdown": "## compileModuleR\n  \nBecause the `compileModule` and `generateDependencies` functions interact\nrecursively, defining a stand-in pluggable for `compileModule` allows for\nplugins to utilize `compileModule` from within an overridden `generateDependencies`.\n\nFor true behavior, please see documentation for `compileModule`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Return value |  | Promise | Resolves to compiled module. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L26-L28).\n\n  ",
                   "size": 1
                 }
               ],
-              "markdown": "## generateDependencies\n  \nGiven a module whose dependency references (like require strings) have been\ndetermined, recursively compile all dependencies and return the module with\nnew dependency properties.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module for whom dependencies should be compiled. |\n| Return value |  | Object | Module with new dependency properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L38-L73).\n\n  "
+              "markdown": "## generateDependencies\n  \nGiven a module whose dependency references (like require strings) have been\ndetermined, recursively compile all dependencies and return the module with\nnew dependency properties.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module for whom dependencies should be compiled. |\n| Return value |  | Object | Module with new dependency properties. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L39-L74).\n\n  "
             },
             {
               "name": "hashModule",
@@ -798,6 +799,49 @@
               "markdown": "## hashModule\n  \nGiven a mostly-compiled module, generate a hash for that module and resolve\nto that module with a new `hash` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs to be hashed hash. |\n| Return value |  | Object | Module that now has a hash property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L36-L48).\n\n  "
             },
             {
+              "name": "generateModuleId",
+              "node": {
+                "path": "src/compile/modules/generate-id.js",
+                "pluggableLine": 13,
+                "edges": [],
+                "fnParams": [
+                  "module"
+                ],
+                "name": "generateModuleId",
+                "fnStart": 13,
+                "fnEnd": 21,
+                "doc": "*\n * Given a mostly-compiled module, generate an ID for that module\n * and resolve the same module with an `id` property.\n *\n * @param  {Object}  module  Module that needs an ID.\n *\n * @return {Object}          Module that now has an `id` property.\n ",
+                "parsedDoc": {
+                  "tags": [
+                    {
+                      "tag": "param",
+                      "type": "Object",
+                      "name": "module",
+                      "optional": false,
+                      "description": "Module that needs an ID.",
+                      "line": 4,
+                      "source": "@param  {Object}  module  Module that needs an ID."
+                    },
+                    {
+                      "tag": "return",
+                      "type": "Object",
+                      "name": "Module",
+                      "optional": false,
+                      "description": "that now has an `id` property.",
+                      "line": 6,
+                      "source": "@return {Object}          Module that now has an `id` property."
+                    }
+                  ],
+                  "line": 0,
+                  "description": "Given a mostly-compiled module, generate an ID for that module\nand resolve the same module with an `id` property.",
+                  "source": "Given a mostly-compiled module, generate an ID for that module\nand resolve the same module with an `id` property.\n\n@param  {Object}  module  Module that needs an ID.\n\n@return {Object}          Module that now has an `id` property."
+                }
+              },
+              "children": [],
+              "markdown": "## generateModuleId\n  \nGiven a mostly-compiled module, generate an ID for that module\nand resolve the same module with an `id` property.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module that needs an ID. |\n| Return value |  | Object | Module that now has an `id` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/generate-id.js#L13-L21).\n\n  ",
+              "size": 1
+            },
+            {
               "name": "updateRequires",
               "node": {
                 "path": "src/compile/modules/update-requires.js",
@@ -841,10 +885,10 @@
               "size": 1
             }
           ],
-          "markdown": "## compileModule\n  \nGiven an unprocess module that has been loaded from disk, return a promise\nthat resolves to the same module in a processed/compiled state, and whose\ndependencies have also been processed/compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Seed module. |\n| Return value |  | Promise | Resolves to compiled module. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L84-L104).\n\n  "
+          "markdown": "## compileModule\n  \nGiven an unprocess module that has been loaded from disk, return a promise\nthat resolves to the same module in a processed/compiled state, and whose\ndependencies have also been processed/compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Seed module. |\n| Return value |  | Promise | Resolves to compiled module. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L85-L107).\n\n  "
         }
       ],
-      "markdown": "## compileModules\n  \nGiven one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been populated with properties such as ast, `dependencies`, etc. Module objects _should_ have path, rawSource, and namespace values. |\n| Return value |  | Promise | Resolves to array of all compiled modules. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L119-L127).\n\n  "
+      "markdown": "## compileModules\n  \nGiven one or more module seeds, traverse their dependency graph, collecting any and\nall dependency modules, and then parse, transform, and hash those modules.  Return\na promise that resolves to the full set of modules, once they have been correctly\ngathered and compiled.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **moduleSeeds** | Array | Module seeds, i.e. modules that have not yet been populated with properties such as ast, `dependencies`, etc. Module objects _should_ have path, rawSource, and namespace values. |\n| Return value |  | Promise | Resolves to array of all compiled modules. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L122-L130).\n\n  "
     },
     {
       "name": "generateModuleMaps",
@@ -1292,7 +1336,7 @@
             ],
             "name": "interpolateFilename",
             "fnStart": 13,
-            "fnEnd": 22,
+            "fnEnd": 23,
             "doc": "*\n * Given a bundle, determine its ultimate output filepath by replacing\n * supported placeholders with their dynamic equivalents.\n *\n * @param  {Object}  bundle  Late-stage bundle object.\n *\n * @return {Object}          Bundle with interpolated `dest` property.\n ",
             "parsedDoc": {
               "tags": [
@@ -1321,7 +1365,7 @@
             }
           },
           "children": [],
-          "markdown": "## interpolateFilename\n  \nGiven a bundle, determine its ultimate output filepath by replacing\nsupported placeholders with their dynamic equivalents.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Late-stage bundle object. |\n| Return value |  | Object | Bundle with interpolated `dest` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L13-L22).\n\n  ",
+          "markdown": "## interpolateFilename\n  \nGiven a bundle, determine its ultimate output filepath by replacing\nsupported placeholders with their dynamic equivalents.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Late-stage bundle object. |\n| Return value |  | Object | Bundle with interpolated `dest` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/interpolate-filename.js#L13-L23).\n\n  ",
           "size": 1
         },
         {
@@ -1585,7 +1629,7 @@
                     "name": "constructBundleAst",
                     "fnStart": 165,
                     "fnEnd": 170,
-                    "doc": "*\n * Construct the AST for an output bundle.  A number of optional options-args are\n * allowed, to give flexibility to the compiler for what sort of bundle should be\n * constructed.\n *\n * For example, in the case of a bundle with an entry module, you'll want everything\n * to be included.  The run-time is needed, because there is no guarantee another\n * bundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\n * should be included, as again there is no guarantee another bundle has already\n * set those values.  The modules of the bundle itself need to be included, etc.\n *\n * However, you might instead generate a specialized bundle that only contains the\n * run-time and URLs.  This bundle might be inlined into the page, or guaranteed\n * to be loaded first, so that redundant copies of the run-time be included in\n * every other bundle generated.\n *\n * The output for this function should be a root AST node, ready to be transformed\n * back into JavaScript code.\n *\n * @param  {Object}  opts                 Options.\n * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n * @param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\n *                                        will be emitted.\n * @param  {Array}   opts.modules         Optional. If included, the module objects will be\n *                                        transformed into output module AST and emitted.\n * @param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\n *                                        to invoke the specified module on load.\n *\n * @return {ASTnode}                      Single program AST node.\n ",
+                    "doc": "*\n * Construct the AST for an output bundle.  A number of optional options-args are\n * allowed, to give flexibility to the compiler for what sort of bundle should be\n * constructed.\n *\n * For example, in the case of a bundle with an entry module, you'll want everything\n * to be included.  The run-time is needed, because there is no guarantee another\n * bundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\n * should be included, as again there is no guarantee another bundle has already\n * set those values.  The modules of the bundle itself need to be included, etc.\n *\n * However, you might instead generate a specialized bundle that only contains the\n * run-time and URLs.  This bundle might be inlined into the page, or guaranteed\n * to be loaded first, so that redundant copies of the run-time be included in\n * every other bundle generated.\n *\n * The output for this function should be a root AST node, ready to be transformed\n * back into JavaScript code.\n *\n * @param  {Object}  opts                 Options.\n * @param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n * @param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\n *                                        will be emitted.\n * @param  {Array}   opts.modules         Optional. If included, the module objects will be\n *                                        transformed into output module AST and emitted.\n * @param  {String}  opts.entryModuleId   Optional. If included, a statement will be rendered\n *                                        to invoke the specified module on load.\n *\n * @return {ASTnode}                      Single program AST node.\n ",
                     "parsedDoc": {
                       "tags": [
                         {
@@ -1627,11 +1671,11 @@
                         {
                           "tag": "param",
                           "type": "String",
-                          "name": "opts.entryModuleHash",
+                          "name": "opts.entryModuleId",
                           "optional": false,
                           "description": "Optional. If included, a statement will be rendered\nto invoke the specified module on load.",
                           "line": 25,
-                          "source": "@param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\nto invoke the specified module on load."
+                          "source": "@param  {String}  opts.entryModuleId   Optional. If included, a statement will be rendered\nto invoke the specified module on load."
                         },
                         {
                           "tag": "return",
@@ -1645,7 +1689,7 @@
                       ],
                       "line": 0,
                       "description": "Construct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.",
-                      "source": "Construct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n@param  {Object}  opts                 Options.\n@param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n@param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\nwill be emitted.\n@param  {Array}   opts.modules         Optional. If included, the module objects will be\ntransformed into output module AST and emitted.\n@param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered\nto invoke the specified module on load.\n\n@return {ASTnode}                      Single program AST node."
+                      "source": "Construct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n@param  {Object}  opts                 Options.\n@param  {Boolean} opts.includeRuntime  Indicates whether Interlock run-time should be emitted.\n@param  {Object}  opts.urls            Optional. If included, map of module hashes to URLs\nwill be emitted.\n@param  {Array}   opts.modules         Optional. If included, the module objects will be\ntransformed into output module AST and emitted.\n@param  {String}  opts.entryModuleId   Optional. If included, a statement will be rendered\nto invoke the specified module on load.\n\n@return {ASTnode}                      Single program AST node."
                     }
                   },
                   "children": [
@@ -1704,12 +1748,12 @@
                             "fnParams": [
                               "modules",
                               "globalName",
-                              "entryModuleHash"
+                              "entryModuleId"
                             ],
                             "name": "constructModuleSet",
                             "fnStart": 66,
                             "fnEnd": 82,
-                            "doc": "*\n * Given an array of compiled modules, construct the AST for JavaScript that would\n * register those modules for consumption by the Interlock run-time.\n *\n * @param  {Array}   modules          Array of compiled modules.\n * @param  {String}  globalName       Global variable name of the Interlock run-time.\n * @param  {String}  entryModuleHash  Module-hash of the entry module.\n *\n * @return {Array}                 Array of AST nodes to be emitted as JavaScript.\n ",
+                            "doc": "*\n * Given an array of compiled modules, construct the AST for JavaScript that would\n * register those modules for consumption by the Interlock run-time.\n *\n * @param  {Array}   modules          Array of compiled modules.\n * @param  {String}  globalName       Global variable name of the Interlock run-time.\n * @param  {String}  entryModuleId  Module-hash of the entry module.\n *\n * @return {Array}                 Array of AST nodes to be emitted as JavaScript.\n ",
                             "parsedDoc": {
                               "tags": [
                                 {
@@ -1733,11 +1777,11 @@
                                 {
                                   "tag": "param",
                                   "type": "String",
-                                  "name": "entryModuleHash",
+                                  "name": "entryModuleId",
                                   "optional": false,
                                   "description": "Module-hash of the entry module.",
                                   "line": 6,
-                                  "source": "@param  {String}  entryModuleHash  Module-hash of the entry module."
+                                  "source": "@param  {String}  entryModuleId  Module-hash of the entry module."
                                 },
                                 {
                                   "tag": "return",
@@ -1751,7 +1795,7 @@
                               ],
                               "line": 0,
                               "description": "Given an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.",
-                              "source": "Given an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n@param  {Array}   modules          Array of compiled modules.\n@param  {String}  globalName       Global variable name of the Interlock run-time.\n@param  {String}  entryModuleHash  Module-hash of the entry module.\n\n@return {Array}                 Array of AST nodes to be emitted as JavaScript."
+                              "source": "Given an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n@param  {Array}   modules          Array of compiled modules.\n@param  {String}  globalName       Global variable name of the Interlock run-time.\n@param  {String}  entryModuleId  Module-hash of the entry module.\n\n@return {Array}                 Array of AST nodes to be emitted as JavaScript."
                             }
                           },
                           "children": [
@@ -1809,7 +1853,7 @@
                               "size": 1
                             }
                           ],
-                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Parameter | **entryModuleHash** | String | Module-hash of the entry module. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L66-L82).\n\n  "
+                          "markdown": "## constructModuleSet\n  \nGiven an array of compiled modules, construct the AST for JavaScript that would\nregister those modules for consumption by the Interlock run-time.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **modules** | Array | Array of compiled modules. |\n| Parameter | **globalName** | String | Global variable name of the Interlock run-time. |\n| Parameter | **entryModuleId** | String | Module-hash of the entry module. |\n| Return value |  | Array | Array of AST nodes to be emitted as JavaScript. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L66-L82).\n\n  "
                         },
                         {
                           "name": "constructRuntime",
@@ -1911,7 +1955,7 @@
                       "markdown": "## constructBundleBody\n  \nBuilds body of output bundle, to be inserted into the IIFE.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Same options object passed to constructBundleBody. |\n| Return value |  | Array | Body of bundle. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L121-L133).\n\n  "
                     }
                   ],
-                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleHash** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L165-L170).\n\n  "
+                  "markdown": "## constructBundleAst\n  \nConstruct the AST for an output bundle.  A number of optional options-args are\nallowed, to give flexibility to the compiler for what sort of bundle should be\nconstructed.\n\nFor example, in the case of a bundle with an entry module, you'll want everything\nto be included.  The run-time is needed, because there is no guarantee another\nbundle has already loaded the run-time.  The module-hash-to-bundle-URLs object\nshould be included, as again there is no guarantee another bundle has already\nset those values.  The modules of the bundle itself need to be included, etc.\n\nHowever, you might instead generate a specialized bundle that only contains the\nrun-time and URLs.  This bundle might be inlined into the page, or guaranteed\nto be loaded first, so that redundant copies of the run-time be included in\nevery other bundle generated.\n\nThe output for this function should be a root AST node, ready to be transformed\nback into JavaScript code.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | Options. |\n| Parameter | **opts.includeRuntime** | Boolean | Indicates whether Interlock run-time should be emitted. |\n| Parameter | **opts.urls** | Object | Optional. If included, map of module hashes to URLs will be emitted. |\n| Parameter | **opts.modules** | Array | Optional. If included, the module objects will be transformed into output module AST and emitted. |\n| Parameter | **opts.entryModuleId** | String | Optional. If included, a statement will be rendered to invoke the specified module on load. |\n| Return value |  | ASTnode | Single program AST node. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/construct/index.js#L165-L170).\n\n  "
                 }
               ],
               "markdown": "## constructBundle\n  \nGiven a compiled bundle and moduleHash-to-URL lookup object, output\nthe same bundle with generated AST.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Fully compiled bundle, ready to be outputed. |\n| Parameter | **urls** | Object | moduleHash-to-URL lookup dictionary. |\n| Return value |  | Object | Bundle with new `ast` property. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/index.js#L40-L48).\n\n  "

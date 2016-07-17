@@ -21,8 +21,8 @@ export default pluggable(function updateRequires (module) {
         if (path.node.callee.name === "require") {
           const originalVal = path.node.arguments[0].value;
           const correspondingModule = module.dependenciesByInternalRef[originalVal];
-          path.node.arguments[0].value = correspondingModule.hash;
-          path.node.arguments[0].raw = `"$(correspondingModule.hash)"`;
+          path.node.arguments[0].value = correspondingModule.id;
+          path.node.arguments[0].raw = `"${correspondingModule.id}"`;
         }
       }
     }

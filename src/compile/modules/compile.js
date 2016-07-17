@@ -8,6 +8,7 @@ import { pluggable } from "pluggable";
 import resolveModule from "./resolve";
 import loadModule from "./load";
 import hashModule from "./hash";
+import generateModuleId from "./generate-id";
 import parseModule from "./parse";
 import transformModule from "./transform";
 import updateRequires from "./update-requires";
@@ -93,6 +94,7 @@ const compileModule = pluggable(function compileModule (module) {
     .then(this.transformModule)
     .then(this.generateDependencies)
     .then(this.hashModule)
+    .then(this.generateModuleId)
     .then(this.updateRequires);
 }, {
   loadModule,
@@ -100,6 +102,7 @@ const compileModule = pluggable(function compileModule (module) {
   transformModule,
   generateDependencies,
   hashModule,
+  generateModuleId,
   updateRequires
 });
 

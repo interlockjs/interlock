@@ -16,7 +16,7 @@ describe("src/compile/construct", () => {
     function simpleModule () {
       const origModuleBody = parse("module.exports = 'hello';").program.body;
 
-      const dependencies = [{ hash: "ddb179" }, { hash: "aa527f" }];
+      const dependencies = [{ id: "ddb179" }, { id: "aa527f" }];
 
       return Promise.all([
         constructCommonModule(origModuleBody, dependencies),
@@ -34,7 +34,7 @@ describe("src/compile/construct", () => {
         .then(done, done);
     });
 
-    it("includes dependency hashes", done => {
+    it("includes dependency IDs", done => {
       return simpleModule()
         .then(([ast]) => {
           const depsArray = query(ast, "[key.name=deps]")[0];

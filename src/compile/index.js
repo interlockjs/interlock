@@ -42,7 +42,7 @@ export const constructBundle = pluggable(function constructBundle (bundle, urls)
     modules: bundle.modules,
     includeRuntime: bundle.includeRuntime,
     urls: bundle.isEntryPt ? urls : null,
-    entryModuleHash: bundle.isEntryPt && bundle.module && bundle.module.hash || null
+    entryModuleId: bundle.isEntryPt && bundle.module && bundle.module.id || null
   })
     .then(ast => assign({}, bundle, { ast }));
 }, { constructBundleAst });

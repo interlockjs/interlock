@@ -40,7 +40,7 @@ export const constructCommonModule = pluggable(
   function constructCommonModule (moduleBody, deps) {
     return commonModuleTmpl({
       MODULE_BODY: moduleBody,
-      DEPS: t.arrayExpression(deps.map(dep => t.stringLiteral(dep.hash)))
+      DEPS: t.arrayExpression(deps.map(dep => t.stringLiteral(dep.id)))
     });
   }
 );
@@ -59,19 +59,19 @@ function markAsEntry (moduleAst) {
  *
  * @param  {Array}   modules          Array of compiled modules.
  * @param  {String}  globalName       Global variable name of the Interlock run-time.
- * @param  {String}  entryModuleHash  Module-hash of the entry module.
+ * @param  {String}  entryModuleId  Module-hash of the entry module.
  *
  * @return {Array}                 Array of AST nodes to be emitted as JavaScript.
  */
 export const constructModuleSet = pluggable(
-  function constructModuleSet (modules, globalName, entryModuleHash) {
+  function constructModuleSet (modules, globalName, entryModuleId) {
     return Promise.all(modules.map(module =>
       this.constructCommonModule(module.ast.body, module.dependencies)
-        .then(moduleAst => module.hash === entryModuleHash ?
+        .then(moduleAst => module.id === entryModuleId ?
           markAsEntry(moduleAst) :
           moduleAst
         )
-        .then(moduleAst => t.objectProperty(t.stringLiteral(module.hash), moduleAst))
+        .then(moduleAst => t.objectProperty(t.stringLiteral(module.id), moduleAst))
     ))
       .then(moduleProps => moduleSetTmpl({
         GLOBAL_NAME: t.stringLiteral(globalName),
@@ -125,7 +125,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
     opts.modules && this.constructModuleSet(
       opts.modules,
       this.opts.globalName,
-      opts.entryModuleHash
+      opts.entryModuleId
     )
   ])
     .then(([runtime, urls, moduleSet, loadEntry]) =>
@@ -157,7 +157,7 @@ export const constructBundleBody = pluggable(function constructBundleBody (opts)
  *                                        will be emitted.
  * @param  {Array}   opts.modules         Optional. If included, the module objects will be
  *                                        transformed into output module AST and emitted.
- * @param  {String}  opts.entryModuleHash Optional. If included, a statement will be rendered
+ * @param  {String}  opts.entryModuleId   Optional. If included, a statement will be rendered
  *                                        to invoke the specified module on load.
  *
  * @return {ASTnode}                      Single program AST node.

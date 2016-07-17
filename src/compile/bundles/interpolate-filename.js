@@ -16,6 +16,7 @@ export default pluggable(function interpolateFilename (bundle) {
     .replace("[hash]", bundle.hash);
   if (bundle.module) {
     dest = dest.replace("[primaryModuleHash]", bundle.module.hash);
+    dest = dest.replace("[primaryModuleId]", bundle.module.id);
   }
 
   return assign({}, bundle, { dest });

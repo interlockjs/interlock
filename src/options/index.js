@@ -53,6 +53,11 @@ export function getInterlockOpts (argv, optionsDef, defaults = {}) {
   }, defaults);
 }
 
+function markAsDefault (opts, key) {
+  opts.__defaults = opts.__defaults || {};
+  opts.__defaults[key] = true;
+}
+
 export function validate (options, optionsDef) {
   const cwd = process.cwd();
 
@@ -61,6 +66,7 @@ export function validate (options, optionsDef) {
     let val = options[option.key];
 
     if (!hasKey && option.default) {
+      markAsDefault(opts, option.key);
       val = opts[option.key] = option.default(cwd);
     }
 

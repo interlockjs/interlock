@@ -121,7 +121,21 @@ describe("src/index", () => {
         pretty: false,
         sourceMaps: false,
         fcache: false,
-        presets: []
+        presets: [],
+        __defaults: {
+          destRoot: true,
+          extensions: true,
+          fcache: true,
+          implicitBundleDest: true,
+          includeComments: true,
+          log: true,
+          multiprocess: true,
+          ns: true,
+          plugins: true,
+          presets: true,
+          pretty: true,
+          sourceMaps: true
+        }
       });
     });
 
@@ -155,7 +169,17 @@ describe("src/index", () => {
         pretty: false,
         sourceMaps: false,
         fcache: false,
-        presets: []
+        presets: [],
+        __defaults: {
+          fcache: true,
+          includeComments: true,
+          log: true,
+          multiprocess: true,
+          plugins: true,
+          presets: true,
+          pretty: true,
+          sourceMaps: true
+        }
       });
     });
   });

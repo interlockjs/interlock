@@ -6,17 +6,17 @@ import { isObject, isArray } from "lodash";
 /* eslint-disable no-console */
 export function getLogger (verbosity) {
   return {
-    error: (...msgs) => console.error(...msgs) || true,
-    warn: verbosity >= 1 ? (...msgs) => console.warn(...msgs) || true : () => false,
-    info: verbosity >= 2 ? (...msgs) => console.info(...msgs) || true : () => false,
-    debug: verbosity >= 3 ? (...msgs) => console.log(...msgs) || true : () => false
+    error: (...msgs) => console.error("ERROR:", ...msgs) || true,
+    warn: verbosity >= 1 ? (...msgs) => console.warn("WARNING:", ...msgs) || true : () => false,
+    info: verbosity >= 2 ? (...msgs) => console.info("INFO:", ...msgs) || true : () => false,
+    debug: verbosity >= 3 ? (...msgs) => console.log("DEBUG:", ...msgs) || true : () => false
   };
 }
 /* eslint-enable no-console */
 
 export const shared = [{
   key: "log",
-  default: () => getLogger(0),
+  default: () => getLogger(1),
   schema: isObject,
 
   flagType: "count",

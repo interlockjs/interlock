@@ -1,4 +1,5 @@
 import { transformFromAst } from "babel-core";
+import traverse from "babel-traverse";
 
 import { pluggable } from "pluggable";
 import { assign } from "lodash";
@@ -15,23 +16,17 @@ import { assign } from "lodash";
  *                           module hashes.
  */
 export default pluggable(function updateRequires (module) {
-  const updatePlugin = {
-    visitor: {
-      CallExpression (path) {
-        if (path.node.callee.name === "require") {
-          const originalVal = path.node.arguments[0].value;
-          const correspondingModule = module.dependenciesByInternalRef[originalVal];
-          path.node.arguments[0].value = correspondingModule.id;
-          path.node.arguments[0].raw = `"${correspondingModule.id}"`;
-        }
-      }
+  traverse.cheap(module.ast, node => {
+    if (
+      node.type === "CallExpression" &&
+      node.callee.name === "require"
+    ) {
+      const originalVal = node.arguments[0].value;
+      const correspondingModule = module.dependenciesByInternalRef[originalVal];
+      node.arguments[0].value = correspondingModule.hash;
+      node.arguments[0].raw = `"$(correspondingModule.hash)"`;
     }
-  };
+  });
 
-  const ast = transformFromAst(module.ast, null, {
-    code: false,
-    plugins: [updatePlugin]
-  }).ast.program;
-
-  return assign({}, module, { ast });
+  return assign({}, module, { ast: module.ast });
 });

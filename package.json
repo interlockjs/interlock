@@ -30,7 +30,7 @@
   "homepage": "https://github.com/interlockjs/interlock",
   "dependencies": {
     "babel-core": "^6.9.1",
-    "babel-generator": "^6.10.2",
+    "babel-generator": "6.11.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
     "babel-polyfill": "^6.9.1",
     "babel-traverse": "^6.9.0",

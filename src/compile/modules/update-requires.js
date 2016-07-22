@@ -1,4 +1,3 @@
-import { transformFromAst } from "babel-core";
 import traverse from "babel-traverse";
 
 import { pluggable } from "pluggable";

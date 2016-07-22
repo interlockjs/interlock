@@ -646,5 +646,5 @@ all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
 | Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L17-L37).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L17-L31).
 

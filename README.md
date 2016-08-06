@@ -4,6 +4,8 @@
 
 ***
 
+For information about Interlock and how it works, check out our [website](http://interlockjs.com).  To learn how to extend Interlock through plugins, we recommend you [read the docs](http://interlockjs.com/docs/extensibility).
+
 ## License
 
 [MIT License](http://opensource.org/licenses/MIT)

@@ -634,10 +634,12 @@ The resulting hash should be deterministic for the same inputs in the same order
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/hash.js#L18-L26).
 
-## updateRequires
+## updateReferences
 
-Give a module whose dependencies have been identified and compiled, replace
-all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
+Given a module whose dependencies have been identified and compiled,
+replace all original references with run-time references. In the case
+of JavaScript, this will mean updating references like `path/to/dep`
+or `./sibling-dep` with each dependency's module ID.
 
 
 |     | Name | Type | Description |
@@ -646,5 +648,5 @@ all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
 | Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L17-L31).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-references.js#L19-L33).
 

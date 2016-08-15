@@ -249,7 +249,7 @@
               "generateDependencies",
               "hashModule",
               "generateModuleId",
-              "updateRequires"
+              "updateReferences"
             ],
             "fnParams": [
               "module"
@@ -842,18 +842,18 @@
               "size": 1
             },
             {
-              "name": "updateRequires",
+              "name": "updateReferences",
               "node": {
-                "path": "src/compile/modules/update-requires.js",
-                "pluggableLine": 17,
+                "path": "src/compile/modules/update-references.js",
+                "pluggableLine": 19,
                 "edges": [],
                 "fnParams": [
                   "module"
                 ],
-                "name": "updateRequires",
-                "fnStart": 17,
-                "fnEnd": 31,
-                "doc": "*\n * Give a module whose dependencies have been identified and compiled, replace\n * all original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n *\n * @param  {Object}  module  Module with AST containing original require expressions.\n *\n * @return {Object}          Module with AST containing require expressions whose\n *                           arguments have been replaced with corresponding dependency\n *                           module hashes.\n ",
+                "name": "updateReferences",
+                "fnStart": 19,
+                "fnEnd": 33,
+                "doc": "*\n * Given a module whose dependencies have been identified and compiled,\n * replace all original references with run-time references. In the case\n * of JavaScript, this will mean updating references like `path/to/dep`\n * or `./sibling-dep` with each dependency's module ID.\n *\n * @param  {Object}  module  Module with AST containing original require expressions.\n *\n * @return {Object}          Module with AST containing require expressions whose\n *                           arguments have been replaced with corresponding dependency\n *                           module hashes.\n ",
                 "parsedDoc": {
                   "tags": [
                     {
@@ -862,7 +862,7 @@
                       "name": "module",
                       "optional": false,
                       "description": "Module with AST containing original require expressions.",
-                      "line": 4,
+                      "line": 6,
                       "source": "@param  {Object}  module  Module with AST containing original require expressions."
                     },
                     {
@@ -871,17 +871,17 @@
                       "name": "Module",
                       "optional": false,
                       "description": "with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes.",
-                      "line": 6,
+                      "line": 8,
                       "source": "@return {Object}          Module with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes."
                     }
                   ],
                   "line": 0,
-                  "description": "Give a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.",
-                  "source": "Give a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n@param  {Object}  module  Module with AST containing original require expressions.\n\n@return {Object}          Module with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes."
+                  "description": "Given a module whose dependencies have been identified and compiled,\nreplace all original references with run-time references. In the case\nof JavaScript, this will mean updating references like `path/to/dep`\nor `./sibling-dep` with each dependency's module ID.",
+                  "source": "Given a module whose dependencies have been identified and compiled,\nreplace all original references with run-time references. In the case\nof JavaScript, this will mean updating references like `path/to/dep`\nor `./sibling-dep` with each dependency's module ID.\n\n@param  {Object}  module  Module with AST containing original require expressions.\n\n@return {Object}          Module with AST containing require expressions whose\narguments have been replaced with corresponding dependency\nmodule hashes."
                 }
               },
               "children": [],
-              "markdown": "## updateRequires\n  \nGive a module whose dependencies have been identified and compiled, replace\nall original `require(\"path/to/dep\")` with `require(\"HASH_OF_DEP\")`.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-requires.js#L17-L31).\n\n  ",
+              "markdown": "## updateReferences\n  \nGiven a module whose dependencies have been identified and compiled,\nreplace all original references with run-time references. In the case\nof JavaScript, this will mean updating references like `path/to/dep`\nor `./sibling-dep` with each dependency's module ID.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **module** | Object | Module with AST containing original require expressions. |\n| Return value |  | Object | Module with AST containing require expressions whose arguments have been replaced with corresponding dependency module hashes. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/update-references.js#L19-L33).\n\n  ",
               "size": 1
             }
           ],

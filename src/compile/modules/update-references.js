@@ -5,8 +5,10 @@ import { assign } from "lodash";
 
 
 /**
- * Give a module whose dependencies have been identified and compiled, replace
- * all original `require("path/to/dep")` with `require("HASH_OF_DEP")`.
+ * Given a module whose dependencies have been identified and compiled,
+ * replace all original references with run-time references. In the case
+ * of JavaScript, this will mean updating references like `path/to/dep`
+ * or `./sibling-dep` with each dependency's module ID.
  *
  * @param  {Object}  module  Module with AST containing original require expressions.
  *
@@ -14,7 +16,7 @@ import { assign } from "lodash";
  *                           arguments have been replaced with corresponding dependency
  *                           module hashes.
  */
-export default pluggable(function updateRequires (module) {
+export default pluggable(function updateReferences (module) {
   traverse.cheap(module.ast, node => {
     if (
       node.type === "CallExpression" &&

@@ -11,7 +11,7 @@ import hashModule from "./hash";
 import generateModuleId from "./generate-id";
 import parseModule from "./parse";
 import transformModule from "./transform";
-import updateRequires from "./update-requires";
+import updateReferences from "./update-references";
 
 
 /**
@@ -95,7 +95,7 @@ const compileModule = pluggable(function compileModule (module) {
     .then(this.generateDependencies)
     .then(this.hashModule)
     .then(this.generateModuleId)
-    .then(this.updateRequires);
+    .then(this.updateReferences);
 }, {
   loadModule,
   parseModule,
@@ -103,7 +103,7 @@ const compileModule = pluggable(function compileModule (module) {
   generateDependencies,
   hashModule,
   generateModuleId,
-  updateRequires
+  updateReferences
 });
 
 /**

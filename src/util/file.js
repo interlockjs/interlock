@@ -38,7 +38,7 @@ export function getPackageJson (filePath) {
   for (const pjPath of getPossiblePaths(filePath, "package.json")) {
     if (isFile(pjPath)) {
       try {
-        return require(pjPath);
+        return require(pjPath); // eslint-disable-line global-require
       } catch (err) {
         throw new Error(`Invalid package.json found at '${pjPath}'.`);
       }

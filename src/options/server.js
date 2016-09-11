@@ -20,7 +20,7 @@ export const server = [{
 
   description: {
     short: "Port on which to run dev server.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "retryTimeout",
@@ -32,7 +32,7 @@ export const server = [{
 
   description: {
     short: "Delay before hot-reload clients attempt reconnection.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "staticResources",
@@ -50,7 +50,7 @@ export const server = [{
     .map(([urlPattern, localPath]) => {
       return [
         path.resolve(cwd, localPath),
-        new RegExp("^" + urlPattern)
+        new RegExp(`^${urlPattern}`)
       ];
     })
     .fromPairs()
@@ -59,7 +59,7 @@ export const server = [{
 
   description: {
     short: "Pairs of URL patterns and the local filepaths they should resolve to.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "hot",
@@ -71,6 +71,6 @@ export const server = [{
 
   description: {
     short: "Enable hot-reloading of client modules.",
-    long: `TODO`
+    long: "TODO"
   }
 }];

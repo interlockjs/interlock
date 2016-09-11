@@ -25,7 +25,7 @@ export default pluggable(function updateReferences (module) {
       const originalVal = node.arguments[0].value;
       const correspondingModule = module.dependenciesByInternalRef[originalVal];
       node.arguments[0].value = correspondingModule.hash;
-      node.arguments[0].raw = `"$(correspondingModule.hash)"`;
+      node.arguments[0].raw = `"${correspondingModule.hash}"`;
     }
   });
 

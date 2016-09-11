@@ -29,7 +29,7 @@ function resolveDir (absPath, extensions) {
 
   const packageJsonPath = path.join(absPath, "package.json");
   if (isFile(packageJsonPath)) {
-    const main = require(packageJsonPath).main;
+    const main = require(packageJsonPath).main; // eslint-disable-line global-require
     if (main) {
       const mainAbsPath = path.join(absPath, main);
       return resolveFile(mainAbsPath, extensions) || resolveDir(mainAbsPath, extensions);

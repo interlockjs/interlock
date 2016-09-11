@@ -46,7 +46,7 @@ function getCacheDir (cacheDir) {
 export default function (opts = {}) {
   const cacheDir = getCacheDir(opts.cacheDir);
 
-  const getCachePath = rawSource => path.join(cacheDir, farmhash.hash64(rawSource) + ".ast");
+  const getCachePath = rawSource => path.join(cacheDir, `${farmhash.hash64(rawSource)}.ast`);
 
   return (override, transform) => {
     override("parseModule", function (module) {

@@ -12,7 +12,7 @@ export function loadConfig (configPath) {
   configPath = path.resolve(process.cwd(), configPath);
 
   try {
-    return require(configPath);
+    return require(configPath); // eslint-disable-line global-require
   } catch (err) {
     console.log("ERROR: Unable to load config file.\n"); // eslint-disable-line no-console
     console.log(err.stack); // eslint-disable-line no-console

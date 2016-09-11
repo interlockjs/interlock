@@ -24,17 +24,16 @@ describe("src/compile/construct", () => {
       ]);
     }
 
-    it("outputs an object literal with two properties", done => {
+    it("outputs an object literal with two properties", () => {
       return simpleModule()
         .then(([ast]) => {
           const objLiterals = query(ast, "ObjectExpression");
           expect(objLiterals).to.have.length(1);
           expect(objLiterals[0].properties).to.have.length(2);
-        })
-        .then(done, done);
+        });
     });
 
-    it("includes dependency IDs", done => {
+    it("includes dependency IDs", () => {
       return simpleModule()
         .then(([ast]) => {
           const depsArray = query(ast, "[key.name=deps]")[0];
@@ -42,11 +41,10 @@ describe("src/compile/construct", () => {
           expect(depsArray.value.elements).to.have.length(2);
           expect(query(depsArray, "StringLiteral[value=ddb179]")).to.have.length(1);
           expect(query(depsArray, "StringLiteral[value=aa527f]")).to.have.length(1);
-        })
-        .then(done, done);
+        });
     });
 
-    it("includes the wrapped module body", done => {
+    it("includes the wrapped module body", () => {
       return simpleModule()
         .then(([ast, origBody]) => {
           const moduleFn = query(ast, "ObjectProperty[key.name=fn]")[0];
@@ -55,11 +53,10 @@ describe("src/compile/construct", () => {
 
           const constructedModuleFnBody = query(moduleFn, "BlockStatement")[0].body;
           expect(constructedModuleFnBody).to.eql(origBody);
-        })
-        .then(done, done);
+        });
     });
 
-    it("outputs correct JS when rendered", done => {
+    it("outputs correct JS when rendered", () => {
       return simpleModule()
         .then(([ast]) => {
           expect(render(ast)).to.eql([
@@ -70,8 +67,7 @@ describe("src/compile/construct", () => {
             "  }",
             "}"
           ].join("\n"));
-        })
-        .then(done, done);
+        });
     });
   });
 });

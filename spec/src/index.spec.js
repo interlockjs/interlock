@@ -29,14 +29,14 @@ describe("src/index", () => {
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
           { entry: null },
-          { entry: {"fakepath": {}} }
+          { entry: { "fakepath": {} } }
         );
         new Interlock(invalidConfig);
       }).to.throw(Error, "Received invalid value for option 'entry': {\"fakepath\":{}}.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
           { entry: null },
-          { entry: {"fakepath": {dest: true}} }
+          { entry: { "fakepath": { dest: true } } }
         );
         new Interlock(invalidConfig);
       }).to.throw(
@@ -52,12 +52,12 @@ describe("src/index", () => {
       expect(() => { new Interlock(_.merge({}, minimalValidConfig, { split: null })); })
         .to.throw(Error, "Received invalid value for option 'split': null.");
       expect(() => {
-        const invalidConfig = _.merge({}, minimalValidConfig, { split: {"fakepath": {}} });
+        const invalidConfig = _.merge({}, minimalValidConfig, { split: { "fakepath": {} } });
         new Interlock(invalidConfig);
       }).to.throw(Error, "Received invalid value for option \'split\': {\"fakepath\":{}}.");
       expect(() => {
         const invalidConfig = _.merge({}, minimalValidConfig,
-          { split: {"fakepath": {dest: true}} });
+          { split: { "fakepath": { dest: true } } });
         new Interlock(invalidConfig);
       }).to.throw(
         Error,
@@ -107,7 +107,7 @@ describe("src/index", () => {
       delete ilk.options.log;
 
       expect(ilk.options).to.deep.equal({
-        entry: { "./index.js": { dest: "bundle.js" }},
+        entry: { "./index.js": { dest: "bundle.js" } },
         split: {},
         globalName: "__interlock__",
         srcRoot: path.join(__dirname, "/../.."),

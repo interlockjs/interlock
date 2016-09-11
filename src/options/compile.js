@@ -34,7 +34,7 @@ export const compile = [{
 
   description: {
     short: "Path to source directory.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "destRoot",
@@ -48,7 +48,7 @@ export const compile = [{
 
   description: {
     short: "Path to output directory.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "entry",
@@ -68,7 +68,7 @@ export const compile = [{
 
   description: {
     short: "Your application entry point, followed by its output bundle filename.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "split",
@@ -88,7 +88,7 @@ export const compile = [{
 
   description: {
     short: "Your application split point, followed by its output bundle filename.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "extensions",
@@ -103,7 +103,7 @@ export const compile = [{
 
   description: {
     short: "Extensions to use for require() resolution.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "ns",
@@ -115,7 +115,7 @@ export const compile = [{
 
   description: {
     short: "Namespace to use for your project.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "implicitBundleDest",
@@ -127,7 +127,7 @@ export const compile = [{
 
   description: {
     short: "Filename pattern for discovered/implicit bundles.",
-    full: ``
+    full: "TODO"
   }
 }, {
   key: "sourceMaps",
@@ -139,7 +139,7 @@ export const compile = [{
 
   description: {
     short: "Output sourcemaps along with bundled code.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "includeComments",
@@ -151,7 +151,7 @@ export const compile = [{
 
   description: {
     short: "Include comments in output JS.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "pretty",
@@ -163,7 +163,7 @@ export const compile = [{
 
   description: {
     short: "Output bundles in non-compact mode.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "babelConfig",
@@ -175,7 +175,7 @@ export const compile = [{
 
   description: {
     short: "Babel config.  Should take the form of a JS object.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "plugins",
@@ -188,7 +188,7 @@ export const compile = [{
 
   description: {
     short: "Plugins array.  Should take the form of a JS array.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   "key": "multiprocess",
@@ -200,7 +200,7 @@ export const compile = [{
 
   description: {
     short: "Distribute work over multiple processors.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   "key": "workers",
@@ -211,7 +211,7 @@ export const compile = [{
 
   description: {
     short: "Number of processes to use (implies multiprocess).",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   "key": "fcache",
@@ -223,7 +223,7 @@ export const compile = [{
 
   description: {
     short: "Enable caching of compilation assets for improved build times.",
-    full: `TODO`
+    full: "TODO"
   }
 }];
 

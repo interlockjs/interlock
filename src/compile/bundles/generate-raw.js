@@ -45,7 +45,7 @@ export default pluggable(function generateRawBundles (bundle) {
   }, bundleSources);
 
   const outputBundle = assign({}, bundle, { raw: code });
-  const mapDest = bundle.dest + ".map";
+  const mapDest = `${bundle.dest}.map`;
 
   return this.opts.sourceMaps ?
     [ outputBundle, { raw: JSON.stringify(map), dest: mapDest } ] :

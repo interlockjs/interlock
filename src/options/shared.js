@@ -26,7 +26,7 @@ export const shared = [{
 
   description: {
     short: "Compiler verbosity (sent to STDOUT).",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "config",
@@ -37,7 +37,7 @@ export const shared = [{
 
   description: {
     short: "Path to Interlock config file.",
-    full: `TODO`
+    full: "TODO"
   }
 }, {
   key: "presets",
@@ -50,11 +50,12 @@ export const shared = [{
 
   flags: ["preset"],
   flagType: "string",
+  // eslint-disable-next-line global-require
   flagTransform: (val, cwd) => require(path.resolve(cwd, val)),
   cmdOpts: { global: true },
 
   description: {
     short: "Pull in pre-determined Interlock configuration options.",
-    full: `TODO`
+    full: "TODO"
   }
 }];

@@ -52,7 +52,7 @@ export const handler = argv => {
         notify("update", { update: true });
       } else if (compilation) {
         const newAssets = keys(compilation.bundles).reduce((assets, filename) => {
-          assets["/" + filename] = compilation.bundles[filename].raw;
+          assets[`/${filename}`] = compilation.bundles[filename].raw;
           return assets;
         }, {});
         setDynamicAssets(newAssets);

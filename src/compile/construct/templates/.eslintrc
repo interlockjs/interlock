@@ -1,12 +1,16 @@
 extends:
-  - "defaults/configurations/walmart/es5-browser"
+  - "formidable/configurations/es5-browser"
 
 rules:
-  no-unused-expressions: 0
-  no-extra-parens: 0
-  no-unused-vars: 0
-  max-len: 0
-  valid-jsdoc: 0
-  no-return-assign: 0
-  func-style: 0
-  space-before-function-paren: [2, { "anonymous": "always", "named": "always" }]
+  no-unused-expressions: "off"
+  no-extra-parens: "off"
+  no-unused-vars: "off"
+  max-len: "off"
+  valid-jsdoc: "off"
+  no-return-assign: "off"
+  func-style: "off"
+  no-magic-numbers: "off"
+  space-before-function-paren:
+    - 2
+    - anonymous: "always"
+      named: "always"

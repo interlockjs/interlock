@@ -6,6 +6,7 @@ try {
   useTranspiled = false;
 }
 
+/* eslint-disable global-require */
 if (useTranspiled) {
   require("babel-polyfill");
   module.exports = require("./lib");
@@ -13,3 +14,4 @@ if (useTranspiled) {
   require("babel-core/register");
   module.exports = require("./src");
 }
+/* eslint-enable global-require */

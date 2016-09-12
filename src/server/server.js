@@ -63,10 +63,11 @@ export function createServer (opts = {}) {
   const server = http.createServer((req, res) => {
     shouldRespond.then(() => { // eslint-disable-line max-statements
       const acceptType = req.headers.accept;
-      const requestUrl = url.parse(req.url).pathname.toLowerCase();
-
-      const requestedResource = dynamicResources[requestUrl] ||
-        dynamicResources[path.join(requestUrl, "index.html")];
+      let requestUrl = url.parse(req.url).pathname.toLowerCase();
+      if (!(requestUrl in dynamicResources)) {
+        requestUrl = path.join(requestUrl, "index.html");
+      }
+      const requestedResource = dynamicResources[requestUrl];
 
       if (requestUrl === eventsUrl && acceptType === "text/event-stream") {
         const id = ++nextConnectionID;

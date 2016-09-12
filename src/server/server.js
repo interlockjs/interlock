@@ -66,7 +66,7 @@ export function createServer (opts = {}) {
       const requestUrl = url.parse(req.url).pathname.toLowerCase();
 
       const requestedResource = dynamicResources[requestUrl] ||
-        dynamicResources[`${requestUrl}/index.html`];
+        dynamicResources[path.join(requestUrl, "index.html")];
 
       if (requestUrl === eventsUrl && acceptType === "text/event-stream") {
         const id = ++nextConnectionID;

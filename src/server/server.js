@@ -1,6 +1,7 @@
 import http from "http";
 import path from "path";
 import fs from "fs";
+import url from "url";
 
 import mime from "mime";
 import { findKey } from "lodash";
@@ -62,9 +63,12 @@ export function createServer (opts = {}) {
   const server = http.createServer((req, res) => {
     shouldRespond.then(() => { // eslint-disable-line max-statements
       const acceptType = req.headers.accept;
-      const url = req.url.toLowerCase();
+      const requestUrl = url.parse(req.url).pathname.toLowerCase();
 
-      if (url === eventsUrl && acceptType === "text/event-stream") {
+      const requestedResource = dynamicResources[requestUrl] ||
+        dynamicResources[`${requestUrl}/index.html`];
+
+      if (requestUrl === eventsUrl && acceptType === "text/event-stream") {
         const id = ++nextConnectionID;
         connections[id] = res;
         res.writeHead(200, {
@@ -78,15 +82,15 @@ export function createServer (opts = {}) {
         });
 
         return;
-      } else if (url in dynamicResources) {
-        const contentType = mime.lookup(url);
+      } else if (requestedResource) {
+        const contentType = mime.lookup(requestUrl);
         res.writeHead(200, { "content-type": contentType });
-        res.write(dynamicResources[url]);
+        res.write(requestedResource);
         res.end();
         return;
       }
       const staticMatch = findKey(opts.staticResources, pattern => {
-        return pattern.test(url);
+        return pattern.test(requestUrl);
       });
 
       if (!staticMatch) {
@@ -94,7 +98,7 @@ export function createServer (opts = {}) {
         return;
       }
 
-      const relPath = url.replace(opts.staticResources[staticMatch], "");
+      const relPath = requestUrl.replace(opts.staticResources[staticMatch], "");
       respondStatic(res, staticMatch, relPath);
     });
   });

@@ -115,6 +115,7 @@ Interlock.prototype._saveBundles = function (compilation) {
 function getRefreshedAsset (compilation, changedFilePath) {
   return compilation.cache.modulesByAbsPath[changedFilePath]
     .then(origAsset => assign({}, origAsset, {
+      type: null,
       rawSource: null,
       ast: null,
       requireNodes: null,

@@ -23,7 +23,7 @@ import fcachePlugin from "../optimizations/file-cache";
  */
 export const getUrls = pluggable(function getUrls (bundles) {
   return bundles.reduce((urls, bundle) => {
-    bundle.moduleHashes.forEach(hash => urls[hash] = bundle.dest);
+    bundle.moduleHashes.forEach(hash => urls[hash] = `/${bundle.dest}`);
     return urls;
   }, {});
 });

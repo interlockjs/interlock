@@ -5,6 +5,45 @@ import { pluggable } from "pluggable";
 
 
 /**
+ * Given an AST and a set of options, generate the corresponding JavaScript
+ * source and optional sourcemap string.
+ *
+ * @param  {Object}  opts                 The generation options.
+ * @param  {AST}     opts.ast             The AST to render.
+ * @param  {Boolean} opts.sourceMaps      Whether to render a source-map.
+ * @param  {String}  opts.sourceMapTarget The output filename.
+ * @param  {Boolean} opts.pretty          Whether to output formatted JS.
+ * @param  {Boolean} opts.includeComments Whether to include comments in the output.
+ * @param  {Object}  opts.sources         A hash of source filenames to source content.
+ *
+ * @return {Object}                       An object with `code` and `map` strings,
+ *                                        where `map` can be null.
+ */
+const generateJsCode = pluggable(function generateJsCode (opts) {
+  const {
+    ast,
+    sourceMaps,
+    sourceMapTarget,
+    pretty,
+    includeComments,
+    sources
+  } = opts;
+
+  const { code, map } = generate(ast, {
+    sourceMaps,
+    sourceMapTarget,
+    comments: includeComments,
+    compact: !pretty,
+    quotes: "double"
+  }, sources);
+
+  return {
+    code,
+    map: sourceMaps ? JSON.stringify(map) : null
+  };
+});
+
+/**
  * Given a compiled bundle object, return an array of one or more bundles with
  * new `raw` property.  This raw property should be generated from the bundle's
  * AST or equivalent intermediate representation.
@@ -36,18 +75,18 @@ export default pluggable(function generateRawBundles (bundle) {
     bundle.ast :
     { type: "Program", body: [].concat(bundle.ast) };
 
-  const { code, map } = generate(ast, {
+  return this.generateJsCode({
+    ast,
     sourceMaps: !!this.opts.sourceMaps,
     sourceMapTarget: this.opts.sourceMaps && bundle.dest,
-    comments: !!this.opts.includeComments,
-    compact: !this.opts.pretty,
-    quotes: "double"
-  }, bundleSources);
+    pretty: !this.opts.pretty,
+    includeComments: !!this.opts.includeComments,
+    sources: bundleSources
+  }).then(({ code, map }) => {
+    const outputBundle = assign({}, bundle, { raw: code });
 
-  const outputBundle = assign({}, bundle, { raw: code });
-  const mapDest = `${bundle.dest}.map`;
-
-  return this.opts.sourceMaps ?
-    [ outputBundle, { raw: JSON.stringify(map), dest: mapDest } ] :
-    [ outputBundle ];
-});
+    return this.opts.sourceMaps ?
+      [ outputBundle, { raw: map, dest: `${bundle.dest}.map` } ] :
+      [ outputBundle ];
+  });
+}, { generateJsCode });

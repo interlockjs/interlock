@@ -313,6 +313,26 @@ new dependency properties.
 
 This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/modules/compile.js#L39-L74).
 
+## generateJsCode
+
+Given an AST and a set of options, generate the corresponding JavaScript
+source and optional sourcemap string.
+
+
+|     | Name | Type | Description |
+| --- | ---- | ---- | ----------- |
+| Parameter | **opts** | Object | The generation options. |
+| Parameter | **opts.ast** | AST | The AST to render. |
+| Parameter | **opts.sourceMaps** | Boolean | Whether to render a source-map. |
+| Parameter | **opts.sourceMapTarget** | String | The output filename. |
+| Parameter | **opts.pretty** | Boolean | Whether to output formatted JS. |
+| Parameter | **opts.includeComments** | Boolean | Whether to include comments in the output. |
+| Parameter | **opts.sources** | Object | A hash of source filenames to source content. |
+| Return value |  | Object | An object with `code` and `map` strings, where `map` can be null. |
+
+
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L22-L44).
+
 ## generateModuleId
 
 Given a mostly-compiled module, generate an ID for that module
@@ -360,7 +380,7 @@ bundle to result in a `.js` file and a `.map` file.
 | Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |
 
 
-This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L25-L53).
+This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L64-L92).
 
 ## getBundleSeeds
 

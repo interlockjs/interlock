@@ -1981,14 +1981,16 @@
               "name": "generateRawBundles",
               "node": {
                 "path": "src/compile/bundles/generate-raw.js",
-                "pluggableLine": 25,
-                "edges": [],
+                "pluggableLine": 64,
+                "edges": [
+                  "generateJsCode"
+                ],
                 "fnParams": [
                   "bundle"
                 ],
                 "name": "generateRawBundles",
-                "fnStart": 25,
-                "fnEnd": 53,
+                "fnStart": 64,
+                "fnEnd": 92,
                 "doc": "*\n * Given a compiled bundle object, return an array of one or more bundles with\n * new `raw` property.  This raw property should be generated from the bundle's\n * AST or equivalent intermediate representation.\n *\n * This is a one-to-many transformation because it is quite possible for multiple\n * output files to result from a single bundle object.  The canonical example (and\n * default behavior of this function, when sourcemaps are enabled) is for one\n * bundle to result in a `.js` file and a `.map` file.\n *\n * @param  {Object} bundle    Bundle object without `raw` property.\n *\n * @return {Array}            Array of bundle objects.  At minimum, these bundle\n *                            objects should have a `raw` property - a string\n *                            representation of the file to be written to disk -\n *                            and a `dest` property - the relative filepath\n *                            of the file to be written to disk.\n ",
                 "parsedDoc": {
                   "tags": [
@@ -2016,8 +2018,106 @@
                   "source": "Given a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n@param  {Object} bundle    Bundle object without `raw` property.\n\n@return {Array}            Array of bundle objects.  At minimum, these bundle\nobjects should have a `raw` property - a string\nrepresentation of the file to be written to disk -\nand a `dest` property - the relative filepath\nof the file to be written to disk."
                 }
               },
-              "children": [],
-              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L25-L53).\n\n  ",
+              "children": [
+                {
+                  "name": "generateJsCode",
+                  "node": {
+                    "path": "src/compile/bundles/generate-raw.js",
+                    "pluggableLine": 22,
+                    "edges": [],
+                    "fnParams": [
+                      "opts"
+                    ],
+                    "name": "generateJsCode",
+                    "fnStart": 22,
+                    "fnEnd": 44,
+                    "doc": "*\n * Given an AST and a set of options, generate the corresponding JavaScript\n * source and optional sourcemap string.\n *\n * @param  {Object}  opts                 The generation options.\n * @param  {AST}     opts.ast             The AST to render.\n * @param  {Boolean} opts.sourceMaps      Whether to render a source-map.\n * @param  {String}  opts.sourceMapTarget The output filename.\n * @param  {Boolean} opts.pretty          Whether to output formatted JS.\n * @param  {Boolean} opts.includeComments Whether to include comments in the output.\n * @param  {Object}  opts.sources         A hash of source filenames to source content.\n *\n * @return {Object}                       An object with `code` and `map` strings,\n *                                        where `map` can be null.\n ",
+                    "parsedDoc": {
+                      "tags": [
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "opts",
+                          "optional": false,
+                          "description": "The generation options.",
+                          "line": 4,
+                          "source": "@param  {Object}  opts                 The generation options."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "AST",
+                          "name": "opts.ast",
+                          "optional": false,
+                          "description": "The AST to render.",
+                          "line": 5,
+                          "source": "@param  {AST}     opts.ast             The AST to render."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Boolean",
+                          "name": "opts.sourceMaps",
+                          "optional": false,
+                          "description": "Whether to render a source-map.",
+                          "line": 6,
+                          "source": "@param  {Boolean} opts.sourceMaps      Whether to render a source-map."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "String",
+                          "name": "opts.sourceMapTarget",
+                          "optional": false,
+                          "description": "The output filename.",
+                          "line": 7,
+                          "source": "@param  {String}  opts.sourceMapTarget The output filename."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Boolean",
+                          "name": "opts.pretty",
+                          "optional": false,
+                          "description": "Whether to output formatted JS.",
+                          "line": 8,
+                          "source": "@param  {Boolean} opts.pretty          Whether to output formatted JS."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Boolean",
+                          "name": "opts.includeComments",
+                          "optional": false,
+                          "description": "Whether to include comments in the output.",
+                          "line": 9,
+                          "source": "@param  {Boolean} opts.includeComments Whether to include comments in the output."
+                        },
+                        {
+                          "tag": "param",
+                          "type": "Object",
+                          "name": "opts.sources",
+                          "optional": false,
+                          "description": "A hash of source filenames to source content.",
+                          "line": 10,
+                          "source": "@param  {Object}  opts.sources         A hash of source filenames to source content."
+                        },
+                        {
+                          "tag": "return",
+                          "type": "Object",
+                          "name": "An",
+                          "optional": false,
+                          "description": "object with `code` and `map` strings,\nwhere `map` can be null.",
+                          "line": 12,
+                          "source": "@return {Object}                       An object with `code` and `map` strings,\nwhere `map` can be null."
+                        }
+                      ],
+                      "line": 0,
+                      "description": "Given an AST and a set of options, generate the corresponding JavaScript\nsource and optional sourcemap string.",
+                      "source": "Given an AST and a set of options, generate the corresponding JavaScript\nsource and optional sourcemap string.\n\n@param  {Object}  opts                 The generation options.\n@param  {AST}     opts.ast             The AST to render.\n@param  {Boolean} opts.sourceMaps      Whether to render a source-map.\n@param  {String}  opts.sourceMapTarget The output filename.\n@param  {Boolean} opts.pretty          Whether to output formatted JS.\n@param  {Boolean} opts.includeComments Whether to include comments in the output.\n@param  {Object}  opts.sources         A hash of source filenames to source content.\n\n@return {Object}                       An object with `code` and `map` strings,\nwhere `map` can be null."
+                    }
+                  },
+                  "children": [],
+                  "markdown": "## generateJsCode\n  \nGiven an AST and a set of options, generate the corresponding JavaScript\nsource and optional sourcemap string.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **opts** | Object | The generation options. |\n| Parameter | **opts.ast** | AST | The AST to render. |\n| Parameter | **opts.sourceMaps** | Boolean | Whether to render a source-map. |\n| Parameter | **opts.sourceMapTarget** | String | The output filename. |\n| Parameter | **opts.pretty** | Boolean | Whether to output formatted JS. |\n| Parameter | **opts.includeComments** | Boolean | Whether to include comments in the output. |\n| Parameter | **opts.sources** | Object | A hash of source filenames to source content. |\n| Return value |  | Object | An object with `code` and `map` strings, where `map` can be null. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L22-L44).\n\n  ",
+                  "size": 1
+                }
+              ],
+              "markdown": "## generateRawBundles\n  \nGiven a compiled bundle object, return an array of one or more bundles with\nnew `raw` property.  This raw property should be generated from the bundle's\nAST or equivalent intermediate representation.\n\nThis is a one-to-many transformation because it is quite possible for multiple\noutput files to result from a single bundle object.  The canonical example (and\ndefault behavior of this function, when sourcemaps are enabled) is for one\nbundle to result in a `.js` file and a `.map` file.\n\n  \n|     | Name | Type | Description |\n| --- | ---- | ---- | ----------- |\n| Parameter | **bundle** | Object | Bundle object without `raw` property. |\n| Return value |  | Array | Array of bundle objects. At minimum, these bundle objects should have a `raw` property - a string representation of the file to be written to disk - and a `dest` property - the relative filepath of the file to be written to disk. |\n\n\n  This Pluggable's definition can be found [here](http://github.com/interlockjs/interlock/tree/master/src/compile/bundles/generate-raw.js#L64-L92).\n\n  ",
               "size": 1
             }
           ],

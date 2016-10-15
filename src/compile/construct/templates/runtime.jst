@@ -7,7 +7,7 @@
  *
  * @return {Object}          Destination object.
  */
-function copyProps (dest /* sources... */) {
+function copyProps (dest/*, sources... */) {
   var len = arguments.length;
   if (arguments.length < 2 || dest === null) { return dest; }
   Array.prototype.splice.call(arguments, 1).forEach(function (src) {
